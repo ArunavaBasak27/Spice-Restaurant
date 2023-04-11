@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 let mild = require("../../Images/mild.png");
 let spicy = require("../../Images/spicy.png");
 let verySpicy = require("../../Images/verySpicy.png");
 const Header = () => {
+	const navigate = useNavigate();
 	return (
 		<nav className="navbar navbar-dark navbar-expand-lg bg-dark text-white-50">
 			<div className="container-fluid">
@@ -37,11 +38,13 @@ const Header = () => {
 								Content Management
 							</a>
 							<ul className="dropdown-menu">
-								<li>
-									<a className="dropdown-item" href="#">
-										Category
-									</a>
+								<li
+									className="dropdown-item"
+									onClick={() => navigate("/categoryList")}
+								>
+									Category
 								</li>
+
 								<li>
 									<a className="dropdown-item" href="#">
 										Sub Category

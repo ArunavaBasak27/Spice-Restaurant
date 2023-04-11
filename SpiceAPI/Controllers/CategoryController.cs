@@ -34,6 +34,25 @@ namespace SpiceAPI.Controllers
             }
             return Ok(_response);
         }
+
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetCategory(int id)
+        {
+            try
+            {
+                var category = await _db.Categories.FirstOrDefaultAsync(x => x.Id == id);
+                _response.Result = category;
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return Ok(_response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDTO categoryDTO)
         {
@@ -92,7 +111,7 @@ namespace SpiceAPI.Controllers
             return Ok(_response);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             try
