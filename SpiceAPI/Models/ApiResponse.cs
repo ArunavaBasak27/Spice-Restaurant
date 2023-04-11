@@ -1,5 +1,5 @@
 ﻿using System.Net;
-
+#nullable disable
 namespace SpiceAPI.Models
 {
     public class ApiResponse
