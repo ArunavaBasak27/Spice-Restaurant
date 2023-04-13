@@ -19,26 +19,36 @@ const SubCategoryOfCategory = (props: Props) => {
 		}
 	}, [isLoading]);
 
+	var filteredSubCategories = subCategoryList.filter(
+		(subCategory: subCategoryModel) => {
+			if (subCategory.categoryId === +props.category) {
+				return subCategory;
+			}
+		}
+	);
+
 	return (
 		<>
-			{isLoading && <MiniLoader />}
-			{!isLoading && (
+			{isLoading ? (
+				<MiniLoader />
+			) : filteredSubCategories.length > 0 ? (
 				<div>
 					<p>Existing sub categories: </p>
 					<ul className="list-group">
-						{subCategoryList.length &&
-							subCategoryList.map(
-								(subCategory: subCategoryModel, index: number) => {
-									if (subCategory.categoryId === +props.category) {
-										return (
-											<li key={index} className="list-group-item">
-												{subCategory.name}
-											</li>
-										);
-									}
-								}
-							)}
+						{filteredSubCategories.map(
+							(subCategory: subCategoryModel, index: number) => {
+								return (
+									<li key={index} className="list-group-item">
+										{subCategory.name}
+									</li>
+								);
+							}
+						)}
 					</ul>
+				</div>
+			) : (
+				<div>
+					<p>No Sub category exists...</p>
 				</div>
 			)}
 		</>
