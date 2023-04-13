@@ -7,6 +7,7 @@ import {
 	useUpdateCategoryMutation,
 } from "../../Apis/categoryApi";
 import { apiResponse } from "../../Interfaces";
+import { MainLoader } from "../../Components/Pages/Common";
 
 const categoryData = {
 	name: "",
@@ -57,7 +58,6 @@ const CategoryUpsert = () => {
 
 		if (response.data?.isSuccess) {
 			setLoading(false);
-			console.log(response);
 			toastNotify(
 				`Category ${id ? "updated" : "created"} successfully`,
 				"success"
@@ -71,47 +71,56 @@ const CategoryUpsert = () => {
 	};
 
 	return (
-		<div>
-			<div className="row">
-				<h2 className="text-info">{id ? "Update" : "Create"} Category</h2>
-			</div>
-			<div className="border backgroundWhite mt-2">
-				<form method="post" onSubmit={handleSubmit}>
-					<div className="form-group row">
-						<div className="col-2">Name:</div>
-						<div className="col-5">
-							<input
-								type="text"
-								name="name"
-								placeholder="Enter category"
-								value={categoryInput.name}
-								className="form-control"
-								onChange={handleCategoryInput}
-							/>
-						</div>
+		<>
+			{loading && <MainLoader />}
+			{!loading && (
+				<div>
+					<div className="row">
+						<h2 className="text-info">{id ? "Update" : "Create"} Category</h2>
 					</div>
-					<div className="form-group row mt-2">
-						<div className="col-5 offset-2">
-							<div className="row">
-								<div className="col-6">
-									<button type="submit" className="btn btn-info form-control">
-										{id ? "Update" : "Create"}
-									</button>
-								</div>
-								<div className="col-6">
-									<a
-										className="btn btn-success form-control"
-										onClick={() => navigate("/categoryList")}
-									>
-										Back to List
-									</a>
+					<div className="border backgroundWhite mt-2">
+						<form method="post" onSubmit={handleSubmit}>
+							<div className="form-group row">
+								<div className="col-2">Name:</div>
+								<div className="col-5">
+									<input
+										type="text"
+										name="name"
+										placeholder="Enter category"
+										value={categoryInput.name}
+										className="form-control"
+										onChange={handleCategoryInput}
+									/>
 								</div>
 							</div>
-						</div>
+							<div className="form-group row mt-2">
+								<div className="col-5 offset-2">
+									<div className="row">
+										<div className="col-6">
+											<button
+												type="submit"
+												className="btn btn-info form-control"
+												disabled={loading}
+											>
+												{id ? "Update" : "Create"}
+											</button>
+										</div>
+										<div className="col-6">
+											<a
+												className="btn btn-success form-control"
+												onClick={() => navigate("/categoryList")}
+											>
+												Back to List
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
-		</div>
+				</div>
+			)}
+		</>
 	);
 };
 

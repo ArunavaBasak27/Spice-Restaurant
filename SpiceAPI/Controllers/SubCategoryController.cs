@@ -99,12 +99,12 @@ namespace SpiceAPI.Controllers
                     throw new Exception("Error while updating subCategory");
                 }
 
-                var subCategoryList = await _db.SubCategories.Where(x=>x.Name.ToLower()==subCategoryDTO.Name.ToLower()).ToListAsync();
+                var subCategoryList = await _db.SubCategories.Where(x => x.Id == subCategoryDTO.Id &&  x.Name.ToLower() == subCategoryDTO.Name.ToLower()).ToListAsync();
                 if (subCategoryList.Count > 0)
                 {
                     throw new Exception("Sub Category already exists. Try again using different name");
                 }
-                var subCategory = await _db.SubCategories.FirstOrDefaultAsync(x=>x.Id==subCategoryDTO.Id);
+                var subCategory = await _db.SubCategories.FirstOrDefaultAsync(x => x.Id == subCategoryDTO.Id);
                 if (subCategory == null)
                 {
                     throw new Exception("SubCategory not found");
