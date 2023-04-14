@@ -51,6 +51,14 @@ const Header = () => {
 								>
 									Sub Category
 								</li>
+
+								<li
+									className="dropdown-item"
+									onClick={() => navigate("/menuItemList")}
+								>
+									Menu Item
+								</li>
+
 								<li>
 									<hr className="dropdown-divider" />
 								</li>

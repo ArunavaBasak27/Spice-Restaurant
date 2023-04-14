@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SpiceAPI.Data;
+using SpiceAPI.Mapper;
+using SpiceAPI.Services.Models;
+using SpiceAPI.Services.PhotoService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAutoMapper(typeof(Mappings));
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddCors();
 var app = builder.Build();
 
@@ -31,7 +37,7 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseCors(options=>options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+app.UseCors(options => options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseAuthorization();
 
 app.MapControllers();

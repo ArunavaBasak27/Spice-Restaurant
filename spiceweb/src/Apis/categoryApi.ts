@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { url } from "inspector";
+import SD from "../Utility/SD";
 
 const categoryApi = createApi({
 	reducerPath: "categoryApi",
 	baseQuery: fetchBaseQuery({
-		baseUrl: "https://localhost:7165/api",
+		baseUrl: SD.baseUrl,
 	}),
 	tagTypes: ["Categories"],
 	endpoints: (builder) => ({

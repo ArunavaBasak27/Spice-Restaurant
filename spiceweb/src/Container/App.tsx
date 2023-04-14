@@ -3,6 +3,8 @@ import {
 	CategoryList,
 	CategoryUpsert,
 	Home,
+	MenuItemList,
+	MenuItemUpsert,
 	NotFound,
 	SubCategoryList,
 	SubCategoryUpsert,
@@ -27,6 +29,11 @@ function App() {
 						path="/updateSubCategory/:id"
 						element={<SubCategoryUpsert />}
 					/>
+
+					<Route path="/menuItemList" element={<MenuItemList />} />
+					<Route path="/createMenuItem" element={<MenuItemUpsert />} />
+					<Route path="/updateMenuItem/:id" element={<MenuItemUpsert />} />
+
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
