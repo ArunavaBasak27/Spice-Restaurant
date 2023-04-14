@@ -3,10 +3,11 @@ import SD from "../Utility/SD";
 
 const menuItemApi = createApi({
 	reducerPath: "menuItemApi",
-	tagTypes: ["MenuItem"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: SD.baseUrl,
 	}),
+	tagTypes: ["MenuItem"],
+
 	endpoints: (builder) => ({
 		getMenuItems: builder.query({
 			query: () => ({

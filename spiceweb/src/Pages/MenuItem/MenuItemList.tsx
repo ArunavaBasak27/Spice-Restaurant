@@ -1,23 +1,40 @@
 import { useNavigate } from "react-router-dom";
-import { useGetMenuItemsQuery } from "../../Apis/menuItemApi";
+import {
+	useDeleteMenuItemMutation,
+	useGetMenuItemsQuery,
+} from "../../Apis/menuItemApi";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setMenuItem } from "../../Storage/Redux/menuItemSlice";
 import { menuItemModel } from "../../Interfaces";
+import { MainLoader } from "../../Components/Pages/Common";
+import { toast } from "react-toastify";
 
 const MenuItemList = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { data, isLoading } = useGetMenuItemsQuery(null);
-	const [menuItems, setMenuItems] = useState([]);
-
+	const [deleteMenuItem] = useDeleteMenuItemMutation();
 	useEffect(() => {
 		if (!isLoading) {
-			dispatch(setMenuItem(data.result));
-			setMenuItems(data.result);
+			dispatch(setMenuItem(data?.result));
 		}
 	}, [isLoading]);
 
+	if (isLoading) {
+		return <MainLoader />;
+	}
+	const handleMenuItemDelete = (id: number) => {
+		toast.promise(
+			deleteMenuItem(id),
+			{
+				pending: "Processing your request",
+				success: "Menu Item deleted successfully 👌",
+				error: "Error encountered 🤯",
+			},
+			{ theme: "dark" }
+		);
+	};
 	return (
 		<div className="border backgroundWhite">
 			<div className="row">
@@ -34,20 +51,21 @@ const MenuItemList = () => {
 				</div>
 			</div>
 			<br />
-			{menuItems.length > 0 ? (
-				<div className="">
-					<table className="table table-striped-border">
-						<thead className="table-secondary">
-							<tr>
-								<th>Name</th>
-								<th>Price</th>
-								<th>Category</th>
-								<th>Sub Category</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{menuItems.map((menuItem: menuItemModel) => {
+
+			<div className="">
+				<table className="table table-striped-border">
+					<thead className="table-secondary">
+						<tr>
+							<th>Name</th>
+							<th>Price</th>
+							<th>Category</th>
+							<th>Sub Category</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{data?.result.length > 0 &&
+							data?.result.map((menuItem: menuItemModel) => {
 								return (
 									<tr key={menuItem.id}>
 										<td>{menuItem.name}</td>
@@ -64,7 +82,10 @@ const MenuItemList = () => {
 												>
 													<i className="bi bi-pencil"></i>
 												</button>
-												<button className="btn btn-danger">
+												<button
+													className="btn btn-danger"
+													onClick={() => handleMenuItemDelete(menuItem.id)}
+												>
 													<i className="bi bi-trash-fill"></i>
 												</button>
 											</div>
@@ -72,12 +93,10 @@ const MenuItemList = () => {
 									</tr>
 								);
 							})}
-						</tbody>
-					</table>
-				</div>
-			) : (
-				<p>No menu items exist...</p>
-			)}
+					</tbody>
+				</table>
+				{data.result.length == 0 && <div>No menu items exists....</div>}
+			</div>
 		</div>
 	);
 };

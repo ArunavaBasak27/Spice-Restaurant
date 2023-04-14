@@ -103,23 +103,25 @@ namespace SpiceAPI.Controllers
                     throw new Exception("Error while updating menuItem");
                 }
 
-                MenuItem menuItemFromDb = await _db.MenuItems.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+                MenuItem menuItemFromDb = await _db.MenuItems.FirstOrDefaultAsync(x => x.Id == id);
                 if (menuItemFromDb == null)
                 {
                     throw new Exception("MenuItem not found");
                 }
-                var updatedMenuItem = _mapper.Map<MenuItem>(menuItemDTO);
-                if (menuItemDTO.File != null)
+                menuItemFromDb.Name = menuItemDTO.Name;
+                menuItemFromDb.Description = menuItemDTO.Description;
+                menuItemFromDb.Price = menuItemDTO.Price;
+                menuItemFromDb.CategoryId = menuItemDTO.CategoryId;
+                menuItemFromDb.SubCategoryId = menuItemDTO.SubCategoryId;
+
+                if (menuItemDTO.File != null && menuItemDTO.File.Length > 0)
                 {
                     await _photoService.DeletePhoto(menuItemFromDb.Image);
                     var photo = await _photoService.AddPhoto(menuItemDTO.File);
-                    updatedMenuItem.Image = photo.Url + "," + photo.PublicId;
+                    menuItemFromDb.Image = photo.Url + "," + photo.PublicId;
                 }
-                else
-                {
-                    updatedMenuItem.Image = menuItemFromDb.Image;
-                }
-                _db.MenuItems.Update(updatedMenuItem);
+
+                //_db.MenuItems.Update(updatedMenuItem);
                 await _db.SaveChangesAsync();
                 _response.StatusCode = HttpStatusCode.NoContent;
             }
@@ -150,14 +152,15 @@ namespace SpiceAPI.Controllers
                 _db.MenuItems.Remove(menuItem);
                 await _db.SaveChangesAsync();
                 _response.StatusCode = HttpStatusCode.NoContent;
+                return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string> { ex.Message };
+                return BadRequest(_response);
             }
-            return Ok(_response);
         }
     }
 }

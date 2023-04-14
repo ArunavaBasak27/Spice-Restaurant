@@ -13,6 +13,7 @@ import {
 	useGetMenuItemByIdQuery,
 	useUpdateMenuItemMutation,
 } from "../../Apis/menuItemApi";
+import { MiniLoader } from "../../Components/Pages/Common";
 let default_food = require("../../Images/default_food.png");
 const menuItemData = {
 	name: "",
@@ -103,6 +104,8 @@ const MenuItemUpsert = () => {
 		let response: apiResponse = {};
 
 		if (id) {
+			formData.append("Id", id);
+			response = await updateMenuItem({ data: formData, id: id });
 		} else {
 			response = await createMenuItem(formData);
 		}
@@ -116,13 +119,8 @@ const MenuItemUpsert = () => {
 			navigate("/menuItemList");
 		} else {
 			setLoading(false);
-			toastNotify(
-				`Menu Item ${id ? "update" : "create"} successfully`,
-				"success"
-			);
+			toastNotify(response.data?.errorMessages[0], "error");
 		}
-
-		console.log(menuItemInputs);
 
 		setLoading(false);
 	};
@@ -285,8 +283,10 @@ const MenuItemUpsert = () => {
 										<button
 											type="submit"
 											className="btn btn-primary form-control"
+											disabled={loading}
 										>
-											{id ? "Update" : "Create"}
+											{loading && <MiniLoader />}
+											{!loading && (id ? "Update" : "Create")}
 										</button>
 									</div>
 									<div className="col-6">
