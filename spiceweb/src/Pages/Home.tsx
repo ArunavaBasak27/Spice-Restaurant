@@ -1,6 +1,11 @@
-const Home = () => {
+import { CouponCarousel } from "../Components/Pages/Home";
 
-	return <div>Home</div>;
+const Home = () => {
+	return (
+		<div className="container">
+			<CouponCarousel />
+		</div>
+	);
 };
 
 export default Home;
