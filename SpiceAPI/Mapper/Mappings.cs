@@ -10,6 +10,8 @@ namespace SpiceAPI.Mapper
         {
             CreateMap<MenuItem,MenuItemCreateDTO>().ReverseMap();
             CreateMap<MenuItem,MenuItemUpdateDTO>().ReverseMap();
+            CreateMap<Coupon,CouponCreateDTO>().ReverseMap();
+            CreateMap<Coupon,CouponUpdateDTO>().ReverseMap();
         }
     }
 }

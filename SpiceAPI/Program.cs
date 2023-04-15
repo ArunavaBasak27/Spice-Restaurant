@@ -37,7 +37,7 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseCors(options => options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+app.UseCors(options => options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().WithExposedHeaders());
 app.UseAuthorization();
 
 app.MapControllers();

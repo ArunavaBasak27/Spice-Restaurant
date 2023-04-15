@@ -1,19 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static SpiceAPI.Models.Coupon;
 #nullable disable
-namespace SpiceAPI.Models
+namespace SpiceAPI.Models.Dto
 {
-    public class Coupon
+    public class CouponCreateDTO
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public ECouponType CouponType { get; set; } = ECouponType.Percent;
-        public enum ECouponType { Percent = 0, Dollar = 1 };
-
+        public ECouponType CouponType { get; set; }
 
         [Required]
         public double Discount { get; set; }
@@ -21,7 +17,7 @@ namespace SpiceAPI.Models
         [Required]
         public double MinimumAmount { get; set; }
         [Required]
-        public byte[] Picture { get; set; }
+        public IFormFile File { get; set; }
 
         public bool IsActive { get; set; } = false;
     }
