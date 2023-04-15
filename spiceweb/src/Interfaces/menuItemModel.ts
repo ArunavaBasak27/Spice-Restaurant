@@ -4,6 +4,7 @@ import subCategoryModel from "./subCategoryModel";
 export default interface menuItemModel {
 	id: number;
 	name: string;
+	description: string;
 	spicyness: number;
 	image: string;
 	categoryId: number;
