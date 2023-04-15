@@ -62,12 +62,10 @@ const CouponUpsert = () => {
 		formData.append("MinimumAmount", couponInput.minimumAmount);
 		formData.append("File", imageToStore);
 		formData.append("IsActive", checked.toString());
-		console.log(imageToStore);
 		let response: apiResponse = {};
 		if (id) {
 			formData.append("Id", id);
 			response = await updateCoupon({ data: formData, id: id });
-			console.log(response);
 		} else {
 			response = await createCoupon(formData);
 		}
@@ -108,7 +106,6 @@ const CouponUpsert = () => {
 
 			reader.readAsDataURL(file);
 			setImageToStore(file);
-			console.log(file);
 			reader.onload = (e) => {
 				const imageUrl = e.target?.result as string;
 				setImageToDisplay(imageUrl);
