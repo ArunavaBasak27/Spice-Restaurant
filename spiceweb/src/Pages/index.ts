@@ -1,5 +1,7 @@
 import CategoryList from "./Category/CategoryList";
 import CategoryUpsert from "./Category/CategoryUpsert";
+import CouponList from "./Coupon/CouponList";
+import CouponUpsert from "./Coupon/CouponUpsert";
 import Home from "./Home";
 import MenuItemList from "./MenuItem/MenuItemList";
 import MenuItemUpsert from "./MenuItem/MenuItemUpsert";
@@ -16,4 +18,6 @@ export {
 	SubCategoryUpsert,
 	MenuItemList,
 	MenuItemUpsert,
+	CouponList,
+	CouponUpsert,
 };

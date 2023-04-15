@@ -2,6 +2,8 @@ import { Footer, Header } from "../Components/Layout";
 import {
 	CategoryList,
 	CategoryUpsert,
+	CouponList,
+	CouponUpsert,
 	Home,
 	MenuItemList,
 	MenuItemUpsert,
@@ -33,6 +35,10 @@ function App() {
 					<Route path="/menuItemList" element={<MenuItemList />} />
 					<Route path="/createMenuItem" element={<MenuItemUpsert />} />
 					<Route path="/updateMenuItem/:id" element={<MenuItemUpsert />} />
+
+					<Route path="/couponList" element={<CouponList />} />
+					<Route path="/createCoupon" element={<CouponUpsert />} />
+					<Route path="/updateCoupon/:id" element={<CouponUpsert />} />
 
 					<Route path="*" element={<NotFound />} />
 				</Routes>

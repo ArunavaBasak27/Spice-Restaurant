@@ -62,10 +62,12 @@ const Header = () => {
 								<li>
 									<hr className="dropdown-divider" />
 								</li>
-								<li>
-									<a className="dropdown-item" href="#">
-										Something else here
-									</a>
+
+								<li
+									className="dropdown-item"
+									onClick={() => navigate("/couponList")}
+								>
+									Coupon
 								</li>
 							</ul>
 						</li>
