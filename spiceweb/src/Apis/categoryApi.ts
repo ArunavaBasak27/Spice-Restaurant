@@ -52,5 +52,5 @@ export const {
 	useCreateCategoryMutation,
 	useUpdateCategoryMutation,
 	useDeleteCategoryMutation,
-} = categoryApi;
+} = categoryApi; 
 export default categoryApi;
