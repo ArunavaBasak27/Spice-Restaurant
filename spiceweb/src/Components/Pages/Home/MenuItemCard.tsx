@@ -10,6 +10,11 @@ interface Props {
 
 const MenuItemCard = (props: Props) => {
 	const navigate = useNavigate();
+
+	function createMarkup() {
+		return { __html: props.menuItem.description };
+	}
+
 	return (
 		<div
 			className="col-12 border border-info rounded"
@@ -46,7 +51,7 @@ const MenuItemCard = (props: Props) => {
 						</div>
 					</div>
 					<div className="row col-12 text-justify d-none d-md-block">
-						<p>{props.menuItem.description}</p>
+						<p dangerouslySetInnerHTML={createMarkup()}></p>
 					</div>
 				</div>
 			</div>

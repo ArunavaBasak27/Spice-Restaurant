@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import SD from "../../Utility/SD";
 import { useGetCategoriesQuery } from "../../Apis/categoryApi";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCategory } from "../../Storage/Redux/categorySlice";
 import { useGetSubCategoriesQuery } from "../../Apis/subCategoryApi";
@@ -14,6 +14,7 @@ import {
 	useUpdateMenuItemMutation,
 } from "../../Apis/menuItemApi";
 import { MiniLoader } from "../../Components/Pages/Common";
+import { Editor } from "@tinymce/tinymce-react";
 let default_food = require("../../Images/default_food.png");
 const menuItemData = {
 	name: "",
@@ -87,6 +88,14 @@ const MenuItemUpsert = () => {
 		setMenuItemInputs(tempData);
 	};
 
+	const [textArea, setTextArea] = useState(menuItemData.description);
+	const editorRef = useRef<any>("");
+	const log = () => {
+		if (editorRef.current) {
+			setTextArea(editorRef.current?.getContent());
+		}
+	};
+
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
@@ -94,7 +103,7 @@ const MenuItemUpsert = () => {
 		const formData = new FormData();
 
 		formData.append("Name", menuItemInputs.name);
-		formData.append("Description", menuItemInputs.description);
+		formData.append("Description", textArea);
 		formData.append("Spicyness", menuItemInputs.spicyness.toString());
 		formData.append("CategoryId", menuItemInputs.categoryId.toString());
 		formData.append("SubCategoryId", menuItemInputs.subCategoryId.toString());
@@ -178,13 +187,23 @@ const MenuItemUpsert = () => {
 						<div className="form-group row mt-2">
 							<div className="col-4">Description</div>
 							<div className="col-8">
-								<textarea
-									name="description"
-									className="form-control"
-									rows={5}
-									value={menuItemInputs.description || ""}
-									onChange={handleMenuItemInputs}
-								></textarea>
+								<Editor
+									apiKey="p13w5s0vlrclepzoitrbezndnjepzy2twdglsozg8v67w53m"
+									onInit={(evt, editor) => (editorRef.current = editor)}
+									init={{
+										height: 300,
+										menubar: false,
+										content_style:
+											"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+									}}
+									toolbar={[
+										"bold italic underline backcolor | alignleft aligncenter " +
+											"alignright alignjustify | bullist numlist outdent indent | " +
+											"removeformat",
+									]}
+									initialValue={menuItemInputs.description}
+									onChange={log}
+								/>
 							</div>
 						</div>
 
