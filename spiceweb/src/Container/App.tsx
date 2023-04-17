@@ -5,6 +5,7 @@ import {
 	CouponList,
 	CouponUpsert,
 	Home,
+	MenuItemDetails,
 	MenuItemList,
 	MenuItemUpsert,
 	NotFound,
@@ -35,6 +36,7 @@ function App() {
 					<Route path="/menuItemList" element={<MenuItemList />} />
 					<Route path="/createMenuItem" element={<MenuItemUpsert />} />
 					<Route path="/updateMenuItem/:id" element={<MenuItemUpsert />} />
+					<Route path="/menuItemDetails/:id" element={<MenuItemDetails />} />
 
 					<Route path="/couponList" element={<CouponList />} />
 					<Route path="/createCoupon" element={<CouponUpsert />} />

@@ -8,8 +8,8 @@ export default interface menuItemModel {
 	spicyness: number;
 	image: string;
 	categoryId: number;
-	category: categoryModel;
+	category?: categoryModel;
 	subCategoryId: number;
-	subCategory: subCategoryModel;
+	subCategory?: subCategoryModel;
 	price: number;
 }

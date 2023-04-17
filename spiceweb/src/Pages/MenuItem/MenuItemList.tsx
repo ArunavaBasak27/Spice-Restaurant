@@ -70,17 +70,25 @@ const MenuItemList = () => {
 									<tr key={menuItem.id}>
 										<td>{menuItem.name}</td>
 										<td>{menuItem.price}</td>
-										<td>{menuItem.category.name}</td>
-										<td>{menuItem.subCategory.name}</td>
+										<td>{menuItem.category?.name}</td>
+										<td>{menuItem.subCategory?.name}</td>
 										<td style={{ width: "140px" }}>
 											<div className="btn-group" role="group">
 												<button
 													onClick={() =>
 														navigate("/updateMenuItem/" + menuItem.id)
 													}
-													className="btn btn-success"
+													className="btn btn-primary"
 												>
 													<i className="bi bi-pencil"></i>
+												</button>
+												<button
+													onClick={() =>
+														navigate("/menuItemDetails/" + menuItem.id)
+													}
+													className="btn btn-success"
+												>
+													<i className="bi bi-list-ul"></i>
 												</button>
 												<button
 													className="btn btn-danger"
