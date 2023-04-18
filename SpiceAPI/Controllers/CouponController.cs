@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpiceAPI.Data;
 using SpiceAPI.Models;
 using SpiceAPI.Models.Dto;
+using SpiceAPI.Utility;
 using System.Net;
 #nullable disable
 namespace SpiceAPI.Controllers
@@ -57,6 +59,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> CreateCoupon([FromForm] CouponCreateDTO couponDTO)
         {
             try
@@ -97,6 +100,7 @@ namespace SpiceAPI.Controllers
             return Ok(_response);
         }
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> UpdateCoupon(int id, [FromForm] CouponUpdateDTO couponDTO)
         {
             try
@@ -144,6 +148,7 @@ namespace SpiceAPI.Controllers
             return Ok(_response);
         }
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> DeleteCoupon(int id)
         {
             try

@@ -32,8 +32,8 @@ const MenuItemCard = (props: Props) => {
 				<div className="container card col-md-9 col-sm-12">
 					<div className="card-header row pr-3">
 						<div
-							className="col-8"
-							style={{ fontSize: "21px", color: "maroon" }}
+							className="col-md-8 col-6"
+							style={{ fontSize: "1rem", color: "maroon" }}
 						>
 							{props.menuItem.name}
 							{props.menuItem.spicyness === 1 && (
@@ -46,8 +46,11 @@ const MenuItemCard = (props: Props) => {
 								<img srcSet={verySpicy} title="Very Spicy" />
 							)}
 						</div>
-						<div className="col-4 text-end" style={{ color: "maroon" }}>
-							<h4>${props.menuItem.price.toFixed(2)}</h4>
+						<div
+							className="col-md-4 col-6 text-end"
+							style={{ color: "maroon" }}
+						>
+							<h4>${props.menuItem.price}</h4>
 						</div>
 					</div>
 					<div className="card-body row col-12 text-justify d-none d-md-block">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
 	CategoryList,
@@ -5,16 +6,31 @@ import {
 	CouponList,
 	CouponUpsert,
 	Home,
+	Login,
 	MenuItemDetails,
 	MenuItemList,
 	MenuItemUpsert,
 	NotFound,
+	Register,
 	SubCategoryList,
 	SubCategoryUpsert,
 } from "../Pages";
 import { Route, Routes } from "react-router-dom";
-
+import SD from "../Utility/SD";
+import userModel from "../Interfaces/userModel";
+import { setLoggedInUser } from "../Storage/Redux/userSlice";
+import { useDispatch } from "react-redux";
+import jwtDecode from "jwt-decode";
 function App() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const token = localStorage.getItem(SD.token);
+		if (token) {
+			const { fullName, id, email, role }: userModel = jwtDecode(token);
+			dispatch(setLoggedInUser({ fullName, id, email, role }));
+		}
+	}, []);
+
 	return (
 		<>
 			<Header />
@@ -41,6 +57,9 @@ function App() {
 					<Route path="/couponList" element={<CouponList />} />
 					<Route path="/createCoupon" element={<CouponUpsert />} />
 					<Route path="/updateCoupon/:id" element={<CouponUpsert />} />
+
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
 
 					<Route path="*" element={<NotFound />} />
 				</Routes>

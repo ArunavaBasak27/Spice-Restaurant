@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import SD from "../../Utility/SD";
 import { useGetCategoriesQuery } from "../../Apis/categoryApi";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCategory } from "../../Storage/Redux/categorySlice";
 import { useGetSubCategoriesQuery } from "../../Apis/subCategoryApi";
@@ -9,7 +9,6 @@ import { setSubCategory } from "../../Storage/Redux/subCategorySlice";
 import { categoryModel, subCategoryModel } from "../../Interfaces";
 import { inputHelper } from "../../Helper";
 import { useGetMenuItemByIdQuery } from "../../Apis/menuItemApi";
-import { Editor } from "@tinymce/tinymce-react";
 let default_food = require("../../Images/default_food.png");
 const menuItemData = {
 	name: "",
@@ -80,14 +79,6 @@ const MenuItemDetails = () => {
 		setMenuItemInputs(tempData);
 	};
 
-	const [, setTextArea] = useState(menuItemData.description);
-	const editorRef = useRef<any>("");
-	const log = () => {
-		if (editorRef.current) {
-			setTextArea(editorRef.current?.getContent());
-		}
-	};
-
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
@@ -97,7 +88,7 @@ const MenuItemDetails = () => {
 
 	return (
 		<div>
-			<h2 className="text-info">{id ? "Update" : "Create"} Menu Item</h2>
+			<h2 className="text-info text-center">Menu Item Details</h2>
 			<br />
 			<form onSubmit={handleSubmit} method="post" encType="multipart/form-data">
 				<div className="border backgroundWhite row">
@@ -119,19 +110,13 @@ const MenuItemDetails = () => {
 						<div className="form-group row mt-2">
 							<div className="col-4">Description</div>
 							<div className="col-8">
-								<Editor
-									disabled
-									apiKey="p13w5s0vlrclepzoitrbezndnjepzy2twdglsozg8v67w53m"
-									onInit={(evt, editor) => (editorRef.current = editor)}
-									init={{
-										height: 300,
-										menubar: false,
-										content_style:
-											"body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+								<div
+									style={{ padding: "10px" }}
+									dangerouslySetInnerHTML={{
+										__html: menuItemInputs.description,
 									}}
-									initialValue={menuItemInputs.description}
-									onChange={log}
-								/>
+									className="form-control"
+								></div>
 							</div>
 						</div>
 

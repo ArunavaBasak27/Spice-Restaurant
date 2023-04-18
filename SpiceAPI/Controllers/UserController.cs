@@ -123,7 +123,7 @@ namespace SpiceAPI.Controllers
                     #region Generate Token
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes(_secretKey);
-
+                    var roles = await _userManager.GetRolesAsync(userFromDb);
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
                         Subject = new ClaimsIdentity(new Claim[]
@@ -131,7 +131,7 @@ namespace SpiceAPI.Controllers
                         new Claim("fullName", userFromDb.Name),
                         new Claim("id", userFromDb.Id.ToString()),
                         new Claim(ClaimTypes.Email, userFromDb.Email),
-                        new Claim(ClaimTypes.Role, userFromDb.UserName.ToString()),
+                        new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
                         }),
                         Expires = DateTime.UtcNow.AddDays(1),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -150,7 +150,7 @@ namespace SpiceAPI.Controllers
                         throw new Exception("Username or password is incorrect");
                     }
                     _response.StatusCode = HttpStatusCode.OK;
-                    _response.Result= response;
+                    _response.Result = response;
                 }
                 else
                 {

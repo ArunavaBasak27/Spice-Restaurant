@@ -5,6 +5,10 @@ const menuItemApi = createApi({
 	reducerPath: "menuItemApi",
 	baseQuery: fetchBaseQuery({
 		baseUrl: SD.baseUrl,
+		prepareHeaders(headers: Headers, api) {
+			const token = localStorage.getItem(SD.token);
+			token && headers.append("Authorization", "Bearer " + token);
+		},
 	}),
 	tagTypes: ["MenuItem"],
 

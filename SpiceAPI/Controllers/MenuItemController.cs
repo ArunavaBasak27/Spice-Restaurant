@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpiceAPI.Data;
 using SpiceAPI.Models;
 using SpiceAPI.Models.Dto;
 using SpiceAPI.Services.PhotoService;
+using SpiceAPI.Utility;
 using System.Net;
 #nullable disable
 namespace SpiceAPI.Controllers
@@ -65,6 +67,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> CreateMenuItem([FromForm] MenuItemCreateDTO menuItemDTO)
         {
             try
@@ -94,6 +97,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> UpdateMenuItem(int id, [FromForm] MenuItemUpdateDTO menuItemDTO)
         {
             try
@@ -135,6 +139,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> DeleteMenuItem(int id)
         {
             try

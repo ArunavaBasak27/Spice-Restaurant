@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpiceAPI.Data;
 using SpiceAPI.Models;
 using SpiceAPI.Models.Dto;
+using SpiceAPI.Utility;
 using System.Net;
 #nullable disable
 namespace SpiceAPI.Controllers
@@ -52,8 +54,9 @@ namespace SpiceAPI.Controllers
             }
             return Ok(_response);
         }
-
+        
         [HttpPost]
+        [Authorize(Roles =SD.AdminUser+","+SD.ManagerUser)]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDTO categoryDTO)
         {
             try
@@ -84,6 +87,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryUpdateDTO categoryDTO)
         {
             try
@@ -112,6 +116,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             try

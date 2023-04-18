@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import SD from "../Utility/SD";
-import { url } from "inspector";
 
 const couponApi = createApi({
 	reducerPath: "couponApi",
 	baseQuery: fetchBaseQuery({
 		baseUrl: SD.baseUrl,
+		prepareHeaders(headers: Headers, api) {
+			const token = localStorage.getItem(SD.token);
+			token && headers.append("Authorization", "Bearer " + token);
+		},
 	}),
 	tagTypes: ["Coupons"],
 	endpoints: (builder) => ({

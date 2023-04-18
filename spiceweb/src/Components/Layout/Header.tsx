@@ -1,9 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { LoginPartial } from "../Pages/Home";
+import { useSelector } from "react-redux";
+import userModel from "../../Interfaces/userModel";
+import { RootState } from "../../Storage/Redux/store";
+import SD from "../../Utility/SD";
 let mild = require("../../Images/mild.png");
 let spicy = require("../../Images/spicy.png");
 let verySpicy = require("../../Images/verySpicy.png");
 const Header = () => {
 	const navigate = useNavigate();
+	const userData: userModel = useSelector(
+		(state: RootState) => state.userStore
+	);
+
 	return (
 		<nav className="navbar navbar-dark navbar-expand-lg bg-dark text-white-50">
 			<div className="container-fluid">
@@ -27,56 +36,60 @@ const Header = () => {
 				</button>
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-						<li className="nav-item dropdown">
-							<a
-								className="nav-link dropdown-toggle"
-								href="#"
-								role="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
-							>
-								Content Management
-							</a>
-							<ul className="dropdown-menu">
-								<li
-									className="dropdown-item"
-									onClick={() => navigate("/categoryList")}
+						{userData.role === SD.Roles.ADMIN && (
+							<li className="nav-item dropdown">
+								<a
+									className="nav-link dropdown-toggle"
+									href="#"
+									role="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
 								>
-									Category
-								</li>
+									Content Management
+								</a>
+								<ul className="dropdown-menu">
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/categoryList")}
+									>
+										Category
+									</li>
 
-								<li
-									className="dropdown-item"
-									onClick={() => navigate("/subCategoryList")}
-								>
-									Sub Category
-								</li>
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/subCategoryList")}
+									>
+										Sub Category
+									</li>
 
-								<li
-									className="dropdown-item"
-									onClick={() => navigate("/menuItemList")}
-								>
-									Menu Item
-								</li>
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/menuItemList")}
+									>
+										Menu Item
+									</li>
 
-								<li>
-									<hr className="dropdown-divider" />
-								</li>
+									<li>
+										<hr className="dropdown-divider" />
+									</li>
 
-								<li
-									className="dropdown-item"
-									onClick={() => navigate("/couponList")}
-								>
-									Coupon
-								</li>
-							</ul>
-						</li>
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/couponList")}
+									>
+										Coupon
+									</li>
+								</ul>
+							</li>
+						)}
+
 						<li className="nav-item">
 							<NavLink className="nav-link active" aria-current="page" to="/">
 								Home
 							</NavLink>
 						</li>
 					</ul>
+					<LoginPartial />
 				</div>
 			</div>
 		</nav>

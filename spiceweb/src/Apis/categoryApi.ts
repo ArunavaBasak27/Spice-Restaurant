@@ -5,6 +5,10 @@ const categoryApi = createApi({
 	reducerPath: "categoryApi",
 	baseQuery: fetchBaseQuery({
 		baseUrl: SD.baseUrl,
+		prepareHeaders(headers: Headers, api) {
+			const token = localStorage.getItem(SD.token);
+			token && headers.append("Authorization", "Bearer " + token);
+		},
 	}),
 	tagTypes: ["Categories"],
 	endpoints: (builder) => ({
@@ -52,5 +56,5 @@ export const {
 	useCreateCategoryMutation,
 	useUpdateCategoryMutation,
 	useDeleteCategoryMutation,
-} = categoryApi; 
+} = categoryApi;
 export default categoryApi;
