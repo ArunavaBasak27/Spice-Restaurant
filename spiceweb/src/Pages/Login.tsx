@@ -56,12 +56,12 @@ const Login = () => {
 			<form method="post" onSubmit={handleSubmit}>
 				<div className="border backgroundWhite">
 					<div className="form-froup row mt-2">
-						<div className="col-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="userName" className="col-form-label">
 								User Name
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="userName"
@@ -73,12 +73,12 @@ const Login = () => {
 					</div>
 
 					<div className="form-froup row mt-2">
-						<div className="col-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="password" className="col-form-label">
 								Password
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="password"
 								name="password"
@@ -90,9 +90,9 @@ const Login = () => {
 					</div>
 
 					<div className="form-froup row mt-2">
-						<div className="col-5 offset-2">
+						<div className="col-12 col-md-5 offset-md-2">
 							<div className="row">
-								<div className="col-6">
+								<div className="col-12 col-md-6 pt-2">
 									<button
 										type="submit"
 										className="btn btn-primary form-control"
@@ -101,7 +101,7 @@ const Login = () => {
 										{loading && <MiniLoader />} Login
 									</button>
 								</div>
-								<div className="col-6">
+								<div className="col-12 col-md-6 pt-2">
 									<a
 										onClick={() => navigate("/")}
 										className="btn btn-success form-control"

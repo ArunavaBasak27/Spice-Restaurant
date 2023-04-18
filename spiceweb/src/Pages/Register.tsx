@@ -39,7 +39,14 @@ const Register = () => {
 		if (response.data?.isSuccess) {
 			setLoading(false);
 			toastNotify(`User registered successfully`, "success");
-			navigate("/login");
+			if (
+				userData.role === SD.Roles.ADMIN ||
+				userData.role === SD.Roles.MANAGER_USER
+			) {
+				navigate("/");
+			} else {
+				navigate("/login");
+			}
 		} else {
 			setLoading(false);
 			toastNotify(`Error while registering`, "error");
@@ -51,18 +58,22 @@ const Register = () => {
 
 	return (
 		<div>
-			<h2 className="text-info">Create New Account</h2>
+			<h2 className="text-info text-center">
+				{userData.role === SD.Roles.ADMIN
+					? "Register an employee"
+					: "Create New Account"}
+			</h2>
 			<br />
 			{loading && <MainLoader />}
 			<form method="post" onSubmit={handleSubmit}>
 				<div className="border backgroundWhite">
-					<div className="form-froup row">
-						<div className="col-2">
+					<div className="form-group row">
+						<div className="col-12 col-md-2">
 							<label htmlFor="name" className="col-form-label">
 								Name
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="name"
@@ -72,13 +83,13 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="userName" className="col-form-label">
 								Email
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="userName"
@@ -88,13 +99,13 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="phoneNumber" className="col-form-label">
 								Phone Number
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="phoneNumber"
@@ -104,13 +115,29 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
+							<label htmlFor="streetAddress" className="col-form-label">
+								Street Address
+							</label>
+						</div>
+						<div className="col-12 col-md-5">
+							<input
+								type="text"
+								name="streetAddress"
+								className="form-control"
+								onChange={handleUserInput}
+								value={userInput.streetAddress}
+							/>
+						</div>
+					</div>
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="city" className="col-form-label">
 								City
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="city"
@@ -120,13 +147,13 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="state" className="col-form-label">
 								State
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="state"
@@ -136,13 +163,13 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="postalCode" className="col-form-label">
 								Postal Code
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="text"
 								name="postalCode"
@@ -152,13 +179,13 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="password" className="col-form-label">
 								Password
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="password"
 								name="password"
@@ -168,13 +195,13 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-2">
 							<label htmlFor="confirmPassword" className="col-form-label">
 								Confirm Password
 							</label>
 						</div>
-						<div className="col-5">
+						<div className="col-12 col-md-5">
 							<input
 								type="password"
 								name="confirmPassword"
@@ -185,38 +212,38 @@ const Register = () => {
 						</div>
 					</div>
 					{userData.role === SD.Roles.ADMIN && (
-						<div className="form-froup row mt-2">
-							<div className="col-2"></div>
-							<div className="col-5">
+						<div className="form-group row mt-2">
+							<div className="col-12 col-md-2"></div>
+							<div className="col-12 col-md-5">
 								<input
 									type="radio"
 									name="role"
 									value={SD.Roles.FRONT_DESK_USER}
 									onChange={handleUserInput}
 								/>{" "}
-								{SD.Roles.FRONT_DESK_USER} &nbsp;
+								Front Desk &nbsp;
 								<input
 									type="radio"
 									name="role"
 									value={SD.Roles.KITCHEN_USER}
 									onChange={handleUserInput}
 								/>{" "}
-								{SD.Roles.KITCHEN_USER} &nbsp;
+								Kitchen &nbsp;
 								<input
 									type="radio"
 									name="role"
 									value={SD.Roles.MANAGER_USER}
 									onChange={handleUserInput}
 								/>{" "}
-								{SD.Roles.MANAGER_USER} &nbsp;
+								Manager &nbsp;
 							</div>
 						</div>
 					)}
 
-					<div className="form-froup row mt-2">
-						<div className="col-5 offset-2">
+					<div className="form-group row mt-2">
+						<div className="col-12 col-md-5 offset-md-2">
 							<div className="row">
-								<div className="col-6">
+								<div className="col-12 col-md-6 pt-2">
 									<button
 										type="submit"
 										className="btn btn-primary form-control"
@@ -224,7 +251,7 @@ const Register = () => {
 										Register
 									</button>
 								</div>
-								<div className="col-6">
+								<div className="col-12 col-md-6 pt-2">
 									<a
 										onClick={() => navigate("/")}
 										className="btn btn-success form-control"

@@ -58,6 +58,11 @@ namespace SpiceAPI.Controllers
                         Email = model.UserName,
                         NormalizedEmail = model.UserName.ToUpper(),
                         Name = model.Name,
+                        PhoneNumber = model.PhoneNumber,
+                        StreetAddress = model.StreetAddress,
+                        City = model.City,
+                        State = model.State,
+                        PostalCode = model.PostalCode,
                     };
                     var result = await _userManager.CreateAsync(newUser, model.Password);
                     if (result.Succeeded)
