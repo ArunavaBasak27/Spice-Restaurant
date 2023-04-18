@@ -34,7 +34,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			<div className="p-5">
+			<div className="py-5">
 				<Routes>
 					<Route path="/" element={<Home />} />
 

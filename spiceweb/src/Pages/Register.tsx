@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import SD from "../Utility/SD";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { apiResponse, registerModel } from "../Interfaces";
+import { apiResponse } from "../Interfaces";
 import { inputHelper, toastNotify } from "../Helper";
 import { useRegisterUserMutation } from "../Apis/userApi";
+import { useSelector } from "react-redux";
+import userModel from "../Interfaces/userModel";
+import { RootState } from "../Storage/Redux/store";
+import { MainLoader } from "../Components/Pages/Common";
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -40,13 +44,16 @@ const Register = () => {
 			setLoading(false);
 			toastNotify(`Error while registering`, "error");
 		}
-		console.log(response.data);
 	};
+	const userData: userModel = useSelector(
+		(state: RootState) => state.userStore
+	);
 
 	return (
 		<div>
 			<h2 className="text-info">Create New Account</h2>
 			<br />
+			{loading && <MainLoader />}
 			<form method="post" onSubmit={handleSubmit}>
 				<div className="border backgroundWhite">
 					<div className="form-froup row">
@@ -177,32 +184,35 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-froup row mt-2">
-						<div className="col-2"></div>
-						<div className="col-5">
-							<input
-								type="radio"
-								name="role"
-								value={SD.Roles.FRONT_DESK_USER}
-								onChange={handleUserInput}
-							/>{" "}
-							{SD.Roles.FRONT_DESK_USER} &nbsp;
-							<input
-								type="radio"
-								name="role"
-								value={SD.Roles.KITCHEN_USER}
-								onChange={handleUserInput}
-							/>{" "}
-							{SD.Roles.KITCHEN_USER} &nbsp;
-							<input
-								type="radio"
-								name="role"
-								value={SD.Roles.MANAGER_USER}
-								onChange={handleUserInput}
-							/>{" "}
-							{SD.Roles.MANAGER_USER} &nbsp;
+					{userData.role === SD.Roles.ADMIN && (
+						<div className="form-froup row mt-2">
+							<div className="col-2"></div>
+							<div className="col-5">
+								<input
+									type="radio"
+									name="role"
+									value={SD.Roles.FRONT_DESK_USER}
+									onChange={handleUserInput}
+								/>{" "}
+								{SD.Roles.FRONT_DESK_USER} &nbsp;
+								<input
+									type="radio"
+									name="role"
+									value={SD.Roles.KITCHEN_USER}
+									onChange={handleUserInput}
+								/>{" "}
+								{SD.Roles.KITCHEN_USER} &nbsp;
+								<input
+									type="radio"
+									name="role"
+									value={SD.Roles.MANAGER_USER}
+									onChange={handleUserInput}
+								/>{" "}
+								{SD.Roles.MANAGER_USER} &nbsp;
+							</div>
 						</div>
-					</div>
+					)}
+
 					<div className="form-froup row mt-2">
 						<div className="col-5 offset-2">
 							<div className="row">

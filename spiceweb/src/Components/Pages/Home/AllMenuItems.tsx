@@ -16,11 +16,11 @@ const AllMenuItems = () => {
 	}, [isLoading]);
 
 	return (
-		<div className="row">
+		<>
 			{data?.result.map((menuItem: menuItemModel, index: number) => {
 				return <MenuItemCard key={index} menuItem={menuItem} />;
 			})}
-		</div>
+		</>
 	);
 };
 

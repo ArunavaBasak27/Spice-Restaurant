@@ -92,10 +92,18 @@ const MenuItemDetails = () => {
 			<br />
 			<form onSubmit={handleSubmit} method="post" encType="multipart/form-data">
 				<div className="border backgroundWhite row">
-					<div className="col-8">
+					<div className="col-12 d-block d-md-none pb-4">
+						<img
+							src={imageToDisplay}
+							alt=""
+							width="100%"
+							style={{ borderRadius: "5px" }}
+						/>
+					</div>
+					<div className="col-md-8 col-sm-12">
 						<div className="form-group row mt-2">
-							<div className="col-4">Name</div>
-							<div className="col-8">
+							<div className="col-12 col-md-4">Name</div>
+							<div className="col-12 col-md-8">
 								<input
 									disabled
 									type="text"
@@ -108,8 +116,8 @@ const MenuItemDetails = () => {
 						</div>
 
 						<div className="form-group row mt-2">
-							<div className="col-4">Description</div>
-							<div className="col-8">
+							<div className="col-12 col-md-4">Description</div>
+							<div className="col-12 col-md-8">
 								<div
 									style={{ padding: "10px" }}
 									dangerouslySetInnerHTML={{
@@ -121,8 +129,8 @@ const MenuItemDetails = () => {
 						</div>
 
 						<div className="form-group row mt-2">
-							<div className="col-4">Category</div>
-							<div className="col-8">
+							<div className="col-12 col-md-4">Category</div>
+							<div className="col-12 col-md-8">
 								<select
 									disabled
 									name="categoryId"
@@ -143,8 +151,8 @@ const MenuItemDetails = () => {
 						</div>
 
 						<div className="form-group row mt-2">
-							<div className="col-4">Sub Category</div>
-							<div className="col-8">
+							<div className="col-12 col-md-4">Sub Category</div>
+							<div className="col-12 col-md-8">
 								<select
 									disabled
 									name="subCategoryId"
@@ -167,8 +175,8 @@ const MenuItemDetails = () => {
 						</div>
 
 						<div className="form-group row mt-2">
-							<div className="col-4">Price</div>
-							<div className="col-8">
+							<div className="col-12 col-md-4">Price</div>
+							<div className="col-12 col-md-8">
 								<input
 									disabled
 									type="number"
@@ -181,8 +189,8 @@ const MenuItemDetails = () => {
 						</div>
 
 						<div className="form-group row mt-2">
-							<div className="col-4">Spicyness</div>
-							<div className="col-8">
+							<div className="col-12 col-md-4">Spicyness</div>
+							<div className="col-12 col-md-8">
 								<select
 									disabled
 									name="spicyness"
@@ -202,9 +210,9 @@ const MenuItemDetails = () => {
 						</div>
 
 						<div className="form-group row mt-2">
-							<div className="col-8 offset-4">
+							<div className="col-12 col-md-8 offset-md-4">
 								<div className="row">
-									<div className="col-6">
+									<div className="col-12 col-md-6 pt-2">
 										<button
 											type="submit"
 											className="btn btn-primary form-control"
@@ -213,7 +221,7 @@ const MenuItemDetails = () => {
 											Add to Cart
 										</button>
 									</div>
-									<div className="col-6">
+									<div className="col-12 col-md-6 pt-2">
 										<a
 											onClick={() => navigate("/")}
 											className="btn btn-success form-control"
@@ -225,7 +233,7 @@ const MenuItemDetails = () => {
 							</div>
 						</div>
 					</div>
-					<div className="col-3 offset-1">
+					<div className="col-md-3 offset-md-1 d-none d-md-block">
 						<img
 							src={imageToDisplay}
 							alt=""

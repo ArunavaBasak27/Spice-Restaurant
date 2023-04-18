@@ -29,8 +29,8 @@ const MenuItemCard = (props: Props) => {
 						style={{ borderRadius: "5px", border: "1px solid #bbb9b9" }}
 					/>
 				</div>
-				<div className="container card col-md-9 col-sm-12">
-					<div className="card-header row pr-3">
+				<div className="container col-md-9 col-sm-12">
+					<div className="row pr-3">
 						<div
 							className="col-md-8 col-6"
 							style={{ fontSize: "1rem", color: "maroon" }}
