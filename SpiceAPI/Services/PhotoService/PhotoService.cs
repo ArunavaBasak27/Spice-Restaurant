@@ -40,7 +40,6 @@ namespace SpiceAPI.Services.PhotoService
             }
             return photo;
         }
-
         public async Task<string> DeletePhoto(string image)
         {
             var imageArray = image.Split(new char[] { ',' });

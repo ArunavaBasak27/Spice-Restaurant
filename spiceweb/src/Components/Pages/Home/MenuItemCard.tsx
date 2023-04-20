@@ -17,7 +17,7 @@ const MenuItemCard = (props: Props) => {
 			style={{
 				marginBottom: "10px",
 				marginTop: "10px",
-				padding: "10px 25px 10px 10px",
+				padding: "10px",
 			}}
 		>
 			<div className="row">
@@ -50,7 +50,7 @@ const MenuItemCard = (props: Props) => {
 							className="col-md-4 col-6 text-end"
 							style={{ color: "maroon" }}
 						>
-							<h4>${props.menuItem.price}</h4>
+							<h4>${props.menuItem.price.toFixed()}</h4>
 						</div>
 					</div>
 					<div className="card-body row col-12 text-justify d-none d-md-block">
