@@ -12,6 +12,7 @@ import {
 	MenuItemUpsert,
 	NotFound,
 	Register,
+	ShoppingCart,
 	SubCategoryList,
 	SubCategoryUpsert,
 } from "../Pages";
@@ -34,7 +35,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			<div className="py-5">
+			<div className="py-5 px-md-5">
 				<Routes>
 					<Route path="/" element={<Home />} />
 
@@ -57,6 +58,8 @@ function App() {
 					<Route path="/couponList" element={<CouponList />} />
 					<Route path="/createCoupon" element={<CouponUpsert />} />
 					<Route path="/updateCoupon/:id" element={<CouponUpsert />} />
+
+					<Route path="/shoppingCart/:id" element={<ShoppingCart />} />
 
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />

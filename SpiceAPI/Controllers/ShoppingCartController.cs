@@ -17,7 +17,7 @@ namespace SpiceAPI.Controllers
             _db = db;
             _response = new ApiResponse();
         }
-        [HttpGet]
+        [HttpGet("userId")]
         public async Task<object> GetShoppingCart(string userId)
         {
             try

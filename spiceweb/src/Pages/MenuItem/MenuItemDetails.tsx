@@ -217,6 +217,7 @@ const MenuItemDetails = () => {
 											type="submit"
 											className="btn btn-primary form-control"
 											disabled={loading}
+											onClick={() => navigate("/shoppingCart/" + id)}
 										>
 											Add to Cart
 										</button>
