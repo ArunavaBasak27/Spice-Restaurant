@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import userModel from "../../Interfaces/userModel";
 import { RootState } from "../../Storage/Redux/store";
 import SD from "../../Utility/SD";
+import { shoppingCartModel } from "../../Interfaces";
 let mild = require("../../Images/mild.png");
 let spicy = require("../../Images/spicy.png");
 let verySpicy = require("../../Images/verySpicy.png");
@@ -12,7 +13,9 @@ const Header = () => {
 	const userData: userModel = useSelector(
 		(state: RootState) => state.userStore
 	);
-
+	const shoppingCart: shoppingCartModel = useSelector(
+		(state: RootState) => state.shoppingCartStore
+	);
 	return (
 		<nav className="navbar navbar-dark navbar-expand-lg bg-dark text-white-50">
 			<div className="container-fluid">
@@ -117,7 +120,8 @@ const Header = () => {
 								aria-current="page"
 								to="/shoppingCart"
 							>
-								<i className="bi bi-cart"></i>
+								<i className="bi bi-cart"></i> ({shoppingCart.cartItems?.length}
+								)
 							</NavLink>
 						</li>
 					</ul>

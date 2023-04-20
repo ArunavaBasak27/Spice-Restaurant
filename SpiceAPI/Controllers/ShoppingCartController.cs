@@ -30,10 +30,12 @@ namespace SpiceAPI.Controllers
                     .Include(x => x.CartItems)
                     .ThenInclude(x => x.MenuItem)
                     .FirstOrDefaultAsync(u => u.UserId == userId);
-
-                foreach ( var item in shoppingCart.CartItems )
+                if (shoppingCart != null)
                 {
-                    item.MenuItem.Image = item.MenuItem.Image.Split(new[] { ',' })[0];
+                    foreach (var item in shoppingCart.CartItems)
+                    {
+                        item.MenuItem.Image = item.MenuItem.Image.Split(new[] { ',' })[0];
+                    }
                 }
 
                 _response.Result = shoppingCart;
