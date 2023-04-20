@@ -17,7 +17,7 @@ namespace SpiceAPI.Controllers
             _db = db;
             _response = new ApiResponse();
         }
-        [HttpGet("userId")]
+        [HttpGet]
         public async Task<object> GetShoppingCart(string userId)
         {
             try
@@ -30,6 +30,11 @@ namespace SpiceAPI.Controllers
                     .Include(x => x.CartItems)
                     .ThenInclude(x => x.MenuItem)
                     .FirstOrDefaultAsync(u => u.UserId == userId);
+
+                foreach ( var item in shoppingCart.CartItems )
+                {
+                    item.MenuItem.Image = item.MenuItem.Image.Split(new[] { ',' })[0];
+                }
 
                 _response.Result = shoppingCart;
                 _response.StatusCode = HttpStatusCode.OK;

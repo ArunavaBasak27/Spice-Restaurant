@@ -1,249 +1,138 @@
 import { useNavigate, useParams } from "react-router-dom";
-import SD from "../../Utility/SD";
-import { useGetCategoriesQuery } from "../../Apis/categoryApi";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCategory } from "../../Storage/Redux/categorySlice";
-import { useGetSubCategoriesQuery } from "../../Apis/subCategoryApi";
-import { setSubCategory } from "../../Storage/Redux/subCategorySlice";
-import { categoryModel, subCategoryModel } from "../../Interfaces";
-import { inputHelper } from "../../Helper";
 import { useGetMenuItemByIdQuery } from "../../Apis/menuItemApi";
-let default_food = require("../../Images/default_food.png");
-const menuItemData = {
-	name: "",
-	description: "",
-	price: 0,
-	spicyness: 0,
-	image: "",
-	categoryId: 0,
-	subCategoryId: 0,
-};
+import { MainLoader, MiniLoader } from "../../Components/Pages/Common";
+import { useState } from "react";
+import { useUpdateShoppingCartMutation } from "../../Apis/shoppingCartApi";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../Storage/Redux/store";
+import { apiResponse } from "../../Interfaces";
+import { toastNotify } from "../../Helper";
+
 const MenuItemDetails = () => {
 	const { id } = useParams();
-
-	const { data: menuItem, isLoading: isMenuItemLoading } =
-		useGetMenuItemByIdQuery(id, { skip: id === undefined });
-
+	const { data, isLoading } = useGetMenuItemByIdQuery(id, {
+		skip: id === undefined,
+	});
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { data: categoryData, isLoading: isCategoryLoading } =
-		useGetCategoriesQuery(null);
-	const { data, isLoading } = useGetSubCategoriesQuery(null);
-	const [subCategories, setSubCategories] = useState([]);
-	const [categoryDropdown, setCategoryDropdown] = useState([]);
+	const [quantity, setQuantity] = useState(1);
+	const [updateShoppingCart] = useUpdateShoppingCartMutation();
+	const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-	const [imageToDisplay, setImageToDisplay] = useState(default_food);
-
-	const [loading, setLoading] = useState(false);
-
-	useEffect(() => {
-		if (!isCategoryLoading) {
-			dispatch(setCategory(categoryData.result));
-			setCategoryDropdown(categoryData.result);
+	const handleQuantity = (counter: number) => {
+		let newQuantity = quantity + counter;
+		if (newQuantity > 0) {
+			setQuantity(quantity + counter);
 		}
-	}, [isCategoryLoading]);
-
-	useEffect(() => {
-		if (!isLoading) {
-			dispatch(setSubCategory(data.result));
-			setSubCategories(data.result);
-		}
-	}, [isLoading]);
-
-	useEffect(() => {
-		if (!isMenuItemLoading) {
-			if (menuItem && menuItem.result) {
-				setMenuItemInputs(menuItem.result);
-				setImageToDisplay(menuItem.result.image);
-			}
-		}
-	}, [isMenuItemLoading]);
-
-	const subCategoryDropdown = (categoryId: number) => {
-		var subCatDropdown = subCategories.filter(
-			(subCategory: subCategoryModel) => {
-				if (subCategory.categoryId === categoryId) {
-					return subCategory;
-				}
-			}
-		);
-		return subCatDropdown;
+		return;
 	};
 
-	const [menuItemInputs, setMenuItemInputs] = useState(menuItemData);
-	const handleMenuItemInputs = (
-		e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-	) => {
-		const tempData = inputHelper(e, menuItemInputs);
-		setMenuItemInputs(tempData);
-	};
+	const userData = useSelector((state: RootState) => state.userStore);
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setLoading(true);
+	const handleAddToCart = async (menuItemId: number) => {
+		setIsAddingToCart(true);
 
-		setLoading(false);
+		const response: apiResponse = await updateShoppingCart({
+			menuItemId: menuItemId,
+			updateQuantityBy: quantity,
+			userId: userData.id,
+		});
+		if (response.data?.isSuccess) {
+			toastNotify("Item added to cart successfully", "success");
+			navigate("/shoppingCart");
+		} else {
+			toastNotify(response.data?.errorMessages[0], "error");
+		}
+		setIsAddingToCart(false);
 	};
 
 	return (
-		<div>
-			<h2 className="text-info text-center">Menu Item Details</h2>
-			<br />
-			<form onSubmit={handleSubmit} method="post" encType="multipart/form-data">
-				<div className="border backgroundWhite row">
-					<div className="col-12 d-block d-md-none pb-4">
-						<img
-							src={imageToDisplay}
-							alt=""
-							width="100%"
-							style={{ borderRadius: "5px" }}
-						/>
+		<div className="container pt-4 pt-md-5">
+			{isLoading && <MainLoader />}
+			<div className="row d-md-none d-block">
+				<img
+					src={data?.result?.image}
+					width="100%"
+					style={{ borderRadius: "50%" }}
+					alt="No content"
+				></img>
+			</div>
+			<div className="row pt-4">
+				<div className="col-md-7 col-12">
+					<h2 className="text-success text-center">{data?.result?.name}</h2>
+					<div className="text-center">
+						<span>
+							<span
+								className="badge text-bg-warning pt-2"
+								style={{ height: "40px", fontSize: "20px" }}
+							>
+								{data?.result?.category.name}
+							</span>
+						</span>
+						<span>
+							<span
+								className="badge text-bg-light text-danger pt-2"
+								style={{ height: "40px", fontSize: "20px" }}
+							>
+								{data?.result?.subCategory.name}
+							</span>
+						</span>
 					</div>
-					<div className="col-md-8 col-sm-12">
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-4">Name</div>
-							<div className="col-12 col-md-8">
-								<input
-									disabled
-									type="text"
-									name="name"
-									className="form-control"
-									value={menuItemInputs.name}
-									onChange={handleMenuItemInputs}
-								/>
-							</div>
-						</div>
-
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-4">Description</div>
-							<div className="col-12 col-md-8">
-								<div
-									style={{ padding: "10px" }}
-									dangerouslySetInnerHTML={{
-										__html: menuItemInputs.description,
-									}}
-									className="form-control"
-								></div>
-							</div>
-						</div>
-
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-4">Category</div>
-							<div className="col-12 col-md-8">
-								<select
-									disabled
-									name="categoryId"
-									className="form-control"
-									value={menuItemInputs.categoryId}
-									onChange={handleMenuItemInputs}
-								>
-									<option value={0}>-Select Category-</option>
-									{categoryDropdown.map((category: categoryModel) => {
-										return (
-											<option key={category.id} value={category.id}>
-												{category.name}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-						</div>
-
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-4">Sub Category</div>
-							<div className="col-12 col-md-8">
-								<select
-									disabled
-									name="subCategoryId"
-									className="form-control"
-									value={menuItemInputs.subCategoryId}
-									onChange={handleMenuItemInputs}
-								>
-									<option value={0}>-Select Sub Category-</option>
-									{subCategoryDropdown(Number(menuItemInputs.categoryId)).map(
-										(subCategory: subCategoryModel, index: number) => {
-											return (
-												<option key={index} value={subCategory.id}>
-													{subCategory.name}
-												</option>
-											);
-										}
-									)}
-								</select>
-							</div>
-						</div>
-
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-4">Price</div>
-							<div className="col-12 col-md-8">
-								<input
-									disabled
-									type="number"
-									name="price"
-									className="form-control"
-									value={menuItemInputs.price}
-									onChange={handleMenuItemInputs}
-								/>
-							</div>
-						</div>
-
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-4">Spicyness</div>
-							<div className="col-12 col-md-8">
-								<select
-									disabled
-									name="spicyness"
-									className="form-control"
-									value={menuItemInputs.spicyness}
-									onChange={handleMenuItemInputs}
-								>
-									{SD.spicyness.map((spicy: string, index: number) => {
-										return (
-											<option key={index} value={index}>
-												{spicy}
-											</option>
-										);
-									})}
-								</select>
-							</div>
-						</div>
-
-						<div className="form-group row mt-2">
-							<div className="col-12 col-md-8 offset-md-4">
-								<div className="row">
-									<div className="col-12 col-md-6 pt-2">
-										<button
-											type="submit"
-											className="btn btn-primary form-control"
-											disabled={loading}
-											onClick={() => navigate("/shoppingCart/" + id)}
-										>
-											Add to Cart
-										</button>
-									</div>
-									<div className="col-12 col-md-6 pt-2">
-										<a
-											onClick={() => navigate("/")}
-											className="btn btn-success form-control"
-										>
-											Back to Home
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div
+						style={{ fontSize: "20px" }}
+						dangerouslySetInnerHTML={{ __html: data?.result?.description }}
+						className="p-4"
+					></div>
+					<div className="text-center">
+						<span className="h3">${data?.result?.price.toFixed(2)}</span>{" "}
+						&nbsp;&nbsp;&nbsp;
+						<span
+							className="pb-2  p-3"
+							style={{ border: "1px solid #333", borderRadius: "30px" }}
+						>
+							<i
+								className="bi bi-dash p-1"
+								style={{ fontSize: "25px", cursor: "pointer" }}
+								onClick={() => handleQuantity(-1)}
+							></i>
+							<span className="h3 mt-3 px-3">{quantity}</span>
+							<i
+								className="bi bi-plus p-1"
+								style={{ fontSize: "25px", cursor: "pointer" }}
+								onClick={() => handleQuantity(+1)}
+							></i>
+						</span>
 					</div>
-					<div className="col-md-3 offset-md-1 d-none d-md-block">
-						<img
-							src={imageToDisplay}
-							alt=""
-							width="100%"
-							style={{ borderRadius: "5px" }}
-						/>
+
+					<div className="row p-4 ml-2">
+						<div className="col-5">
+							<button
+								onClick={() => handleAddToCart(data?.result.id)}
+								className="btn btn-success form-control"
+							>
+								Add to Cart
+							</button>
+						</div>
+
+						<div className="col-5">
+							<button
+								className="btn btn-secondary form-control"
+								onClick={() => navigate("/")}
+							>
+								Back to Home
+							</button>
+						</div>
 					</div>
 				</div>
-			</form>
+				<div className="col-md-5 d-none d-md-block">
+					<img
+						src={data?.result?.image}
+						width="99%"
+						style={{ borderRadius: "50%" }}
+						alt="No content"
+					></img>
+				</div>
+			</div>
 		</div>
 	);
 };

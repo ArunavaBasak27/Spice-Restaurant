@@ -20,10 +20,26 @@ import { Route, Routes } from "react-router-dom";
 import SD from "../Utility/SD";
 import userModel from "../Interfaces/userModel";
 import { setLoggedInUser } from "../Storage/Redux/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import jwtDecode from "jwt-decode";
+import { useGetShoppingCartQuery } from "../Apis/shoppingCartApi";
+import { RootState } from "../Storage/Redux/store";
+import { setShoppingCart } from "../Storage/Redux/shoppingCartSlice";
 function App() {
 	const dispatch = useDispatch();
+	const userData: userModel = useSelector(
+		(state: RootState) => state.userStore
+	);
+	const { data, isLoading } = useGetShoppingCartQuery(userData.id, {
+		skip: userData?.id === undefined,
+	});
+
+	useEffect(() => {
+		if (!isLoading) {
+			dispatch(setShoppingCart(data?.result?.cartItems));
+		}
+	}, [isLoading, data?.result]);
+
 	useEffect(() => {
 		const token = localStorage.getItem(SD.token);
 		if (token) {
@@ -59,7 +75,7 @@ function App() {
 					<Route path="/createCoupon" element={<CouponUpsert />} />
 					<Route path="/updateCoupon/:id" element={<CouponUpsert />} />
 
-					<Route path="/shoppingCart/:id" element={<ShoppingCart />} />
+					<Route path="/shoppingCart" element={<ShoppingCart />} />
 
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />

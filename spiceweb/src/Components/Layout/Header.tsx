@@ -111,6 +111,15 @@ const Header = () => {
 								Home
 							</NavLink>
 						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link active"
+								aria-current="page"
+								to="/shoppingCart"
+							>
+								<i className="bi bi-cart"></i>
+							</NavLink>
+						</li>
 					</ul>
 					<LoginPartial />
 				</div>
