@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SpiceAPI.Data;
 using SpiceAPI.Models;
+using SpiceAPI.Utility;
 using System.Net;
 #nullable disable
 namespace SpiceAPI.Controllers
@@ -32,14 +33,53 @@ namespace SpiceAPI.Controllers
                     .FirstOrDefaultAsync(u => u.UserId == userId);
                 if (shoppingCart != null)
                 {
+                    shoppingCart.CartTotal = 0;
                     foreach (var item in shoppingCart.CartItems)
                     {
+                        shoppingCart.CartTotal += item.Quantity * item.MenuItem.Price;
                         item.MenuItem.Image = item.MenuItem.Image.Split(new[] { ',' })[0];
+                    }
+                    if (shoppingCart.CouponId != null)
+                    {
+                        var couponFromDb = await _db.Coupons.FirstOrDefaultAsync(x => x.Id == shoppingCart.CouponId);
+                        shoppingCart.CartTotal = SD.DiscountedPrice(couponFromDb, shoppingCart.CartTotal);
                     }
                 }
 
                 _response.Result = shoppingCart;
                 _response.StatusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return Ok(_response);
+        }
+
+        [HttpPut]
+        public async Task<object> AddCouponToShoppingCart(string userId, string coupon)
+        {
+            try
+            {
+                var shoppingCartFromDb = await _db.ShoppingCarts.FirstOrDefaultAsync(x => x.UserId == userId);
+                if (shoppingCartFromDb == null)
+                {
+                    throw new Exception("Shopping cart not found!");
+                }
+                if (string.IsNullOrEmpty(coupon))
+                {
+                    throw new Exception("Invalid coupon! Please enter a valid coupon");
+                }
+                var couponFromDb = await _db.Coupons.FirstOrDefaultAsync(x => x.Name.ToLower() == coupon.ToLower());
+                if (couponFromDb == null)
+                {
+                    throw new Exception("Invalid coupon! Please enter a valid coupon");
+                }
+                shoppingCartFromDb.CouponId = couponFromDb.Id;
+                await _db.SaveChangesAsync();
+                _response.StatusCode = HttpStatusCode.NoContent;
             }
             catch (Exception ex)
             {

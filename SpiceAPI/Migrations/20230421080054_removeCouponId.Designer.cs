@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpiceAPI.Data;
 
@@ -11,9 +12,10 @@ using SpiceAPI.Data;
 namespace SpiceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230421080054_removeCouponId")]
+    partial class removeCouponId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -358,15 +360,10 @@ namespace SpiceAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CouponId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CouponId");
 
                     b.HasIndex("UserId");
 
@@ -484,17 +481,11 @@ namespace SpiceAPI.Migrations
 
             modelBuilder.Entity("SpiceAPI.Models.ShoppingCart", b =>
                 {
-                    b.HasOne("SpiceAPI.Models.Coupon", "Coupon")
-                        .WithMany()
-                        .HasForeignKey("CouponId");
-
                     b.HasOne("SpiceAPI.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("ApplicationUser");
-
-                    b.Navigation("Coupon");
                 });
 
             modelBuilder.Entity("SpiceAPI.Models.SubCategory", b =>

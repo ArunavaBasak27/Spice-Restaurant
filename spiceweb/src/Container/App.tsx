@@ -30,15 +30,18 @@ function App() {
 	const userData: userModel = useSelector(
 		(state: RootState) => state.userStore
 	);
+
 	const { data, isLoading } = useGetShoppingCartQuery(userData.id, {
-		skip: userData?.id === undefined,
+		skip: userData?.id === "",
 	});
 
 	useEffect(() => {
 		if (!isLoading) {
-			dispatch(setShoppingCart(data?.result?.cartItems));
+			dispatch(setShoppingCart(data?.result));
 		}
 	}, [isLoading, data?.result]);
+
+	console.log(data);
 
 	useEffect(() => {
 		const token = localStorage.getItem(SD.token);

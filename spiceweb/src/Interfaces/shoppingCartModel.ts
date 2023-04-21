@@ -1,4 +1,5 @@
 import cartItemModel from "./cartItemModel";
+import couponModel from "./couponModel";
 
 export interface shoppingCartModel {
 	id?: number;
@@ -8,4 +9,6 @@ export interface shoppingCartModel {
 	clientSecret?: any;
 	cartItems?: cartItemModel[];
 	cartTotal?: number;
+	couponId?: number;
+	coupon?: couponModel;
 }

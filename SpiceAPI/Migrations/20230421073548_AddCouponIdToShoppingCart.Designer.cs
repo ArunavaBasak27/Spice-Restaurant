@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpiceAPI.Data;
 
@@ -11,9 +12,10 @@ using SpiceAPI.Data;
 namespace SpiceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230421073548_AddCouponIdToShoppingCart")]
+    partial class AddCouponIdToShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -358,7 +360,7 @@ namespace SpiceAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CouponId")
+                    b.Property<int>("CouponId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -486,7 +488,9 @@ namespace SpiceAPI.Migrations
                 {
                     b.HasOne("SpiceAPI.Models.Coupon", "Coupon")
                         .WithMany()
-                        .HasForeignKey("CouponId");
+                        .HasForeignKey("CouponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SpiceAPI.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

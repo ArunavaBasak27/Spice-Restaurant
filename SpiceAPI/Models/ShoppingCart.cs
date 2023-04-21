@@ -8,9 +8,16 @@ namespace SpiceAPI.Models
     {
         [Key]
         public int Id { get; set; }
+        
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser ApplicationUser { get; set; }
+
+        public int? CouponId { get; set; }
+        [ForeignKey("CouponId")]
+        public Coupon Coupon { get; set; }
+
+
         [NotMapped]
         public string StripePaymentIntentId { get; set; }
         [NotMapped]
@@ -19,7 +26,7 @@ namespace SpiceAPI.Models
         public ICollection<CartItem> CartItems { get; set; }
 
         [NotMapped]
-        public double CartTotal { get; set; }
+        public double CartTotal { get; set; }        
     }
 
 

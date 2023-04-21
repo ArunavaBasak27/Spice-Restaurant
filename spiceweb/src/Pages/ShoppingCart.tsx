@@ -1,29 +1,34 @@
 import { useDispatch, useSelector } from "react-redux";
 import { withAuth } from "../HOC";
-import { cartItemModel } from "../Interfaces";
+import { apiResponse, cartItemModel } from "../Interfaces";
 import { RootState } from "../Storage/Redux/store";
 import { useNavigate } from "react-router-dom";
-import { MainLoader } from "../Components/Pages/Common";
+import { MainLoader, MiniLoader } from "../Components/Pages/Common";
 import {
 	removeFromCart,
 	updateQuantity,
 } from "../Storage/Redux/shoppingCartSlice";
-import { useUpdateShoppingCartMutation } from "../Apis/shoppingCartApi";
+import {
+	useAddCouponToShoppingCartMutation,
+	useUpdateShoppingCartMutation,
+} from "../Apis/shoppingCartApi";
 import userModel from "../Interfaces/userModel";
 import SD from "../Utility/SD";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { inputHelper, toastNotify } from "../Helper";
 
-const couponData = {
-	coupon: "",
-};
 function ShoppingCart() {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const shoppingCartFromStore = useSelector(
 		(state: RootState) => state.shoppingCartStore ?? []
 	);
+	const couponData = {
+		coupon: shoppingCartFromStore.coupon?.name,
+	};
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const [addCouponToCart] = useAddCouponToShoppingCartMutation();
 	const [updateShoppingCart] = useUpdateShoppingCartMutation();
+	const [loading, setLoading] = useState(false);
 	const userData: userModel = useSelector(
 		(state: RootState) => state.userStore ?? []
 	);
@@ -63,23 +68,39 @@ function ShoppingCart() {
 		setCouponInput(tempData);
 	};
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	useEffect(() => {
+		setCouponInput({
+			coupon: shoppingCartFromStore.coupon?.name,
+		});
+	}, [shoppingCartFromStore]);
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (couponInput.coupon.length === 0) {
-			toastNotify("Please enter a valid coupon", "error");
-			return;
+		setLoading(true);
+
+		const response: apiResponse = await addCouponToCart({
+			userId: userData.id,
+			coupon: couponInput.coupon,
+		});
+
+		if (response.data?.isSuccess) {
+			toastNotify("Coupon added successfully", "success");
+		} else {
+			toastNotify(response.data?.errorMessages[0], "error");
 		}
+
+		setLoading(false);
+
 		console.log(couponInput);
 	};
 
 	if (!shoppingCartFromStore) {
 		return <MainLoader />;
 	}
-	let orderTotal = 0.0;
 	return (
 		<div className="backgroundWhite">
 			<div className="container">
-				{shoppingCartFromStore?.cartItems?.length && (
+				{shoppingCartFromStore?.cartItems?.length! > 0 && (
 					<div className="card">
 						<div className="card-header bg-dark text-light m-0 row container">
 							<div className="col-6">
@@ -97,7 +118,6 @@ function ShoppingCart() {
 						<div className="card-body">
 							{shoppingCartFromStore.cartItems?.map(
 								(cartItem: cartItemModel, index: number) => {
-									orderTotal += cartItem.quantity * cartItem.menuItem.price;
 									return (
 										<div className="row" key={index}>
 											<div className="d-none d-lg-block col-lg-2 text-center">
@@ -184,8 +204,9 @@ function ShoppingCart() {
 														<button
 															type="submit"
 															className="btn btn-sm form-control btn-outline-success"
+															disabled={loading}
 														>
-															Apply Coupon
+															{loading && <MiniLoader />}Apply Coupon
 														</button>
 													</div>
 												</div>
@@ -199,7 +220,7 @@ function ShoppingCart() {
 										<li className="list-group-item d-flex justify-content-between bg-light">
 											<span className="text-info">Total (USD)</span>
 											<strong className="text-info">
-												${orderTotal.toFixed(2)}
+												${shoppingCartFromStore.cartTotal?.toFixed(2)}
 											</strong>
 										</li>
 									</ul>

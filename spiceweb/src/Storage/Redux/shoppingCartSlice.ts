@@ -3,6 +3,8 @@ import { shoppingCartModel } from "../../Interfaces";
 
 const initialState: shoppingCartModel = {
 	cartItems: [],
+	cartTotal: 0,
+	coupon: undefined,
 };
 
 const shoppingCartSlice = createSlice({
@@ -10,7 +12,9 @@ const shoppingCartSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		setShoppingCart: (state, action) => {
-			state.cartItems = action.payload;
+			state.cartTotal = action.payload?.cartTotal;
+			state.cartItems = action.payload?.cartItems;
+			state.coupon = action.payload?.coupon;
 		},
 		updateQuantity: (state, action) => {
 			state.cartItems = state.cartItems?.map((item) => {
