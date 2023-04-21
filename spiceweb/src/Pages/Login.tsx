@@ -44,7 +44,6 @@ const Login = () => {
 			toastNotify(response.data?.errorMessages[0], "error");
 		}
 
-		console.log(response.data);
 		setLoading(false);
 	};
 

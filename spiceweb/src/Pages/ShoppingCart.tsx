@@ -11,7 +11,12 @@ import {
 import { useUpdateShoppingCartMutation } from "../Apis/shoppingCartApi";
 import userModel from "../Interfaces/userModel";
 import SD from "../Utility/SD";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { inputHelper, toastNotify } from "../Helper";
 
+const couponData = {
+	coupon: "",
+};
 function ShoppingCart() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -51,13 +56,30 @@ function ShoppingCart() {
 			);
 		}
 	};
+
+	const [couponInput, setCouponInput] = useState(couponData);
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const tempData = inputHelper(e, couponInput);
+		setCouponInput(tempData);
+	};
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (couponInput.coupon.length === 0) {
+			toastNotify("Please enter a valid coupon", "error");
+			return;
+		}
+		console.log(couponInput);
+	};
+
 	if (!shoppingCartFromStore) {
 		return <MainLoader />;
 	}
+	let orderTotal = 0.0;
 	return (
 		<div className="backgroundWhite">
 			<div className="container">
-				{shoppingCartFromStore?.cartItems?.length! > 0 ? (
+				{shoppingCartFromStore?.cartItems?.length && (
 					<div className="card">
 						<div className="card-header bg-dark text-light m-0 row container">
 							<div className="col-6">
@@ -72,34 +94,34 @@ function ShoppingCart() {
 								</a>
 							</div>
 						</div>
-						<div className="card-body pb-0">
+						<div className="card-body">
 							{shoppingCartFromStore.cartItems?.map(
 								(cartItem: cartItemModel, index: number) => {
+									orderTotal += cartItem.quantity * cartItem.menuItem.price;
 									return (
 										<div className="row" key={index}>
 											<div className="d-none d-lg-block col-lg-2 text-center">
 												<img
 													src={cartItem.menuItem.image}
-													width="120"
-													height="80"
+													width="130"
+													height="130"
 													alt={cartItem.menuItem.name}
 													className="rounded py-2"
 												/>
 											</div>
-											<div className="col-12 text-sm col-lg-5 text-lg-left">
+											<div className="col-12 text-sm-center col-lg-5 text-lg-start">
 												<h4>
 													<strong>{cartItem.menuItem.name}</strong>
 												</h4>
-												<small
-												// dangerouslySetInnerHTML={{
-												// 	__html: cartItem.menuItem.description,
-												// }}
-												>
+												<small>
 													{SD.convertToRawHtml(cartItem.menuItem.description)}
 												</small>
 											</div>
-											<div className="col-12 text-sm col-lg-5 text-lg-left row">
-												<div className="col-4 text-md-end">
+											<div className="col-12 text-sm-center col-lg-5 text-lg-start row">
+												<div
+													className="col-4 text-md-end"
+													style={{ paddingTop: "5px" }}
+												>
 													<h6>
 														<strong>
 															$ {cartItem.menuItem.price.toFixed(2)}{" "}
@@ -142,37 +164,56 @@ function ShoppingCart() {
 									);
 								}
 							)}
-						</div>
-
-						<div className="row p-2">
-							<div className="col-12 col-md-5">
-								<div className="row">
-									<div className="col-7">
-										<input
-											type="text"
-											className="form-control"
-											placeholder="coupon code..."
-										/>
-									</div>
-									<div className="col-5">
-										<button className="btn btn-sm form-control btn-outline-success">
-											Apply Coupon
-										</button>
+							<div className="row">
+								<div className="col-12 col-md-5">
+									<div className="row">
+										<div className="col-12">
+											<form onSubmit={handleSubmit} method="post">
+												<div className="form-group row">
+													<div className="col-7">
+														<input
+															type="text"
+															name="coupon"
+															className="form-control"
+															placeholder="coupon code..."
+															value={couponInput.coupon}
+															onChange={handleChange}
+														/>
+													</div>
+													<div className="col-5">
+														<button
+															type="submit"
+															className="btn btn-sm form-control btn-outline-success"
+														>
+															Apply Coupon
+														</button>
+													</div>
+												</div>
+											</form>
+										</div>
 									</div>
 								</div>
-							</div>
 
-							<div className="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
-								<ul className="list-group">
-									<li className="list-group-item d-flex justify-content-between bg-light">
-										<span className="text-info">Total (USD)</span>
-										<strong className="text-info">$</strong>
-									</li>
-								</ul>
+								<div className="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
+									<ul className="list-group pt-1 pt-md-0">
+										<li className="list-group-item d-flex justify-content-between bg-light">
+											<span className="text-info">Total (USD)</span>
+											<strong className="text-info">
+												${orderTotal.toFixed(2)}
+											</strong>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div className="card-footer">
+							<div className="col-12 col-lg-4 offset-lg-4 offset-lg-8 col-md-6 offset-md-6">
+								<a className="btn btn-success form-control">Summary</a>
 							</div>
 						</div>
 					</div>
-				) : (
+				)}
+				{!shoppingCartFromStore?.cartItems?.length && (
 					<p>Shopping cart is empty</p>
 				)}
 			</div>

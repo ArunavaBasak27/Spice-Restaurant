@@ -27,7 +27,6 @@ export default class SD {
 			}
 			if (!inside) {
 				result += element;
-				console.log(result);
 			}
 		}
 		if (result.length >= 150) {

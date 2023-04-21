@@ -13,21 +13,12 @@ const shoppingCartSlice = createSlice({
 			state.cartItems = action.payload;
 		},
 		updateQuantity: (state, action) => {
-			console.log(action.payload.quantity);
 			state.cartItems = state.cartItems?.map((item) => {
 				if (item.id === action.payload.cartItem?.id) {
 					item.quantity = action.payload.quantity;
 				}
 				return item;
 			});
-			console.log(
-				state.cartItems?.map((item) => {
-					if (item.id === action.payload.cartItem?.id) {
-						item.quantity = action.payload.quantity;
-					}
-					return item;
-				})
-			);
 		},
 		removeFromCart: (state, action) => {
 			state.cartItems = state.cartItems?.filter((item) => {
