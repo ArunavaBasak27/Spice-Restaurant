@@ -29,7 +29,6 @@ const shoppingCartApi = createApi({
 			}),
 			invalidatesTags: ["ShoppingCart"],
 		}),
-
 		addCouponToShoppingCart: builder.mutation({
 			query: ({ userId, coupon }) => ({
 				url: "ShoppingCart",
@@ -41,6 +40,16 @@ const shoppingCartApi = createApi({
 			}),
 			invalidatesTags: ["ShoppingCart"],
 		}),
+		removeCouponFromShoppingCart: builder.mutation({
+			query: (userId) => ({
+				url: "ShoppingCart",
+				method: "DELETE",
+				params: {
+					userId: userId,
+				},
+			}),
+			invalidatesTags: ["ShoppingCart"],
+		}),
 	}),
 });
 
@@ -48,5 +57,6 @@ export const {
 	useGetShoppingCartQuery,
 	useUpdateShoppingCartMutation,
 	useAddCouponToShoppingCartMutation,
+	useRemoveCouponFromShoppingCartMutation,
 } = shoppingCartApi;
 export default shoppingCartApi;

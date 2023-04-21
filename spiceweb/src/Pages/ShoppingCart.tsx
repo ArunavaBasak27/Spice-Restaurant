@@ -10,6 +10,7 @@ import {
 } from "../Storage/Redux/shoppingCartSlice";
 import {
 	useAddCouponToShoppingCartMutation,
+	useRemoveCouponFromShoppingCartMutation,
 	useUpdateShoppingCartMutation,
 } from "../Apis/shoppingCartApi";
 import userModel from "../Interfaces/userModel";
@@ -27,6 +28,7 @@ function ShoppingCart() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [addCouponToCart] = useAddCouponToShoppingCartMutation();
+	const [removeCouponFromCart] = useRemoveCouponFromShoppingCartMutation();
 	const [updateShoppingCart] = useUpdateShoppingCartMutation();
 	const [loading, setLoading] = useState(false);
 	const userData: userModel = useSelector(
@@ -92,6 +94,19 @@ function ShoppingCart() {
 		setLoading(false);
 
 		console.log(couponInput);
+	};
+
+	const handleDeleteCoupon = async () => {
+		const response: apiResponse = await removeCouponFromCart(userData.id);
+
+		if (response.data?.isSuccess) {
+			toastNotify("Coupon removed successfully", "success");
+			setCouponInput({
+				coupon: "",
+			});
+		} else {
+			toastNotify(response.data?.errorMessages[0], "error");
+		}
 	};
 
 	if (!shoppingCartFromStore) {
@@ -196,18 +211,29 @@ function ShoppingCart() {
 															name="coupon"
 															className="form-control"
 															placeholder="coupon code..."
-															value={couponInput.coupon}
+															defaultValue={couponInput.coupon}
 															onChange={handleChange}
 														/>
 													</div>
 													<div className="col-5">
-														<button
-															type="submit"
-															className="btn btn-sm form-control btn-outline-success"
-															disabled={loading}
-														>
-															{loading && <MiniLoader />}Apply Coupon
-														</button>
+														{shoppingCartFromStore.coupon === null && (
+															<button
+																type="submit"
+																className="btn btn-sm form-control btn-outline-success"
+																disabled={loading}
+															>
+																{loading && <MiniLoader />}Apply Coupon
+															</button>
+														)}
+														{shoppingCartFromStore.coupon !== null && (
+															<a
+																onClick={handleDeleteCoupon}
+																type="submit"
+																className="btn btn-sm form-control btn-outline-danger"
+															>
+																Delete Coupon
+															</a>
+														)}
 													</div>
 												</div>
 											</form>

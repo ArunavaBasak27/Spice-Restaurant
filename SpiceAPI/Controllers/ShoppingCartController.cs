@@ -90,6 +90,29 @@ namespace SpiceAPI.Controllers
             return Ok(_response);
         }
 
+        [HttpDelete]
+        public async Task<object> RemoveCouponFromShoppingCart(string userId)
+        {
+            try
+            {
+                var shoppingCartFromDb = await _db.ShoppingCarts.FirstOrDefaultAsync(x => x.UserId == userId);
+                if (shoppingCartFromDb == null)
+                {
+                    throw new Exception("Shopping cart not found!");
+                }
+                shoppingCartFromDb.CouponId = null;
+                await _db.SaveChangesAsync();
+                _response.StatusCode = HttpStatusCode.NoContent;
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return Ok(_response);
+        }
+
         [HttpPost]
         public async Task<object> AddOrUpdateItemInCart(string userId, int menuItemId, int updateQuantityBy)
         {
