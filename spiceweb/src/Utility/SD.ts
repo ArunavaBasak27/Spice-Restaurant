@@ -10,5 +10,31 @@ export default class SD {
 		KITCHEN_USER: "kitchen",
 		FRONT_DESK_USER: "frontDesk",
 	};
+
+	static convertToRawHtml = (source: string) => {
+		let result = "",
+			inside = false;
+
+		for (let i = 0; i < source.length; i++) {
+			const element = source[i];
+			if (element === "<") {
+				inside = true;
+				continue;
+			}
+			if (element === ">") {
+				inside = false;
+				continue;
+			}
+			if (!inside) {
+				result += element;
+				console.log(result);
+			}
+		}
+		if (result.length >= 150) {
+			result = result.substring(0, 150) + "...";
+		}
+		return result;
+	};
+
 	static token = "token";
 }

@@ -10,6 +10,7 @@ import {
 } from "../Storage/Redux/shoppingCartSlice";
 import { useUpdateShoppingCartMutation } from "../Apis/shoppingCartApi";
 import userModel from "../Interfaces/userModel";
+import SD from "../Utility/SD";
 
 function ShoppingCart() {
 	const navigate = useNavigate();
@@ -90,10 +91,12 @@ function ShoppingCart() {
 													<strong>{cartItem.menuItem.name}</strong>
 												</h4>
 												<small
-													dangerouslySetInnerHTML={{
-														__html: cartItem.menuItem.description,
-													}}
-												></small>
+												// dangerouslySetInnerHTML={{
+												// 	__html: cartItem.menuItem.description,
+												// }}
+												>
+													{SD.convertToRawHtml(cartItem.menuItem.description)}
+												</small>
 											</div>
 											<div className="col-12 text-sm col-lg-5 text-lg-left row">
 												<div className="col-4 text-md-end">
