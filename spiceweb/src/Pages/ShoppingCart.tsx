@@ -255,7 +255,12 @@ function ShoppingCart() {
 						</div>
 						<div className="card-footer">
 							<div className="col-12 col-lg-4 offset-lg-4 offset-lg-8 col-md-6 offset-md-6">
-								<a className="btn btn-success form-control">Summary</a>
+								<a
+									onClick={() => navigate("/order/orderSummary")}
+									className="btn btn-success form-control"
+								>
+									Summary
+								</a>
 							</div>
 						</div>
 					</div>

@@ -11,6 +11,7 @@ import {
 	MenuItemList,
 	MenuItemUpsert,
 	NotFound,
+	OrderSummary,
 	Register,
 	ShoppingCart,
 	SubCategoryList,
@@ -79,6 +80,7 @@ function App() {
 					<Route path="/updateCoupon/:id" element={<CouponUpsert />} />
 
 					<Route path="/shoppingCart" element={<ShoppingCart />} />
+					<Route path="/order/orderSummary" element={<OrderSummary />} />
 
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
