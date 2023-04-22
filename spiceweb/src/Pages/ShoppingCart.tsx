@@ -93,7 +93,6 @@ function ShoppingCart() {
 
 		setLoading(false);
 
-		console.log(couponInput);
 	};
 
 	const handleDeleteCoupon = async () => {

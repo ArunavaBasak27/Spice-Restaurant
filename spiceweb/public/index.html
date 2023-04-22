@@ -61,7 +61,11 @@
 				if (getTimeFromCurrentDate().split(":")[0] >= 20) {
 					minDate = 1;
 				}
-				$("#datepicker").datepicker({ minDate: minDate, maxDate: "+1W" });
+				$("#datepicker").datepicker({
+					minDate: minDate,
+					maxDate: "+1W",
+					dateFormat: "yy-mm-dd",
+				});
 				$("#timepicker").timepicker({
 					minTime: "11:00 AM",
 					maxTime: "9:00 PM",
@@ -69,10 +73,9 @@
 				});
 
 				function setPickUpTime() {
-					var dateSelected = $("#datepicker");
+					var dateSelected = $("#datepicker").val();
 					var dt = new Date(dateSelected);
 					var today = new Date();
-
 					if (dt > today) {
 						selectedTime = "11:00am";
 					} else {

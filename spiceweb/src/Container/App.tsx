@@ -42,7 +42,6 @@ function App() {
 		}
 	}, [isLoading, data?.result]);
 
-	console.log(data);
 
 	useEffect(() => {
 		const token = localStorage.getItem(SD.token);

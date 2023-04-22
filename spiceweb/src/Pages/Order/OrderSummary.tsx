@@ -2,17 +2,35 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../Storage/Redux/store";
 import { useSelector } from "react-redux";
 import { cartItemModel, shoppingCartModel } from "../../Interfaces";
-import { useEffect, FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import $ from "jquery";
+import { inputHelper } from "../../Helper";
+
 const OrderSummary = () => {
 	const navigate = useNavigate();
 	const shoppingCart: shoppingCartModel = useSelector(
 		(state: RootState) => state.shoppingCartStore
 	);
+	const [orderInput, setOrderInput] = useState({
+		name: "",
+		phone: "",
+		date: "",
+		time: "",
+		additionalInstructions: "",
+	});
+
 	let total = 0.0;
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		const tempData = inputHelper(e, orderInput);
+		setOrderInput(tempData);
+	};
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log($("#datepicker").val());
+		orderInput.date = $("#datepicker").val()?.toString() || "";
+		orderInput.time = $("#timepicker").val()?.toString() || "";
+		console.log(orderInput);
 	};
 	return (
 		<div className="backgroundWhite">
@@ -44,7 +62,13 @@ const OrderSummary = () => {
 												<label>Name</label>
 											</div>
 											<div className="col-9">
-												<input type="text" className="form-control" />
+												<input
+													name="name"
+													value={orderInput.name}
+													onChange={handleChange}
+													type="text"
+													className="form-control"
+												/>
 											</div>
 										</div>
 										<div className="row my-1">
@@ -52,7 +76,13 @@ const OrderSummary = () => {
 												<label>Phone</label>
 											</div>
 											<div className="col-9">
-												<input type="text" className="form-control" />
+												<input
+													type="text"
+													name="phone"
+													value={orderInput.phone}
+													onChange={handleChange}
+													className="form-control"
+												/>
 											</div>
 										</div>
 										<div className="row my-1">
@@ -85,6 +115,9 @@ const OrderSummary = () => {
 											</div>
 											<div className="col-9">
 												<textarea
+													name="additionalInstructions"
+													value={orderInput.additionalInstructions}
+													onChange={handleChange}
 													style={{ height: "100px" }}
 													className="form-control"
 												/>
@@ -150,7 +183,11 @@ const OrderSummary = () => {
 							</div>
 						</div>
 						<div className="card-footer">
-							<button type="submit">Submit</button>
+							<div className="col-12 col-md-4 offset-md-8">
+								<button type="submit" className="btn btn-success form-control">
+									Place Order
+								</button>
+							</div>
 						</div>
 					</form>
 				</div>
