@@ -35,5 +35,17 @@ export default class SD {
 		return result;
 	};
 
+	static newDate(time: string) {
+		var result = new Date();
+		var hhmm = time.split(":");
+		result.setHours(+hhmm[0], +hhmm[1], 0, 0);
+		return result;
+	}
+	static addDays(days: Date, i: number) {
+		var result = new Date(days);
+		result.setDate(days.getDate() + i);
+		return result;
+	}
+
 	static token = "token";
 }

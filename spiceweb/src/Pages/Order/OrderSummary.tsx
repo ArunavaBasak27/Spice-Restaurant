@@ -3,8 +3,10 @@ import { RootState } from "../../Storage/Redux/store";
 import { useSelector } from "react-redux";
 import { cartItemModel, shoppingCartModel } from "../../Interfaces";
 import { useState, FormEvent, ChangeEvent } from "react";
-import $ from "jquery";
 import { inputHelper } from "../../Helper";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import SD from "../../Utility/SD";
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
@@ -14,8 +16,6 @@ const OrderSummary = () => {
 	const [orderInput, setOrderInput] = useState({
 		name: "",
 		phone: "",
-		date: "",
-		time: "",
 		additionalInstructions: "",
 	});
 
@@ -26,11 +26,51 @@ const OrderSummary = () => {
 		const tempData = inputHelper(e, orderInput);
 		setOrderInput(tempData);
 	};
+
+	var today = new Date();
+	const [startDate, setStartDate] = useState<Date | null>(null);
+	const [minTime, setMinTime] = useState("11:00");
+	const [mTime, setMTime] = useState<Date | null>(null);
+	const handleDateChange = (date: Date) => {
+		var time =
+			today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		if (date > today) {
+			time = "11:00";
+			date.setHours(11, 0, 0, 0);
+		} else {
+			if (today.getHours() < 11) {
+				time = "12:00";
+				date.setHours(12, 0, 0, 0);
+			} else {
+				if (today.getMinutes() < 30) {
+					time = (today.getHours() + 1).toString() + ":30";
+					date.setHours(today.getHours() + 1, 30, 0, 0);
+				} else {
+					time = (today.getHours() + 2).toString() + ":00";
+					date.setHours(today.getHours() + 2, 0, 0, 0);
+					setMTime(SD.newDate(time!));
+				}
+			}
+		}
+		setMinTime(time);
+		setStartDate(date!);
+	};
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		orderInput.date = $("#datepicker").val()?.toString() || "";
-		orderInput.time = $("#timepicker").val()?.toString() || "";
-		console.log(orderInput);
+		const obj = {
+			name: orderInput.name,
+			phoneNumber: orderInput.phone,
+			date: startDate,
+			time: startDate,
+			additionalInstructions: orderInput.additionalInstructions,
+		};
+		if (today.getHours() >= 20) {
+			obj.date = SD.addDays(mTime!, startDate?.getDate()! - today.getDate());
+			obj.time = SD.addDays(mTime!, startDate?.getDate()! - today.getDate());
+		}
+
+		console.log(obj);
 	};
 	return (
 		<div className="backgroundWhite">
@@ -68,6 +108,7 @@ const OrderSummary = () => {
 													onChange={handleChange}
 													type="text"
 													className="form-control"
+													placeholder="Enter name.."
 												/>
 											</div>
 										</div>
@@ -82,6 +123,7 @@ const OrderSummary = () => {
 													value={orderInput.phone}
 													onChange={handleChange}
 													className="form-control"
+													placeholder="Enter phone number.."
 												/>
 											</div>
 										</div>
@@ -90,11 +132,26 @@ const OrderSummary = () => {
 												<label>Date</label>
 											</div>
 											<div className="col-9">
-												<input
-													id="datepicker"
-													type="text"
-													className="form-control"
-												/>
+												{today.getHours() >= 20 && (
+													<DatePicker
+														selected={startDate}
+														onChange={(date) => setStartDate(date!)}
+														minDate={SD.addDays(today, 1)}
+														maxDate={SD.addDays(today, 6)}
+														placeholderText="Enter pickup date.."
+														className="form-control"
+													/>
+												)}
+												{today.getHours() < 20 && (
+													<DatePicker
+														selected={startDate}
+														onChange={(date) => handleDateChange(date!)}
+														minDate={today}
+														maxDate={SD.addDays(today, 5)}
+														placeholderText="Enter pickup date.."
+														className="form-control"
+													/>
+												)}
 											</div>
 										</div>
 										<div className="row my-1">
@@ -102,11 +159,36 @@ const OrderSummary = () => {
 												<label>Time</label>
 											</div>
 											<div className="col-9">
-												<input
-													id="timepicker"
-													type="text"
-													className="form-control"
-												/>
+												{today.getHours() >= 20 && (
+													<DatePicker
+														selected={mTime}
+														onChange={(date) => setMTime(date)}
+														minTime={SD.newDate("11:00")}
+														maxTime={SD.newDate("21:00")}
+														showTimeSelect
+														showTimeSelectOnly
+														timeIntervals={30}
+														timeCaption="Time"
+														dateFormat="h:mm aa"
+														className="form-control"
+														placeholderText="Enter pickup time..."
+													/>
+												)}
+												{today.getHours() < 20 && (
+													<DatePicker
+														selected={startDate}
+														onChange={(date) => setStartDate(date)}
+														minTime={SD.newDate(minTime)}
+														maxTime={SD.newDate("21:00")}
+														showTimeSelect
+														showTimeSelectOnly
+														timeIntervals={30}
+														timeCaption="Time"
+														dateFormat="h:mm aa"
+														className="form-control"
+														placeholderText="Enter pickup time..."
+													/>
+												)}
 											</div>
 										</div>
 										<div className="row my-1">
@@ -120,6 +202,7 @@ const OrderSummary = () => {
 													onChange={handleChange}
 													style={{ height: "100px" }}
 													className="form-control"
+													placeholder="Enter additional instructions.."
 												/>
 											</div>
 										</div>

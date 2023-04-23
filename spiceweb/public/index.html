@@ -18,18 +18,6 @@
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
 		/>
-		<link
-			rel="stylesheet"
-			href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
-		/>
-		<link rel="stylesheet" href="/resources/demos/style.css" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.css"
-			integrity="sha512-WlaNl0+Upj44uL9cq9cgIWSobsjEOD1H7GK1Ny1gmwl43sO0QAUxVpvX2x+5iQz/C60J3+bM7V07aC/CNWt/Yw=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
 		<title>Spice Restaurant App</title>
 	</head>
 	<body class="search-background">
@@ -46,65 +34,5 @@
 			integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
 			crossorigin="anonymous"
 		></script>
-
-		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-		<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.14.0/jquery.timepicker.js"
-			integrity="sha512-v84GNWs/NREzyztDm0s2NCXR9tIXH4aD/pe3uktyJeCWICr+/J38obdjXx1wxPRzTXHY54Hf0zBD5fbuRSNvGw=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		></script>
-		<script>
-			$(function () {
-				var minDate = 0;
-				if (getTimeFromCurrentDate().split(":")[0] >= 20) {
-					minDate = 1;
-				}
-				$("#datepicker").datepicker({
-					minDate: minDate,
-					maxDate: "+1W",
-					dateFormat: "yy-mm-dd",
-				});
-				$("#timepicker").timepicker({
-					minTime: "11:00 AM",
-					maxTime: "9:00 PM",
-					step: "30",
-				});
-
-				function setPickUpTime() {
-					var dateSelected = $("#datepicker").val();
-					var dt = new Date(dateSelected);
-					var today = new Date();
-					if (dt > today) {
-						selectedTime = "11:00am";
-					} else {
-						selectedTime = getTimeFromCurrentDate();
-					}
-					$("#timepicker").timepicker("option", {
-						minTime: selectedTime,
-					});
-				}
-
-				function getTimeFromCurrentDate() {
-					var curDt = new Date();
-					var minTime = "";
-
-					if (curDt.getHours() < 11) {
-						minTime = "12:00pm";
-					} else {
-						if (curDt.getMinutes() < 30) {
-							minTime = (curDt.getHours() + 1).toString() + ":30pm";
-						} else {
-							minTime = (curDt.getHours() + 2).toString() + ":00pm";
-						}
-					}
-					return minTime;
-				}
-				$("#datepicker").on("change", function () {
-					setPickUpTime();
-				});
-			});
-		</script>
 	</body>
 </html>
