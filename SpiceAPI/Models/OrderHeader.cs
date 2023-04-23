@@ -30,12 +30,20 @@ namespace SpiceAPI.Models
         public string PaymentStatus { get; set; }
         public int TotalItems { get; set; }
 
-        public int CouponId { get; set; }
+        public int? CouponId { get; set; }
         [ForeignKey(name: nameof(CouponId))]
         public Coupon Coupon { get; set; }
 
 
         public string StripePaymentIntentID { get; set; }
+
+
+        [Required]
+        public string PickUpName { get; set; }
+        [Required]
+        public string PickUpPhone { get; set; }
+            
+        public IEnumerable<OrderDetails> OrderDetails { get; set; }
 
     }
 }

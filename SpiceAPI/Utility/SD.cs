@@ -10,6 +10,16 @@ namespace SpiceAPI.Utility
         public const string FrontDeskUser = "frontDesk";
         public const string ManagerUser = "manager";
 
+        public const string StatusSubmitted = "Submitted";
+        public const string StatusInProcess = "Being Prepared";
+        public const string StatusReady = "Ready For Pickup";
+        public const string StatusCompleted = "Completed";
+        public const string StatusCancelled = "Cancelled";
+
+        public const string PaymentStatusPending = "Pending";
+        public const string PaymentStatusApproved = "Approved";
+        public const string PaymentStatusRejected = "Rejected";
+
         public static double DiscountedPrice(Coupon coupon, double originalOrderTotal)
         {
             if (coupon == null)

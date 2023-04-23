@@ -1,24 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 #nullable disable
-namespace SpiceAPI.Models
+namespace SpiceAPI.Models.Dto
 {
-    public class OrderDetails
+    public class OrderDetailsDTO
     {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        public int OrderHeaderId { get; set; }
 
         [Required]
         public int MenuItemId { get; set; }
-        [ForeignKey(nameof(MenuItemId))]
-        public MenuItem MenuItem { get; set; }
-
         [Required]
         public string ItemName { get; set; }
-
         [Required]
         public int Quantity { get; set; }
 
