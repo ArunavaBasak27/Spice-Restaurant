@@ -94,7 +94,7 @@ namespace SpiceAPI.Controllers
                 orderHeader.OrderStatus = string.IsNullOrEmpty(orderHeaderDTO.OrderStatus) ? SD.StatusSubmitted : orderHeaderDTO.OrderStatus;
                 orderHeader.PaymentStatus = string.IsNullOrEmpty(orderHeaderDTO.PaymentStatus) ? SD.PaymentStatusPending : orderHeaderDTO.PaymentStatus;
                 orderHeader.CouponId = orderHeaderDTO.CouponId == 0 ? null : orderHeaderDTO.CouponId;
-
+                orderHeader.OrderDate = DateTime.Now;
                 if (orderHeader.CouponId != null)
                 {
                     var couponFromDb = await _db.Coupons.FirstOrDefaultAsync(x => x.Id == orderHeader.CouponId);
