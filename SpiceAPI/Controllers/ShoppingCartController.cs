@@ -27,7 +27,7 @@ namespace SpiceAPI.Controllers
                 {
                     throw new Exception("User not found");
                 }
-                var shoppingCart = await _db.ShoppingCarts.Include(x=>x.ApplicationUser)
+                var shoppingCart = await _db.ShoppingCarts.Include(x => x.ApplicationUser)
                     .Include(x => x.CartItems)
                     .ThenInclude(x => x.MenuItem)
                     .FirstOrDefaultAsync(u => u.UserId == userId);
@@ -179,6 +179,27 @@ namespace SpiceAPI.Controllers
                             await _db.SaveChangesAsync();
                         }
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages = new List<string> { ex.Message };
+            }
+            return Ok(_response);
+        }
+
+        [HttpDelete("ClearCart")]
+        public async Task<object> ClearCart(string id)
+        {
+            try
+            {
+                var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(u => u.UserId == id);
+                if (cart != null)
+                {
+                    _db.ShoppingCarts.Remove(cart);
+                    await _db.SaveChangesAsync();
                 }
             }
             catch (Exception ex)

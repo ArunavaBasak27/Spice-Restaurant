@@ -1,5 +1,3 @@
-import React from "react";
-
 const MiniLoader = ({ type = "warning", size = 100 }) => {
 	return (
 		<div

@@ -18,6 +18,10 @@ const Payment = () => {
 		clientSecret: apiResult.clientSecret,
 	};
 
+	if (!apiResult || !orderData) {
+		return <p>Please place order</p>;
+	}
+
 	return (
 		<Elements stripe={stripePromise} options={options}>
 			<div className="container backgroundWhite m-5 p-5">
@@ -28,7 +32,7 @@ const Payment = () => {
 					<div className="col-md-4 offset-md-1 mt-2">
 						<h3 className="text-success">Payment</h3>
 						<div className="mt-5">
-							<PaymentForm />
+							<PaymentForm data={apiResult} orderData={orderData} />
 						</div>
 					</div>
 				</div>

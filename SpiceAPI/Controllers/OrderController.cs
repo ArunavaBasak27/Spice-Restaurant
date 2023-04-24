@@ -25,7 +25,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<object> GetOrders(string? userId)
+        public async Task<object> GetOrders(string userId = null)
         {
             try
             {

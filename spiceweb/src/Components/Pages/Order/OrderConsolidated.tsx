@@ -1,8 +1,4 @@
-import {
-	cartItemModel,
-	couponModel,
-	shoppingCartModel,
-} from "../../../Interfaces";
+import { cartItemModel, couponModel } from "../../../Interfaces";
 import userModel from "../../../Interfaces/userModel";
 
 interface Props {
@@ -75,18 +71,17 @@ const OrderConsolidated = ({ data, orderData }: Props) => {
 									</p>
 								</div>
 								<hr />
+								<div className="d-flex">
+									<div className="d-flex w-100 justify-content-between">
+										<p>Grand Total:</p>
+										<p></p>
+									</div>
+									<p style={{ width: "70px", textAlign: "right" }}>
+										${data.cartTotal.toFixed(2)}
+									</p>
+								</div>
 							</>
 						)}
-
-						<div className="d-flex">
-							<div className="d-flex w-100 justify-content-between">
-								<p>Grand Total:</p>
-								<p></p>
-							</div>
-							<p style={{ width: "70px", textAlign: "right" }}>
-								${data.cartTotal.toFixed(2)}
-							</p>
-						</div>
 					</div>
 				</div>
 			</div>

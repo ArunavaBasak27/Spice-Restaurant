@@ -1,6 +1,7 @@
 import categoryApi from "./categoryApi";
 import couponApi from "./couponApi";
 import menuItemApi from "./menuItemApi";
+import orderApi from "./orderApi";
 import paymentApi from "./paymentApi";
 import shoppingCartApi from "./shoppingCartApi";
 import subCategoryApi from "./subCategoryApi";
@@ -14,4 +15,5 @@ export {
 	userApi,
 	shoppingCartApi,
 	paymentApi,
+	orderApi,
 };

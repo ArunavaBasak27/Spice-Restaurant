@@ -50,4 +50,14 @@ export default class SD {
 	static token = "token";
 	static publishableKey =
 		"pk_test_51KYMRhSEeYgsRHjr6bt5Thlx12KJGNgsevn9uq8bfkNuBnuLGq1qKouKBEi9hZnbZEFHK9RvSphPr7imLA87LUEG00ClvaMHIO";
+
+	static StatusSubmitted = "Submitted";
+	static StatusInProcess = "Being Prepared";
+	static StatusReady = "Ready For Pickup";
+	static StatusCompleted = "Completed";
+	static StatusCancelled = "Cancelled";
+
+	static PaymentStatusPending = "Pending";
+	static PaymentStatusApproved = "Approved";
+	static PaymentStatusRejected = "Rejected";
 }

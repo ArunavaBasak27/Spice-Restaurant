@@ -120,7 +120,10 @@ const Header = () => {
 								aria-current="page"
 								to="/shoppingCart"
 							>
-								<i className="bi bi-cart"></i> ({shoppingCart.cartItems?.length}
+								<i className="bi bi-cart"></i> (
+								{shoppingCart.cartItems?.length! > 0
+									? shoppingCart.cartItems?.length
+									: "0"}
 								)
 							</NavLink>
 						</li>
