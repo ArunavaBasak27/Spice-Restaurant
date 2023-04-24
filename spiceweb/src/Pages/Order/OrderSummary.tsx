@@ -79,7 +79,7 @@ const OrderSummary = () => {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setLoading(true);
-		const obj = {
+		const orderData = {
 			name: orderInput.name,
 			phoneNumber: orderInput.phone,
 			date: startDate,
@@ -87,14 +87,20 @@ const OrderSummary = () => {
 			additionalInstructions: orderInput.comments,
 		};
 		if (today.getHours() >= 20) {
-			obj.date = SD.addDays(mTime!, startDate?.getDate()! - today.getDate());
-			obj.time = SD.addDays(mTime!, startDate?.getDate()! - today.getDate());
+			orderData.date = SD.addDays(
+				mTime!,
+				startDate?.getDate()! - today.getDate()
+			);
+			orderData.time = SD.addDays(
+				mTime!,
+				startDate?.getDate()! - today.getDate()
+			);
 		}
 
 		const response: apiResponse = await initiatePayment(userData.id);
 
 		navigate("/payment", {
-			state: { apiResult: response.data?.result, obj },
+			state: { apiResult: response.data?.result, orderData },
 		});
 
 		setLoading(false);

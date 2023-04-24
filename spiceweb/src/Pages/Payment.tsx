@@ -3,13 +3,14 @@ import SD from "../Utility/SD";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PaymentForm } from "../Components/Pages/Payment";
+import { OrderConsolidated } from "../Components/Pages/Order";
 
 const Payment = () => {
 	const {
-		state: { apiResult, obj },
+		state: { apiResult, orderData },
 	} = useLocation();
 	console.log(apiResult);
-	console.log(obj);
+	console.log(orderData);
 	const stripePromise = loadStripe(SD.publishableKey);
 
 	const options = {
@@ -19,7 +20,19 @@ const Payment = () => {
 
 	return (
 		<Elements stripe={stripePromise} options={options}>
-			<PaymentForm />
+			<div className="container backgroundWhite m-5 p-5">
+				<div className="row">
+					<div className="col-md-7">
+						<OrderConsolidated data={apiResult} orderData={orderData} />
+					</div>
+					<div className="col-md-4 offset-md-1 mt-2">
+						<h3 className="text-success">Payment</h3>
+						<div className="mt-5">
+							<PaymentForm />
+						</div>
+					</div>
+				</div>
+			</div>
 		</Elements>
 	);
 };
