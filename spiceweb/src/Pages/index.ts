@@ -9,6 +9,7 @@ import MenuItemList from "./MenuItem/MenuItemList";
 import MenuItemUpsert from "./MenuItem/MenuItemUpsert";
 import NotFound from "./NotFound";
 import OrderSummary from "./Order/OrderSummary";
+import Payment from "./Payment";
 import Register from "./Register";
 import ShoppingCart from "./ShoppingCart";
 import SubCategoryList from "./SubCategory/SubCategoryList";
@@ -28,6 +29,7 @@ export {
 	CouponUpsert,
 	ShoppingCart,
 	OrderSummary,
+	Payment,
 	Login,
 	Register,
 };

@@ -1,13 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../Storage/Redux/store";
 import { useSelector } from "react-redux";
-import { cartItemModel, shoppingCartModel } from "../../Interfaces";
+import {
+	apiResponse,
+	cartItemModel,
+	shoppingCartModel,
+} from "../../Interfaces";
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { inputHelper } from "../../Helper";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SD from "../../Utility/SD";
 import userModel from "../../Interfaces/userModel";
+import { useInitiatePaymentMutation } from "../../Apis/paymentApi";
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
@@ -69,8 +74,11 @@ const OrderSummary = () => {
 		setStartDate(date!);
 	};
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const [initiatePayment] = useInitiatePaymentMutation();
+	const [loading, setLoading] = useState(false);
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setLoading(true);
 		const obj = {
 			name: orderInput.name,
 			phoneNumber: orderInput.phone,
@@ -83,8 +91,15 @@ const OrderSummary = () => {
 			obj.time = SD.addDays(mTime!, startDate?.getDate()! - today.getDate());
 		}
 
-		console.log(obj);
+		const response: apiResponse = await initiatePayment(userData.id);
+
+		navigate("/payment", {
+			state: { apiResult: response.data?.result, obj },
+		});
+
+		setLoading(false);
 	};
+
 	return (
 		<div className="backgroundWhite">
 			<div className="container">

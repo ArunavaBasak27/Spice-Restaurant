@@ -12,6 +12,7 @@ import {
 	MenuItemUpsert,
 	NotFound,
 	OrderSummary,
+	Payment,
 	Register,
 	ShoppingCart,
 	SubCategoryList,
@@ -49,7 +50,6 @@ function App() {
 			dispatch(setLoggedInUser({ fullName, id, email, role }));
 		}
 	}, []);
-	console.log(data?.result);
 	return (
 		<>
 			<Header />
@@ -79,6 +79,8 @@ function App() {
 
 					<Route path="/shoppingCart" element={<ShoppingCart />} />
 					<Route path="/order/orderSummary" element={<OrderSummary />} />
+
+					<Route path="/payment" element={<Payment />} />
 
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
