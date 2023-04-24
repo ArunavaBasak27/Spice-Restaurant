@@ -5,6 +5,7 @@ const initialState: shoppingCartModel = {
 	cartItems: [],
 	cartTotal: 0,
 	coupon: undefined,
+	applicationUser: undefined,
 };
 
 const shoppingCartSlice = createSlice({
@@ -15,6 +16,7 @@ const shoppingCartSlice = createSlice({
 			state.cartTotal = action.payload?.cartTotal;
 			state.cartItems = action.payload?.cartItems;
 			state.coupon = action.payload?.coupon;
+			state.applicationUser = action.payload?.applicationUser;
 		},
 		updateQuantity: (state, action) => {
 			state.cartItems = state.cartItems?.map((item) => {

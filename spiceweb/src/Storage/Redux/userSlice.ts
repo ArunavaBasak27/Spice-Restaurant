@@ -6,6 +6,7 @@ export const emptyUserState: userModel = {
 	id: "",
 	email: "",
 	role: "",
+	phoneNumber: "",
 };
 
 export const userSlice = createSlice({

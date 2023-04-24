@@ -27,7 +27,7 @@ namespace SpiceAPI.Controllers
                 {
                     throw new Exception("User not found");
                 }
-                var shoppingCart = await _db.ShoppingCarts
+                var shoppingCart = await _db.ShoppingCarts.Include(x=>x.ApplicationUser)
                     .Include(x => x.CartItems)
                     .ThenInclude(x => x.MenuItem)
                     .FirstOrDefaultAsync(u => u.UserId == userId);

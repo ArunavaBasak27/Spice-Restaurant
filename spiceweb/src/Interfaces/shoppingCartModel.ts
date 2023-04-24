@@ -1,10 +1,11 @@
 import cartItemModel from "./cartItemModel";
 import couponModel from "./couponModel";
+import userModel from "./userModel";
 
 export interface shoppingCartModel {
 	id?: number;
 	userId?: string;
-	applicationUser?: any;
+	applicationUser?: userModel;
 	stripePaymentIntentId?: any;
 	clientSecret?: any;
 	cartItems?: cartItemModel[];

@@ -42,7 +42,7 @@ namespace SpiceAPI.Models
         public string PickUpName { get; set; }
         [Required]
         public string PickUpPhone { get; set; }
-            
+        public string Comment { get; set; } = null;
         public IEnumerable<OrderDetails> OrderDetails { get; set; }
 
     }

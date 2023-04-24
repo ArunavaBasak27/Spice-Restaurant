@@ -42,7 +42,6 @@ function App() {
 		}
 	}, [isLoading, data?.result]);
 
-
 	useEffect(() => {
 		const token = localStorage.getItem(SD.token);
 		if (token) {
@@ -50,7 +49,7 @@ function App() {
 			dispatch(setLoggedInUser({ fullName, id, email, role }));
 		}
 	}, []);
-
+	console.log(data?.result);
 	return (
 		<>
 			<Header />

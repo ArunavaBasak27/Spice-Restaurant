@@ -48,4 +48,6 @@ export default class SD {
 	}
 
 	static token = "token";
+	static publishableKey =
+		"pk_test_51KYMRhSEeYgsRHjr6bt5Thlx12KJGNgsevn9uq8bfkNuBnuLGq1qKouKBEi9hZnbZEFHK9RvSphPr7imLA87LUEG00ClvaMHIO";
 }

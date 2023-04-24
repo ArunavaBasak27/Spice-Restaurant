@@ -2,22 +2,35 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../Storage/Redux/store";
 import { useSelector } from "react-redux";
 import { cartItemModel, shoppingCartModel } from "../../Interfaces";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { inputHelper } from "../../Helper";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SD from "../../Utility/SD";
+import userModel from "../../Interfaces/userModel";
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
 	const shoppingCart: shoppingCartModel = useSelector(
 		(state: RootState) => state.shoppingCartStore
 	);
-	const [orderInput, setOrderInput] = useState({
-		name: "",
-		phone: "",
-		additionalInstructions: "",
-	});
+	const userData: userModel = useSelector(
+		(state: RootState) => state.userStore
+	);
+	const initialUserData = {
+		name: userData.fullName,
+		phone: shoppingCart.applicationUser?.phoneNumber,
+		comments: "",
+	};
+	const [orderInput, setOrderInput] = useState(initialUserData);
+
+	useEffect(() => {
+		setOrderInput({
+			name: userData.fullName,
+			phone: shoppingCart.applicationUser?.phoneNumber,
+			comments: "",
+		});
+	}, [shoppingCart]);
 
 	let total = 0.0;
 	const handleChange = (
@@ -63,7 +76,7 @@ const OrderSummary = () => {
 			phoneNumber: orderInput.phone,
 			date: startDate,
 			time: startDate,
-			additionalInstructions: orderInput.additionalInstructions,
+			additionalInstructions: orderInput.comments,
 		};
 		if (today.getHours() >= 20) {
 			obj.date = SD.addDays(mTime!, startDate?.getDate()! - today.getDate());
@@ -104,7 +117,7 @@ const OrderSummary = () => {
 											<div className="col-9">
 												<input
 													name="name"
-													value={orderInput.name}
+													defaultValue={orderInput.name}
 													onChange={handleChange}
 													type="text"
 													className="form-control"
@@ -120,7 +133,7 @@ const OrderSummary = () => {
 												<input
 													type="text"
 													name="phone"
-													value={orderInput.phone}
+													defaultValue={orderInput.phone}
 													onChange={handleChange}
 													className="form-control"
 													placeholder="Enter phone number.."
@@ -197,8 +210,8 @@ const OrderSummary = () => {
 											</div>
 											<div className="col-9">
 												<textarea
-													name="additionalInstructions"
-													value={orderInput.additionalInstructions}
+													name="comments"
+													value={orderInput.comments}
 													onChange={handleChange}
 													style={{ height: "100px" }}
 													className="form-control"
@@ -232,7 +245,7 @@ const OrderSummary = () => {
 																	</small>
 																</div>
 																<span className="text-muted">
-																	{cartItem.menuItem.price * cartItem.quantity}
+																	${cartItem.menuItem.price * cartItem.quantity}
 																</span>
 															</li>
 														);
@@ -253,10 +266,10 @@ const OrderSummary = () => {
 												)}
 												{shoppingCart?.cartTotal && (
 													<li className="list-group-item d-flex justify-content-between bg-light">
-														<small className="text-muted">Total(USD)</small>
-														<small className="text-info">
+														<strong className="text-info">Total(USD)</strong>
+														<strong className="text-info">
 															${shoppingCart?.cartTotal!.toFixed(2)}
-														</small>
+														</strong>
 													</li>
 												)}
 											</ul>
