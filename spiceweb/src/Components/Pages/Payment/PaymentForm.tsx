@@ -79,7 +79,7 @@ const PaymentForm = ({ data, orderData }: Props) => {
 							? SD.PaymentStatusApproved
 							: SD.PaymentStatusRejected,
 					totalItems: totalItems,
-					couponId: data?.coupon?.id || null,
+					couponId: data?.coupon?.id || 0,
 					pickUpName: orderData.name,
 					pickUpPhone: orderData.phoneNumber,
 					orderDetails: orderDetails,

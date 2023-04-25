@@ -11,9 +11,6 @@ const orderApi = createApi({
 			query: (orderDetails) => ({
 				url: "order",
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
 				body: orderDetails,
 			}),
 		}),
