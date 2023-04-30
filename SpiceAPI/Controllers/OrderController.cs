@@ -29,7 +29,7 @@ namespace SpiceAPI.Controllers
         {
             try
             {
-                var orderHeaders = await _db.OrderHeaders.Include(u => u.ApplicationUser).Include(u=>u.Coupon)
+                var orderHeaders = await _db.OrderHeaders.Include(u => u.ApplicationUser).Include(u => u.Coupon)
                     .Include(u => u.OrderDetails)
                     .ThenInclude(u => u.MenuItem)
                     .OrderByDescending(u => u.Id)
@@ -96,6 +96,7 @@ namespace SpiceAPI.Controllers
                 orderHeader.PaymentStatus = string.IsNullOrEmpty(orderHeaderDTO.PaymentStatus) ? SD.PaymentStatusPending : orderHeaderDTO.PaymentStatus;
                 orderHeader.CouponId = orderHeaderDTO.CouponId == 0 ? null : orderHeaderDTO.CouponId;
                 orderHeader.OrderDate = DateTime.Now;
+                orderHeader.Comment = orderHeaderDTO.Comment;
                 if (orderHeader.CouponId != null)
                 {
                     var couponFromDb = await _db.Coupons.FirstOrDefaultAsync(x => x.Id == orderHeader.CouponId);
@@ -120,7 +121,6 @@ namespace SpiceAPI.Controllers
                         orderDetails.OrderHeaderId = orderHeader.Id;
                         _db.OrderDetails.Add(orderDetails);
                     }
-                    await _db.SaveChangesAsync();
                 }
                 _response.Result = orderHeader;
                 orderHeader.OrderDetails = null;

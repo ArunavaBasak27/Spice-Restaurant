@@ -18,7 +18,7 @@ namespace SpiceAPI.Models.Dto
         public string OrderStatus { get; set; }
         public string PaymentStatus { get; set; }
         public int TotalItems { get; set; }
-
+        public string Comment { get; set; }
         public int CouponId { get; set; }
 
         [Required]

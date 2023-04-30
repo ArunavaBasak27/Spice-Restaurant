@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { useDispatch } from "react-redux";
 import { setOrderList } from "../../Storage/Redux/orderSlice";
 import { MainLoader } from "../../Components/Pages/Common";
 import { orderHeaderModel } from "../../Interfaces/orderHeaderModel";
 import { format, parseISO } from "date-fns";
-
+import { OrderDetails } from "../../Components/Pages/Order";
+import "react-bootstrap/dist/react-bootstrap.js";
 const OrderList = () => {
 	const { data, isLoading } = useGetAllOrdersQuery(null);
 	const dispatch = useDispatch();
@@ -57,11 +58,21 @@ const OrderList = () => {
 											</td>
 											<td>{orderHeader.orderTotal}</td>
 											<td>{orderHeader.totalItems}</td>
-											{/* <td>{orderHeader.coupon?.name ?? ""}</td> */}
 											<td>
-												<a className="btn btn-success form-control w-75">
+												<a
+													type="button"
+													className="btn btn-success form-control w-75"
+													data-bs-toggle="modal"
+													data-bs-target={`#staticBackdrop${index}`}
+												>
 													<i className="bi bi-list-ul"></i>
 												</a>
+
+												<OrderDetails
+													id={index}
+													orderHeader={orderHeader}
+													orderDetails={orderHeader.orderDetails}
+												/>
 											</td>
 										</tr>
 									);

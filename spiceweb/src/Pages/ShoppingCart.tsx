@@ -204,15 +204,27 @@ function ShoppingCart() {
 											<form onSubmit={handleSubmit} method="post">
 												<div className="form-group row">
 													<div className="col-7">
-														<input
-															type="text"
-															name="coupon"
-															className="form-control"
-															placeholder="coupon code..."
-															disabled={shoppingCartFromStore.coupon !== null}
-															defaultValue={couponInput.coupon}
-															onChange={handleChange}
-														/>
+														{shoppingCartFromStore.coupon !== null && (
+															<input
+																type="text"
+																name="coupon"
+																className="form-control"
+																disabled
+																placeholder="coupon code..."
+																defaultValue={couponInput.coupon}
+																onChange={handleChange}
+															/>
+														)}
+														{shoppingCartFromStore.coupon === null && (
+															<input
+																type="text"
+																name="coupon"
+																className="form-control"
+																placeholder="coupon code..."
+																defaultValue={couponInput.coupon}
+																onChange={handleChange}
+															/>
+														)}
 													</div>
 													<div className="col-5">
 														{shoppingCartFromStore.coupon === null && (

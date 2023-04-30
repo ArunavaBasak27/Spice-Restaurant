@@ -87,7 +87,6 @@ const PaymentForm = ({ data, orderData }: Props) => {
 					orderDetails: orderDetails,
 				});
 
-				console.log(response);
 				if (response.data?.isSuccess) {
 					toastNotify("Payment successful", "success");
 					clearCart(data.applicationUser.id);

@@ -28,6 +28,14 @@ body {
   margin-bottom: 30px;
 }
 
+.backgroundWhiteBorder10Padding {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+
 .form-control:disabled,
 .form-control[readonly] {
   background-color: white;
