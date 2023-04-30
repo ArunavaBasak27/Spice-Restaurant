@@ -9,8 +9,6 @@ const Payment = () => {
 	const {
 		state: { apiResult, orderData },
 	} = useLocation();
-	console.log(apiResult);
-	console.log(orderData);
 	const stripePromise = loadStripe(SD.publishableKey);
 
 	const options = {

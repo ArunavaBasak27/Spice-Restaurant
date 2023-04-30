@@ -8,8 +8,10 @@ import MenuItemDetails from "./MenuItem/MenuItemDetails";
 import MenuItemList from "./MenuItem/MenuItemList";
 import MenuItemUpsert from "./MenuItem/MenuItemUpsert";
 import NotFound from "./NotFound";
+import ManageOrder from "./Order/ManageOrder";
 import OrderConfirmed from "./Order/OrderConfirmed";
 import OrderList from "./Order/OrderList";
+import OrderPickup from "./Order/OrderPickup";
 import OrderSummary from "./Order/OrderSummary";
 import Payment from "./Payment";
 import Register from "./Register";
@@ -33,6 +35,8 @@ export {
 	OrderSummary,
 	OrderConfirmed,
 	OrderList,
+	ManageOrder,
+	OrderPickup,
 	Payment,
 	Login,
 	Register,

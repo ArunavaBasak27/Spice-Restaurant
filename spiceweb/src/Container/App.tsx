@@ -7,12 +7,14 @@ import {
 	CouponUpsert,
 	Home,
 	Login,
+	ManageOrder,
 	MenuItemDetails,
 	MenuItemList,
 	MenuItemUpsert,
 	NotFound,
 	OrderConfirmed,
 	OrderList,
+	OrderPickup,
 	OrderSummary,
 	Payment,
 	Register,
@@ -82,6 +84,8 @@ function App() {
 					<Route path="/shoppingCart" element={<ShoppingCart />} />
 					<Route path="/order/orderSummary" element={<OrderSummary />} />
 					<Route path="/order/orderList" element={<OrderList />} />
+					<Route path="/order/manageOrder" element={<ManageOrder />} />
+					<Route path="/order/orderPickup" element={<OrderPickup />} />
 					<Route
 						path="/order/orderConfirmed/:id"
 						element={<OrderConfirmed />}

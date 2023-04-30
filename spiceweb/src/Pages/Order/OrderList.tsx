@@ -6,7 +6,6 @@ import { MainLoader } from "../../Components/Pages/Common";
 import { orderHeaderModel } from "../../Interfaces/orderHeaderModel";
 import { format, parseISO } from "date-fns";
 import { OrderDetails } from "../../Components/Pages/Order";
-import "react-bootstrap/dist/react-bootstrap.js";
 const OrderList = () => {
 	const { data, isLoading } = useGetAllOrdersQuery(null);
 	const dispatch = useDispatch();

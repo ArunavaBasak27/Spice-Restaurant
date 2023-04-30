@@ -85,6 +85,7 @@ const PaymentForm = ({ data, orderData }: Props) => {
 					pickUpName: orderData.name,
 					pickUpPhone: orderData.phoneNumber,
 					orderDetails: orderDetails,
+					comment: orderData.additionalInstructions,
 				});
 
 				if (response.data?.isSuccess) {

@@ -8,7 +8,6 @@ interface Props {
 	orderDetails: orderDetailModel[];
 }
 const OrderDetails = (props: Props) => {
-	console.log(props.orderDetails);
 	let total = 0.0;
 	return (
 		<div

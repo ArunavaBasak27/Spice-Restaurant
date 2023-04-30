@@ -106,7 +106,13 @@ const Header = () => {
 										</li>
 									</ul>
 								</li>
+							</>
+						)}
 
+						{(userData.role === SD.Roles.KITCHEN_USER ||
+							userData.role === SD.Roles.MANAGER_USER ||
+							userData.role === SD.Roles.ADMIN) && (
+							<>
 								<li className="nav-item dropdown">
 									<a
 										className="nav-link dropdown-toggle"
@@ -115,7 +121,7 @@ const Header = () => {
 										data-bs-toggle="dropdown"
 										aria-expanded="false"
 									>
-										Order Management
+										Order
 									</a>
 									<ul className="dropdown-menu">
 										<li
@@ -124,6 +130,26 @@ const Header = () => {
 										>
 											Order List
 										</li>
+										{(userData.role === SD.Roles.KITCHEN_USER ||
+											userData.role === SD.Roles.MANAGER_USER ||
+											userData.role === SD.Roles.ADMIN) && (
+											<li
+												className="dropdown-item"
+												onClick={() => navigate("/order/manageOrder")}
+											>
+												Manage Order
+											</li>
+										)}
+										{(userData.role === SD.Roles.FRONT_DESK_USER ||
+											userData.role === SD.Roles.MANAGER_USER ||
+											userData.role === SD.Roles.ADMIN) && (
+											<li
+												className="dropdown-item"
+												onClick={() => navigate("/order/orderPickup")}
+											>
+												Order PickUp
+											</li>
+										)}
 									</ul>
 								</li>
 							</>
