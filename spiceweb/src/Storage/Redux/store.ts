@@ -15,6 +15,7 @@ import { menuItemReducer } from "./menuItemSlice";
 import { couponReducer } from "./couponSlice";
 import { userReducer } from "./userSlice";
 import { shoppingCartReducer } from "./shoppingCartSlice";
+import { orderReducer } from "./orderSlice";
 
 const store = configureStore({
 	reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
 		couponStore: couponReducer,
 		userStore: userReducer,
 		shoppingCartStore: shoppingCartReducer,
+		orderStore: orderReducer,
 		[categoryApi.reducerPath]: categoryApi.reducer,
 		[subCategoryApi.reducerPath]: subCategoryApi.reducer,
 		[menuItemApi.reducerPath]: menuItemApi.reducer,

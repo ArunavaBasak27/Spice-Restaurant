@@ -29,7 +29,8 @@ namespace SpiceAPI.Controllers
         {
             try
             {
-                var orderHeaders = await _db.OrderHeaders.Include(u => u.OrderDetails)
+                var orderHeaders = await _db.OrderHeaders.Include(u => u.ApplicationUser).Include(u=>u.Coupon)
+                    .Include(u => u.OrderDetails)
                     .ThenInclude(u => u.MenuItem)
                     .OrderByDescending(u => u.Id)
                     .ToListAsync();
@@ -102,6 +103,10 @@ namespace SpiceAPI.Controllers
                     {
                         orderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, orderHeaderDTO.OrderTotal);
                     }
+                }
+                else
+                {
+                    orderHeader.OrderTotal = orderHeaderDTO.OrderTotal;
                 }
 
                 if (ModelState.IsValid)

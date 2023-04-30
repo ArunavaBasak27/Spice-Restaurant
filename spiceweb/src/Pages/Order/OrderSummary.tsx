@@ -85,6 +85,7 @@ const OrderSummary = () => {
 			date: startDate,
 			time: startDate,
 			additionalInstructions: orderInput.comments,
+			orderTotal: total,
 		};
 		if (today.getHours() >= 20) {
 			orderData.date = SD.addDays(

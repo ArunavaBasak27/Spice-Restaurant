@@ -12,6 +12,7 @@ import {
 	MenuItemUpsert,
 	NotFound,
 	OrderConfirmed,
+	OrderList,
 	OrderSummary,
 	Payment,
 	Register,
@@ -80,6 +81,7 @@ function App() {
 
 					<Route path="/shoppingCart" element={<ShoppingCart />} />
 					<Route path="/order/orderSummary" element={<OrderSummary />} />
+					<Route path="/order/orderList" element={<OrderList />} />
 					<Route
 						path="/order/orderConfirmed/:id"
 						element={<OrderConfirmed />}

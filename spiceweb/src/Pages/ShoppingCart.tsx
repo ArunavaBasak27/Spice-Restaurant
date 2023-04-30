@@ -92,7 +92,6 @@ function ShoppingCart() {
 		}
 
 		setLoading(false);
-
 	};
 
 	const handleDeleteCoupon = async () => {
@@ -210,6 +209,7 @@ function ShoppingCart() {
 															name="coupon"
 															className="form-control"
 															placeholder="coupon code..."
+															disabled={shoppingCartFromStore.coupon !== null}
 															defaultValue={couponInput.coupon}
 															onChange={handleChange}
 														/>
@@ -225,13 +225,13 @@ function ShoppingCart() {
 															</button>
 														)}
 														{shoppingCartFromStore.coupon !== null && (
-															<a
+															<button
 																onClick={handleDeleteCoupon}
-																type="submit"
+																type="reset"
 																className="btn btn-sm form-control btn-outline-danger"
 															>
 																Delete Coupon
-															</a>
+															</button>
 														)}
 													</div>
 												</div>

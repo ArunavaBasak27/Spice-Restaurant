@@ -37,7 +37,6 @@ namespace SpiceAPI.Controllers
                 }
 
                 #region Create Payment Intent
-                #region Create Payment Intent
 
                 StripeConfiguration.ApiKey = _configuration["StripeSettings:SecretKey"];
                 double cartTotal = shoppingCart.CartItems.Sum(x => x.Quantity * x.MenuItem.Price);
@@ -75,7 +74,6 @@ namespace SpiceAPI.Controllers
                 shoppingCart.StripePaymentIntentId = response.Id;
                 shoppingCart.ClientSecret = response.ClientSecret;
                 shoppingCart.CartTotal = cartTotal;
-                #endregion
 
 
 

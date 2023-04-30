@@ -9,6 +9,7 @@ import MenuItemList from "./MenuItem/MenuItemList";
 import MenuItemUpsert from "./MenuItem/MenuItemUpsert";
 import NotFound from "./NotFound";
 import OrderConfirmed from "./Order/OrderConfirmed";
+import OrderList from "./Order/OrderList";
 import OrderSummary from "./Order/OrderSummary";
 import Payment from "./Payment";
 import Register from "./Register";
@@ -31,6 +32,7 @@ export {
 	ShoppingCart,
 	OrderSummary,
 	OrderConfirmed,
+	OrderList,
 	Payment,
 	Login,
 	Register,

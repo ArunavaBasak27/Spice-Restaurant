@@ -106,6 +106,26 @@ const Header = () => {
 										</li>
 									</ul>
 								</li>
+
+								<li className="nav-item dropdown">
+									<a
+										className="nav-link dropdown-toggle"
+										href="#"
+										role="button"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+									>
+										Order Management
+									</a>
+									<ul className="dropdown-menu">
+										<li
+											className="dropdown-item"
+											onClick={() => navigate("/order/orderList")}
+										>
+											Order List
+										</li>
+									</ul>
+								</li>
 							</>
 						)}
 

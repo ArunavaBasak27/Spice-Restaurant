@@ -45,7 +45,7 @@ const PaymentForm = ({ data, orderData }: Props) => {
 		const result = await stripe.confirmPayment({
 			elements,
 			confirmParams: {
-				return_url: "https://example.com/order/123/complete",
+				return_url: "",
 			},
 			redirect: "if_required",
 		});
@@ -54,6 +54,7 @@ const PaymentForm = ({ data, orderData }: Props) => {
 		} else {
 			if (result.paymentIntent.status === "succeeded") {
 				let totalItems = 0;
+				let grandTotal = 0;
 				const orderDetails: any = [];
 				data.cartItems.forEach((item: cartItemModel) => {
 					const tempOrderDetail: any = {};
@@ -62,12 +63,13 @@ const PaymentForm = ({ data, orderData }: Props) => {
 					tempOrderDetail["quantity"] = item.quantity;
 					tempOrderDetail["price"] = item.menuItem.price;
 					orderDetails.push(tempOrderDetail);
+					grandTotal += item.menuItem.price * item.quantity;
 					totalItems += item.quantity;
 				});
 
 				const response: apiResponse = await createOrder({
 					applicationUserId: data.applicationUser.id,
-					orderTotal: 0,
+					orderTotal: grandTotal,
 					pickUpTime: orderData.date,
 					pickUpDate: orderData.time,
 					orderStatus:
