@@ -31,6 +31,8 @@ import jwtDecode from "jwt-decode";
 import { useGetShoppingCartQuery } from "../Apis/shoppingCartApi";
 import { RootState } from "../Storage/Redux/store";
 import { setShoppingCart } from "../Storage/Redux/shoppingCartSlice";
+import { useGetAllOrdersQuery } from "../Apis/orderApi";
+import { setOrderList } from "../Storage/Redux/orderSlice";
 function App() {
 	const dispatch = useDispatch();
 	const userData: userModel = useSelector(
@@ -40,6 +42,9 @@ function App() {
 	const { data, isLoading } = useGetShoppingCartQuery(userData.id, {
 		skip: userData?.id === "",
 	});
+
+	const { data: orderData, isLoading: isOrderLoading } =
+		useGetAllOrdersQuery(null);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -52,8 +57,11 @@ function App() {
 		if (token) {
 			const { fullName, id, email, role }: userModel = jwtDecode(token);
 			dispatch(setLoggedInUser({ fullName, id, email, role }));
+			if (role !== SD.Roles.CUSTOMER && !isOrderLoading) {
+				dispatch(setOrderList(orderData?.result));
+			}
 		}
-	}, []);
+	}, [orderData, isOrderLoading]);
 	return (
 		<>
 			<Header />
