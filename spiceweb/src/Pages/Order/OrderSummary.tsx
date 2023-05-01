@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import SD from "../../Utility/SD";
 import userModel from "../../Interfaces/userModel";
 import { useInitiatePaymentMutation } from "../../Apis/paymentApi";
+import { MiniLoader } from "../../Components/Pages/Common";
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
@@ -303,7 +304,7 @@ const OrderSummary = () => {
 						<div className="card-footer">
 							<div className="col-12 col-md-4 offset-md-8">
 								<button type="submit" className="btn btn-success form-control">
-									Place Order
+									{loading && <MiniLoader />}Place Order
 								</button>
 							</div>
 						</div>

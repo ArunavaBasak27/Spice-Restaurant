@@ -24,14 +24,14 @@ interface Props {
 	orderData: {
 		name: string;
 		phoneNumber: string;
-		date: string;
-		time: string;
+		date: Date;
+		time: Date;
 		additionalInstructions: string;
 	};
 }
 
 const PaymentForm = ({ data, orderData }: Props) => {
-	console.log(data);
+	console.log(data, orderData);
 	const navigate = useNavigate();
 	const stripe = useStripe();
 	const elements = useElements();

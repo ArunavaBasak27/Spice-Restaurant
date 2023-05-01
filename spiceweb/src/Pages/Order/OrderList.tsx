@@ -51,7 +51,11 @@ const OrderList = () => {
 											<td>{orderHeader.applicationUser?.email}</td>
 											<td>
 												{format(
-													parseISO(orderHeader?.pickUpTime),
+													parseISO(
+														orderHeader?.pickUpTime.endsWith("Z")
+															? orderHeader?.pickUpTime
+															: orderHeader?.pickUpTime + "Z"
+													),
 													"dd/MM/yyyy hh:mm aa"
 												)}
 											</td>

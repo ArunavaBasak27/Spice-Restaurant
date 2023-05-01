@@ -102,7 +102,11 @@ const OrderDetails = (props: Props) => {
 											type="text"
 											className="form-control"
 											defaultValue={format(
-												parseISO(props.orderHeader?.pickUpTime),
+												parseISO(
+													props.orderHeader?.pickUpTime.endsWith("Z")
+														? props.orderHeader?.pickUpTime
+														: props.orderHeader?.pickUpTime + "Z"
+												),
 												"hh:mm aa"
 											)}
 											disabled

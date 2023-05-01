@@ -19,24 +19,20 @@ const ManageOrder = () => {
 	useEffect(() => {
 		var tempList = orderFromStore.orderList.filter(
 			(orderData: orderHeaderModel) =>
-				orderData.orderStatus !== SD.StatusCompleted
+				orderData.orderStatus === SD.StatusInProcess ||
+				orderData.orderStatus === SD.StatusSubmitted
 		);
-		tempList = tempList.filter(
-			(orderData: orderHeaderModel) =>
-				orderData.orderStatus !== SD.StatusCancelled
-		);
+
 		setOrderList(tempList);
 	}, [orderFromStore]);
 
 	useEffect(() => {
 		var tempList = orderFromStore.orderList.filter(
 			(orderData: orderHeaderModel) =>
-				orderData.orderStatus !== SD.StatusCompleted
+				orderData.orderStatus === SD.StatusInProcess ||
+				orderData.orderStatus === SD.StatusSubmitted
 		);
-		tempList = tempList.filter(
-			(orderData: orderHeaderModel) =>
-				orderData.orderStatus !== SD.StatusCancelled
-		);
+
 		setOrderList(tempList);
 	}, []);
 
@@ -63,6 +59,7 @@ const ManageOrder = () => {
 			const response: apiResponse = await updateOrder({
 				...orderHeader,
 				orderStatus: SD.StatusCancelled,
+				paymentStatus: SD.PaymentStatusRefunded,
 			});
 			if (response.data?.isSuccess) {
 				toastNotify("Order cancelled!");
@@ -80,7 +77,7 @@ const ManageOrder = () => {
 	const orderReady = async (orderHeader: orderHeaderModel) => {
 		const response: apiResponse = await updateOrder({
 			...orderHeader,
-			orderStatus: SD.StatusCompleted,
+			orderStatus: SD.StatusReady,
 		});
 		if (response.data?.isSuccess) {
 			toastNotify("Order Completed!");
@@ -131,7 +128,11 @@ const ManageOrder = () => {
 													className="border rounded form-control"
 													disabled
 													defaultValue={format(
-														parseISO(orderHeader?.pickUpTime),
+														parseISO(
+															orderHeader?.pickUpTime.endsWith("Z")
+																? orderHeader?.pickUpTime
+																: orderHeader?.pickUpTime + "Z"
+														),
 														"dd/MM/yyyy hh:mm aa"
 													)}
 												/>

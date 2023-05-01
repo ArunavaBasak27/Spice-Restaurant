@@ -60,4 +60,5 @@ export default class SD {
 	static PaymentStatusPending = "Pending";
 	static PaymentStatusApproved = "Approved";
 	static PaymentStatusRejected = "Rejected";
+	static PaymentStatusRefunded = "Refunded";
 }

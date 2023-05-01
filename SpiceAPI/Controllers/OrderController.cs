@@ -96,6 +96,7 @@ namespace SpiceAPI.Controllers
                 orderHeader.PaymentStatus = string.IsNullOrEmpty(orderHeaderDTO.PaymentStatus) ? SD.PaymentStatusPending : orderHeaderDTO.PaymentStatus;
                 orderHeader.CouponId = orderHeaderDTO.CouponId == 0 ? null : orderHeaderDTO.CouponId;
                 orderHeader.OrderDate = DateTime.Now;
+                orderHeader.PickUpTime = orderHeaderDTO.PickUpTime;
                 orderHeader.Comment = orderHeaderDTO.Comment;
                 orderHeader.StripePaymentIntentID = orderHeaderDTO.StripePaymentIntentId;
                 if (orderHeader.CouponId != null)
