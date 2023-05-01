@@ -10,7 +10,8 @@ import MenuItemUpsert from "./MenuItem/MenuItemUpsert";
 import NotFound from "./NotFound";
 import ManageOrder from "./Order/ManageOrder";
 import OrderConfirmed from "./Order/OrderConfirmed";
-import OrderList from "./Order/OrderList";
+import OrderHistory from "./Order/OrderHistory";
+import AllOrders from "./Order/AllOrders";
 import OrderPickup from "./Order/OrderPickup";
 import OrderSummary from "./Order/OrderSummary";
 import Payment from "./Payment";
@@ -34,9 +35,10 @@ export {
 	ShoppingCart,
 	OrderSummary,
 	OrderConfirmed,
-	OrderList,
+	AllOrders ,
 	ManageOrder,
 	OrderPickup,
+	OrderHistory,
 	Payment,
 	Login,
 	Register,

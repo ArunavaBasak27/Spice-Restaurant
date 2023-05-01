@@ -154,7 +154,11 @@ const Header = () => {
 								</li>
 							</>
 						)}
-
+						<li className="nav-item">
+							<NavLink className="nav-link active" aria-current="page" to="/order/orderHistory">
+								Order History
+							</NavLink>
+						</li>
 						<li className="nav-item">
 							<NavLink className="nav-link active" aria-current="page" to="/">
 								Home

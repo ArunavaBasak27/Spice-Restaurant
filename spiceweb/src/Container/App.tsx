@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
+	AllOrders,
 	CategoryList,
 	CategoryUpsert,
 	CouponList,
@@ -13,7 +14,7 @@ import {
 	MenuItemUpsert,
 	NotFound,
 	OrderConfirmed,
-	OrderList,
+	OrderHistory,
 	OrderPickup,
 	OrderSummary,
 	Payment,
@@ -91,7 +92,8 @@ function App() {
 
 					<Route path="/shoppingCart" element={<ShoppingCart />} />
 					<Route path="/order/orderSummary" element={<OrderSummary />} />
-					<Route path="/order/orderList" element={<OrderList />} />
+					<Route path="/order/orderList" element={<AllOrders />} />
+					<Route path="/order/orderHistory" element={<OrderHistory />} />
 					<Route path="/order/manageOrder" element={<ManageOrder />} />
 					<Route path="/order/orderPickup" element={<OrderPickup />} />
 					<Route
