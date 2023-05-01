@@ -44,8 +44,10 @@ function App() {
 		skip: userData?.id === "",
 	});
 
-	const { data: orderData, isLoading: isOrderLoading } =
-		useGetAllOrdersQuery(null);
+	const { data: orderData, isLoading: isOrderLoading } = useGetAllOrdersQuery(
+		null,
+		{ skip: userData.role === SD.Roles.CUSTOMER }
+	);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -58,7 +60,7 @@ function App() {
 		if (token) {
 			const { fullName, id, email, role }: userModel = jwtDecode(token);
 			dispatch(setLoggedInUser({ fullName, id, email, role }));
-			if (!isOrderLoading) {
+			if (!isOrderLoading && role !== SD.Roles.CUSTOMER) {
 				dispatch(setOrderList(orderData?.result));
 			}
 		}

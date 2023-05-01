@@ -1,6 +1,13 @@
 import { orderDetailModel } from "../../../Interfaces/orderDetailModel";
 import { orderHeaderModel } from "../../../Interfaces/orderHeaderModel";
 import { format, parseISO } from "date-fns";
+import userModel from "../../../Interfaces/userModel";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Storage/Redux/store";
+import SD from "../../../Utility/SD";
+import { apiResponse } from "../../../Interfaces";
+import { toastNotify } from "../../../Helper";
+import { useUpdateOrderMutation } from "../../../Apis/orderApi";
 
 interface Props {
 	id: number;
@@ -9,6 +16,23 @@ interface Props {
 }
 const OrderDetails = (props: Props) => {
 	let total = 0.0;
+	const userData: userModel = useSelector(
+		(state: RootState) => state.userStore
+	);
+	const [updateOrder] = useUpdateOrderMutation();
+	const readyForPickup = async (orderHeader: orderHeaderModel) => {
+		const response: apiResponse = await updateOrder({
+			...orderHeader,
+			orderStatus: SD.StatusCompleted,
+		});
+		if (response.data?.isSuccess) {
+			toastNotify("Order pickup completed");
+			return;
+		} else {
+			toastNotify(response.data?.errorMessages[0], "error");
+			return;
+		}
+	};
 	return (
 		<div
 			className="modal fade"
@@ -173,10 +197,20 @@ const OrderDetails = (props: Props) => {
 										</strong>
 									</li>
 								</ul>
-
-								<button className="btn btn-info form-control" disabled>
-									{props.orderHeader.orderStatus}
-								</button>
+								{userData.role !== SD.Roles.CUSTOMER &&
+								props.orderHeader.orderStatus === SD.StatusReady ? (
+									<button
+										onClick={() => readyForPickup(props.orderHeader)}
+										className="btn btn-success form-control"
+									>
+										<i className="bi bi-hand-thumbs-up"></i>
+										{props.orderHeader.orderStatus}
+									</button>
+								) : (
+									<button className="btn btn-info form-control" disabled>
+										{props.orderHeader.orderStatus}
+									</button>
+								)}
 							</div>
 						</div>
 					</div>

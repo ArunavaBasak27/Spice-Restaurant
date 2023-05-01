@@ -8,13 +8,6 @@ import { format, parseISO } from "date-fns";
 import { OrderDetails, OrderList } from "../../Components/Pages/Order";
 const AllOrders = () => {
 	const { data, isLoading } = useGetAllOrdersQuery(null);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		if (!isLoading) {
-			dispatch(setOrderList(data?.result));
-		}
-	}, [isLoading]);
-
 	if (isLoading) {
 		return <MainLoader />;
 	}
