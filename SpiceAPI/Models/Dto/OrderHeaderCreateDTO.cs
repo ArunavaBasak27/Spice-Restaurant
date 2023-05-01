@@ -25,7 +25,7 @@ namespace SpiceAPI.Models.Dto
         public string PickUpName { get; set; }
         [Required]
         public string PickUpPhone { get; set; }
-
+        public string StripePaymentIntentId { get; set; }
         public IEnumerable<OrderDetailsDTO> OrderDetails { get; set; }
 
     }

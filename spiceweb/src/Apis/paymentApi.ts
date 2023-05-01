@@ -16,8 +16,18 @@ const paymentApi = createApi({
 				},
 			}),
 		}),
+		refundPayment: builder.mutation({
+			query: (id) => ({
+				url: "Payment/" + id,
+				method: "POST",
+				params: {
+					id: id,
+				},
+			}),
+		}),
 	}),
 });
 
-export const { useInitiatePaymentMutation } = paymentApi;
+export const { useInitiatePaymentMutation, useRefundPaymentMutation } =
+	paymentApi;
 export default paymentApi;

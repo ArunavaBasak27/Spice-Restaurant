@@ -16,10 +16,6 @@ const Payment = () => {
 		clientSecret: apiResult.clientSecret,
 	};
 
-	if (!apiResult || !orderData) {
-		return <p>Please place order</p>;
-	}
-
 	return (
 		<Elements stripe={stripePromise} options={options}>
 			<div className="container backgroundWhite m-5 p-5">

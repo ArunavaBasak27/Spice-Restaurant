@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useClearShoppingCartMutation } from "../../../Apis/shoppingCartApi";
 interface Props {
 	data: {
+		stripePaymentIntentId: string;
 		id: number;
 		cartItems: cartItemModel[];
 		cartTotal: number;
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const PaymentForm = ({ data, orderData }: Props) => {
+	console.log(data);
 	const navigate = useNavigate();
 	const stripe = useStripe();
 	const elements = useElements();
@@ -86,6 +88,7 @@ const PaymentForm = ({ data, orderData }: Props) => {
 					pickUpPhone: orderData.phoneNumber,
 					orderDetails: orderDetails,
 					comment: orderData.additionalInstructions,
+					stripePaymentIntentId: data?.stripePaymentIntentId,
 				});
 
 				if (response.data?.isSuccess) {

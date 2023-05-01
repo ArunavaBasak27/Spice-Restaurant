@@ -97,6 +97,7 @@ namespace SpiceAPI.Controllers
                 orderHeader.CouponId = orderHeaderDTO.CouponId == 0 ? null : orderHeaderDTO.CouponId;
                 orderHeader.OrderDate = DateTime.Now;
                 orderHeader.Comment = orderHeaderDTO.Comment;
+                orderHeader.StripePaymentIntentID = orderHeaderDTO.StripePaymentIntentId;
                 if (orderHeader.CouponId != null)
                 {
                     var couponFromDb = await _db.Coupons.FirstOrDefaultAsync(x => x.Id == orderHeader.CouponId);

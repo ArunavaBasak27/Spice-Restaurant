@@ -57,7 +57,7 @@ function App() {
 		if (token) {
 			const { fullName, id, email, role }: userModel = jwtDecode(token);
 			dispatch(setLoggedInUser({ fullName, id, email, role }));
-			if (role !== SD.Roles.CUSTOMER && !isOrderLoading) {
+			if (!isOrderLoading) {
 				dispatch(setOrderList(orderData?.result));
 			}
 		}
