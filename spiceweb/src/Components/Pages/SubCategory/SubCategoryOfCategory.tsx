@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetSubCategoriesQuery } from "../../../Apis/subCategoryApi";
 import { useDispatch } from "react-redux";
 import { setSubCategory } from "../../../Storage/Redux/subCategorySlice";

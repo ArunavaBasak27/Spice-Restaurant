@@ -52,49 +52,52 @@ const CouponList = () => {
 				</div>
 			</div>
 			<br />
-			{data.result.length > 0 && (
-				<table className="table table-striped-border">
-					<thead className="table-secondary">
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th>Discount</th>
-							<th>Minimum Amount</th>
-							<th>Is Active</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data.result.map((coupon: couponModel, index: number) => {
-							return (
-								<tr key={index}>
-									<td>{coupon.name}</td>
-									<td>{SD.couponType[coupon.couponType]}</td>
-									<td>{coupon.discount}</td>
-									<td>{coupon.minimumAmount}</td>
-									<td>{coupon.isActive ? "Active" : "Inactive"}</td>
-									<td style={{ width: "150px" }}>
-										<div className="btn-group" role="group">
-											<button
-												className="btn btn-success"
-												onClick={() => navigate("/updateCoupon/" + coupon.id)}
-											>
-												<i className="bi bi-pencil"></i>
-											</button>
-											<button
-												className="btn btn-danger"
-												onClick={() => handleDelete(coupon.id)}
-											>
-												<i className="bi bi-trash-fill"></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
-			)}
+			<div className="table-responsive-sm">
+				{data.result.length > 0 && (
+					<table className="table table-striped-border">
+						<thead className="table-secondary">
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th>Discount</th>
+								<th>Minimum Amount</th>
+								<th>Is Active</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{data.result.map((coupon: couponModel, index: number) => {
+								return (
+									<tr key={index}>
+										<td>{coupon.name}</td>
+										<td>{SD.couponType[coupon.couponType]}</td>
+										<td>{coupon.discount}</td>
+										<td>{coupon.minimumAmount}</td>
+										<td>{coupon.isActive ? "Active" : "Inactive"}</td>
+										<td style={{ width: "150px" }}>
+											<div className="btn-group" role="group">
+												<button
+													className="btn btn-success"
+													onClick={() => navigate("/updateCoupon/" + coupon.id)}
+												>
+													<i className="bi bi-pencil"></i>
+												</button>
+												<button
+													className="btn btn-danger"
+													onClick={() => handleDelete(coupon.id)}
+												>
+													<i className="bi bi-trash-fill"></i>
+												</button>
+											</div>
+										</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				)}
+			</div>
+
 			{data.result.length === 0 && <p>No coupon exists....</p>}
 		</div>
 	);

@@ -53,7 +53,7 @@ const MenuItemList = () => {
 			</div>
 			<br />
 
-			<div className="">
+			<div className="table-responsive-sm">
 				<table className="table table-striped-border">
 					<thead className="table-secondary">
 						<tr>

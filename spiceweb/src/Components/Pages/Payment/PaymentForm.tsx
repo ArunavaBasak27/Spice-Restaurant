@@ -12,6 +12,7 @@ import { useCreateOrderMutation } from "../../../Apis/orderApi";
 import SD from "../../../Utility/SD";
 import { useNavigate } from "react-router-dom";
 import { useClearShoppingCartMutation } from "../../../Apis/shoppingCartApi";
+import { withPaymentAuth } from "../../../HOC";
 interface Props {
 	data: {
 		stripePaymentIntentId: string;
@@ -113,4 +114,4 @@ const PaymentForm = ({ data, orderData }: Props) => {
 	);
 };
 
-export default PaymentForm;
+export default withPaymentAuth(PaymentForm);

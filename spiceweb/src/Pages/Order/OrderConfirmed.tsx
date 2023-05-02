@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { withAuth } from "../../HOC";
 
 let confirmed = require("../../Images/confirmed.jpg");
 
@@ -22,4 +23,4 @@ const OrderConfirmed = () => {
 	);
 };
 
-export default OrderConfirmed;
+export default withAuth(OrderConfirmed);

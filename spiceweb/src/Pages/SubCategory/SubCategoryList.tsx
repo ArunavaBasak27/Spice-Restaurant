@@ -53,7 +53,7 @@ const SubCategoryList = () => {
 				</div>
 			</div>
 			<br />
-			<div>
+			<div className="table-responsive-sm">
 				<table className="table table-striped-border">
 					<thead>
 						<tr className="table-secondary">

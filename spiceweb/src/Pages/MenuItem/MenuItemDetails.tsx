@@ -1,13 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetMenuItemByIdQuery } from "../../Apis/menuItemApi";
-import { MainLoader, MiniLoader } from "../../Components/Pages/Common";
+import { MainLoader } from "../../Components/Pages/Common";
 import { useState } from "react";
 import { useUpdateShoppingCartMutation } from "../../Apis/shoppingCartApi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
 import { apiResponse } from "../../Interfaces";
 import { toastNotify } from "../../Helper";
-import { withAdminAuth } from "../../HOC";
+import { withAuth } from "../../HOC";
 
 const MenuItemDetails = () => {
 	const { id } = useParams();
@@ -137,4 +137,4 @@ const MenuItemDetails = () => {
 		</div>
 	);
 };
-export default withAdminAuth(MenuItemDetails);
+export default withAuth(MenuItemDetails);

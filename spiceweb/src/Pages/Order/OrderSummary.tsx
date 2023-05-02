@@ -14,6 +14,7 @@ import SD from "../../Utility/SD";
 import userModel from "../../Interfaces/userModel";
 import { useInitiatePaymentMutation } from "../../Apis/paymentApi";
 import { MiniLoader } from "../../Components/Pages/Common";
+import { withSummaryAuth } from "../../HOC";
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
@@ -315,4 +316,4 @@ const OrderSummary = () => {
 	);
 };
 
-export default OrderSummary;
+export default withSummaryAuth(OrderSummary);

@@ -4,12 +4,15 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PaymentForm } from "../Components/Pages/Payment";
 import { OrderConsolidated } from "../Components/Pages/Order";
+import { withPaymentAuth } from "../HOC";
+import { useState } from "react";
 
 const Payment = () => {
 	const {
 		state: { apiResult, orderData },
 	} = useLocation();
-	const stripePromise = loadStripe(SD.publishableKey);
+	// const stripePromise = loadStripe(SD.publishableKey);
+	const [stripePromise] = useState(() => loadStripe(SD.publishableKey));
 
 	const options = {
 		// passing the client secret obtained from the server
@@ -35,4 +38,4 @@ const Payment = () => {
 	);
 };
 
-export default Payment;
+export default withPaymentAuth(Payment);

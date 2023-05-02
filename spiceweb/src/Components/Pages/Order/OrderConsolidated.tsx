@@ -1,3 +1,4 @@
+import { withPaymentAuth } from "../../../HOC";
 import { cartItemModel, couponModel } from "../../../Interfaces";
 import userModel from "../../../Interfaces/userModel";
 
@@ -89,4 +90,4 @@ const OrderConsolidated = ({ data, orderData }: Props) => {
 	);
 };
 
-export default OrderConsolidated;
+export default withPaymentAuth(OrderConsolidated);
