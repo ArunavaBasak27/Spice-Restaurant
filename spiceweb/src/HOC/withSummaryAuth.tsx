@@ -11,8 +11,8 @@ const withSummaryAuth = (WrappedComponent: any) => {
 				(state: RootState) => state.shoppingCartStore
 			);
 
-			if (!shoppingCartFromStore || !shoppingCartFromStore.cartItems) {
-				window.location.replace("/");
+			if (shoppingCartFromStore?.cartItems?.length === 0) {
+				window.location.replace("/shoppingCart");
 			}
 		}
 

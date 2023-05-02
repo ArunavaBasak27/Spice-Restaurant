@@ -18,21 +18,25 @@ const ManageOrder = () => {
 	const [orderList, setOrderList] = useState([]);
 
 	useEffect(() => {
-		var tempList = orderFromStore.orderList.filter(
-			(orderData: orderHeaderModel) =>
-				orderData.orderStatus === SD.StatusInProcess ||
-				orderData.orderStatus === SD.StatusSubmitted
-		);
+		var tempList =
+			orderFromStore &&
+			orderFromStore?.orderList?.filter(
+				(orderData: orderHeaderModel) =>
+					orderData.orderStatus === SD.StatusInProcess ||
+					orderData.orderStatus === SD.StatusSubmitted
+			);
 
 		setOrderList(tempList);
 	}, [orderFromStore]);
 
 	useEffect(() => {
-		var tempList = orderFromStore.orderList.filter(
-			(orderData: orderHeaderModel) =>
-				orderData.orderStatus === SD.StatusInProcess ||
-				orderData.orderStatus === SD.StatusSubmitted
-		);
+		var tempList =
+			orderFromStore &&
+			orderFromStore?.orderList?.filter(
+				(orderData: orderHeaderModel) =>
+					orderData.orderStatus === SD.StatusInProcess ||
+					orderData.orderStatus === SD.StatusSubmitted
+			);
 
 		setOrderList(tempList);
 	}, []);
@@ -95,7 +99,7 @@ const ManageOrder = () => {
 		<div>
 			<h2 className="text-info">Manage Order</h2>
 			<br />
-			{orderList.length !== 0 && (
+			{orderList && orderList.length !== 0 && (
 				<div className="container row bg-white p-2 mb-3 border rounded">
 					{orderList.map((orderHeader: orderHeaderModel, index: number) => {
 						return (
@@ -189,7 +193,7 @@ const ManageOrder = () => {
 					})}
 				</div>
 			)}
-			{orderList.length === 0 && <p>No orders to process....</p>}
+			{orderList && orderList.length === 0 && <p>No orders to process....</p>}
 		</div>
 	);
 };

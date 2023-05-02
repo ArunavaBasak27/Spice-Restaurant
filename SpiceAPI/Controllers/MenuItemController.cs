@@ -67,7 +67,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> CreateMenuItem([FromForm] MenuItemCreateDTO menuItemDTO)
         {
             try
@@ -97,7 +97,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> UpdateMenuItem(int id, [FromForm] MenuItemUpdateDTO menuItemDTO)
         {
             try
@@ -139,7 +139,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> DeleteMenuItem(int id)
         {
             try

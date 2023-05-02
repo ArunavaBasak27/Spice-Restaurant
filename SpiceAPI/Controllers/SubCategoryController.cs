@@ -56,7 +56,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> CreateSubCategory([FromBody] SubCategoryCreateDTO subCategoryDTO)
         {
             try
@@ -93,7 +93,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPut("{id:int}")]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> UpdateSubCategory(int id, [FromBody] SubCategoryUpdateDTO subCategoryDTO)
         {
             try
@@ -127,7 +127,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> DeleteSubCategory(int id)
         {
             try

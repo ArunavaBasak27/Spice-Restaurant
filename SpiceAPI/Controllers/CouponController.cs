@@ -59,7 +59,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> CreateCoupon([FromForm] CouponCreateDTO couponDTO)
         {
             try
@@ -100,7 +100,7 @@ namespace SpiceAPI.Controllers
             return Ok(_response);
         }
         [HttpPut("{id:int}")]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> UpdateCoupon(int id, [FromForm] CouponUpdateDTO couponDTO)
         {
             try
@@ -148,7 +148,7 @@ namespace SpiceAPI.Controllers
             return Ok(_response);
         }
         [HttpDelete("{id:int}")]
-        [Authorize(Roles = SD.AdminUser + "," + SD.ManagerUser)]
+        [Authorize(Roles = SD.AdminUser)]
         public async Task<IActionResult> DeleteCoupon(int id)
         {
             try

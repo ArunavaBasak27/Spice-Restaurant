@@ -108,7 +108,6 @@ const OrderSummary = () => {
 
 		setLoading(false);
 	};
-
 	return (
 		<div className="backgroundWhite">
 			<div className="container">

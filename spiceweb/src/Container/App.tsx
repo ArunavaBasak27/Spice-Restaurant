@@ -46,8 +46,8 @@ function App() {
 	});
 
 	const { data: orderData, isLoading: isOrderLoading } = useGetAllOrdersQuery(
-		null,
-		{ skip: userData.role === SD.Roles.CUSTOMER }
+		"",
+		{ skip: userData?.id === "" }
 	);
 
 	useEffect(() => {

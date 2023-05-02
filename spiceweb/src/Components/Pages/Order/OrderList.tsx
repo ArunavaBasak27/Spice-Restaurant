@@ -44,32 +44,37 @@ const OrderList = (props: Props) => {
 												</td>
 												<td>{orderHeader.orderTotal}</td>
 												<td>{orderHeader.totalItems}</td>
-												<td className="row">
-													<div className="col-md-6 col-12">
-														<a
-															type="button"
-															className="btn btn-success form-control"
-															data-bs-toggle="modal"
-															data-bs-target={`#staticBackdrop${index}`}
-														>
-															<i className="bi bi-list-ul"></i>
-														</a>
-														<OrderDetails
-															id={index}
-															orderHeader={orderHeader}
-															orderDetails={orderHeader.orderDetails}
-														/>
-													</div>
-													<div className="col-md-6 col-12 mt-md-0 mt-2">
-														<a
-															type="button"
-															className="btn btn-info form-control"
-															data-bs-toggle="modal"
-															data-bs-target={`#statusBackdrop${index}`}
-														>
-															<i className="bi bi-clock"></i>
-														</a>
-														<OrderStatus id={index} orderHeader={orderHeader} />
+												<td>
+													<div className="row">
+														<div className="col-md-6 col-12">
+															<a
+																type="button"
+																className="btn btn-success form-control"
+																data-bs-toggle="modal"
+																data-bs-target={`#staticBackdrop${index}`}
+															>
+																<i className="bi bi-list-ul"></i>
+															</a>
+															<OrderDetails
+																id={index}
+																orderHeader={orderHeader}
+																orderDetails={orderHeader.orderDetails}
+															/>
+														</div>
+														<div className="col-md-6 col-12 mt-md-0 mt-2">
+															<a
+																type="button"
+																className="btn btn-info form-control"
+																data-bs-toggle="modal"
+																data-bs-target={`#statusBackdrop${index}`}
+															>
+																<i className="bi bi-clock"></i>
+															</a>
+															<OrderStatus
+																id={index}
+																orderHeader={orderHeader}
+															/>
+														</div>
 													</div>
 												</td>
 											</tr>

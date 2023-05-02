@@ -19,7 +19,7 @@ const OrderHistory = () => {
 		<>
 			<div className="row">
 				<div className="col-6">
-					<h2 className="text-info">Past Orders List</h2>
+					<h2 className="text-info">Order History</h2>
 				</div>
 			</div>
 			<br />
