@@ -19,7 +19,7 @@ const Home = () => {
 
 	useEffect(() => {
 		if (data && data?.result) {
-			const tempCategoryList = ["Show All"];
+			const tempCategoryList = [""];
 			data?.result?.forEach((item: menuItemModel) => {
 				if (tempCategoryList.indexOf(item.category?.name!) === -1) {
 					tempCategoryList.push(item.category?.name!);
@@ -87,7 +87,7 @@ const Home = () => {
 					{isLoading && <MainLoader />}
 					{!isLoading &&
 						(selectedCategory === "Show All"
-							? categoryList
+							? categoryList.sort()
 							: [selectedCategory]
 						).map((category) => {
 							let menuItemList = data?.result?.filter(
