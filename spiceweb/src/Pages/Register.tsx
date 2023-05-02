@@ -59,7 +59,8 @@ const Register = () => {
 	return (
 		<div>
 			<h2 className="text-info text-center">
-				{userData.role === SD.Roles.ADMIN
+				{userData.role === SD.Roles.ADMIN ||
+				userData.role === SD.Roles.MANAGER_USER
 					? "Register an employee"
 					: "Create New Account"}
 			</h2>
@@ -211,7 +212,8 @@ const Register = () => {
 							/>
 						</div>
 					</div>
-					{userData.role === SD.Roles.ADMIN && (
+					{(userData.role === SD.Roles.ADMIN ||
+						userData.role === SD.Roles.MANAGER_USER) && (
 						<div className="form-group row mt-2">
 							<div className="col-12 col-md-2"></div>
 							<div className="col-12 col-md-5">

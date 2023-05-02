@@ -10,6 +10,7 @@ import { couponModel } from "../../Interfaces";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SD from "../../Utility/SD";
+import { withAdminAuth } from "../../HOC";
 
 const CouponList = () => {
 	const dispatch = useDispatch();
@@ -99,4 +100,4 @@ const CouponList = () => {
 	);
 };
 
-export default CouponList;
+export default withAdminAuth(CouponList);

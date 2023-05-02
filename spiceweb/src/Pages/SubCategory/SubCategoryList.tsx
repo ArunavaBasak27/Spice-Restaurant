@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSubCategory } from "../../Storage/Redux/subCategorySlice";
 import { toastNotify } from "../../Helper";
+import { withAdminAuth } from "../../HOC";
 
 const SubCategoryList = () => {
 	const navigate = useNavigate();
@@ -100,4 +101,4 @@ const SubCategoryList = () => {
 	);
 };
 
-export default SubCategoryList;
+export default withAdminAuth(SubCategoryList);

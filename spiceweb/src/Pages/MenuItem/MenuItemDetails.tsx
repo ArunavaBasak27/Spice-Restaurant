@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
 import { apiResponse } from "../../Interfaces";
 import { toastNotify } from "../../Helper";
+import { withAdminAuth } from "../../HOC";
 
 const MenuItemDetails = () => {
 	const { id } = useParams();
@@ -136,4 +137,4 @@ const MenuItemDetails = () => {
 		</div>
 	);
 };
-export default MenuItemDetails;
+export default withAdminAuth(MenuItemDetails);

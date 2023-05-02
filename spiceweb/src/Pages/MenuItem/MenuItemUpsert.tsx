@@ -15,6 +15,7 @@ import {
 } from "../../Apis/menuItemApi";
 import { MiniLoader } from "../../Components/Pages/Common";
 import { Editor } from "@tinymce/tinymce-react";
+import { withAdminAuth } from "../../HOC";
 let default_food = require("../../Images/default_food.png");
 const menuItemData = {
 	name: "",
@@ -334,4 +335,4 @@ const MenuItemUpsert = () => {
 	);
 };
 
-export default MenuItemUpsert;
+export default withAdminAuth(MenuItemUpsert);

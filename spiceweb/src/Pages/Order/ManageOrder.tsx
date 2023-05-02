@@ -9,6 +9,7 @@ import { apiResponse } from "../../Interfaces";
 import { toastNotify } from "../../Helper";
 import { useEffect, useState } from "react";
 import { useRefundPaymentMutation } from "../../Apis/paymentApi";
+import { withChefAuth } from "../../HOC";
 
 const ManageOrder = () => {
 	const orderFromStore = useSelector((state: RootState) => state.orderStore);
@@ -193,4 +194,4 @@ const ManageOrder = () => {
 	);
 };
 
-export default ManageOrder;
+export default withChefAuth(ManageOrder);

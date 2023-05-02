@@ -8,6 +8,7 @@ import {
 	useUpdateCouponMutation,
 } from "../../Apis/couponApi";
 import { apiResponse } from "../../Interfaces";
+import { withAdminAuth } from "../../HOC";
 const couponData = {
 	name: "",
 	couponType: "-1",
@@ -252,4 +253,4 @@ const CouponUpsert = () => {
 	);
 };
 
-export default CouponUpsert;
+export default withAdminAuth(CouponUpsert);

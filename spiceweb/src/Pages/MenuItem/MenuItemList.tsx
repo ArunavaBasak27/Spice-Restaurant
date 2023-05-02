@@ -9,6 +9,7 @@ import { setMenuItem } from "../../Storage/Redux/menuItemSlice";
 import { menuItemModel } from "../../Interfaces";
 import { MainLoader } from "../../Components/Pages/Common";
 import { toast } from "react-toastify";
+import { withAdminAuth } from "../../HOC";
 
 const MenuItemList = () => {
 	const navigate = useNavigate();
@@ -109,4 +110,4 @@ const MenuItemList = () => {
 	);
 };
 
-export default MenuItemList;
+export default withAdminAuth(MenuItemList);

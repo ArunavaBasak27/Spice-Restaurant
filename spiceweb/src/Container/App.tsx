@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
+	AccessDenied,
 	AllOrders,
 	CategoryList,
 	CategoryUpsert,
@@ -110,6 +111,7 @@ function App() {
 
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/accessDenied" element={<AccessDenied />} />
 
 					<Route path="*" element={<NotFound />} />
 				</Routes>

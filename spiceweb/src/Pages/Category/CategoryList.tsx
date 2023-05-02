@@ -9,6 +9,7 @@ import { setCategory } from "../../Storage/Redux/categorySlice";
 import { useNavigate } from "react-router-dom";
 import { MainLoader } from "../../Components/Pages/Common";
 import { toast } from "react-toastify";
+import { withAdminAuth } from "../../HOC";
 
 const CategoryList = () => {
 	const { data, isLoading } = useGetCategoriesQuery(null);
@@ -97,4 +98,4 @@ const CategoryList = () => {
 	);
 };
 
-export default CategoryList;
+export default withAdminAuth(CategoryList);

@@ -8,6 +8,7 @@ import {
 } from "../../Apis/categoryApi";
 import { apiResponse } from "../../Interfaces";
 import { MainLoader } from "../../Components/Pages/Common";
+import { withAdminAuth } from "../../HOC";
 
 const categoryData = {
 	name: "",
@@ -124,4 +125,4 @@ const CategoryUpsert = () => {
 	);
 };
 
-export default CategoryUpsert;
+export default withAdminAuth(CategoryUpsert);

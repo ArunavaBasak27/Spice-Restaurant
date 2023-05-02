@@ -8,6 +8,7 @@ import SD from "../../../Utility/SD";
 import { apiResponse } from "../../../Interfaces";
 import { toastNotify } from "../../../Helper";
 import { useUpdateOrderMutation } from "../../../Apis/orderApi";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
 	id: number;
@@ -16,6 +17,7 @@ interface Props {
 }
 const OrderDetails = (props: Props) => {
 	let total = 0.0;
+	const navigate = useNavigate();
 	const userData: userModel = useSelector(
 		(state: RootState) => state.userStore
 	);
@@ -27,6 +29,7 @@ const OrderDetails = (props: Props) => {
 		});
 		if (response.data?.isSuccess) {
 			toastNotify("Order pickup completed");
+			navigate("/order/orderPickUp");
 			return;
 		} else {
 			toastNotify(response.data?.errorMessages[0], "error");
@@ -200,8 +203,10 @@ const OrderDetails = (props: Props) => {
 								{userData.role !== SD.Roles.CUSTOMER &&
 								props.orderHeader.orderStatus === SD.StatusReady ? (
 									<button
+										type="button"
 										onClick={() => readyForPickup(props.orderHeader)}
 										className="btn btn-success form-control"
+										data-bs-dismiss="modal"
 									>
 										<i className="bi bi-hand-thumbs-up"></i>
 										{props.orderHeader.orderStatus}

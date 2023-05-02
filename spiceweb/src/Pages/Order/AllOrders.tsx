@@ -1,6 +1,7 @@
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { MainLoader } from "../../Components/Pages/Common";
 import { OrderList } from "../../Components/Pages/Order";
+import { withManagerAuth } from "../../HOC";
 const AllOrders = () => {
 	const { data, isLoading } = useGetAllOrdersQuery(null);
 	if (isLoading) {
@@ -19,4 +20,4 @@ const AllOrders = () => {
 	);
 };
 
-export default AllOrders;
+export default withManagerAuth(AllOrders);

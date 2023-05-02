@@ -11,6 +11,7 @@ import {
 	useGetSubCategoryQuery,
 	useUpdateSubCategoryMutation,
 } from "../../Apis/subCategoryApi";
+import { withAdminAuth } from "../../HOC";
 const subCategoryElement = {
 	categoryId: 0,
 	name: "",
@@ -165,4 +166,4 @@ const SubCategoryUpsert = () => {
 	);
 };
 
-export default SubCategoryUpsert;
+export default withAdminAuth(SubCategoryUpsert);

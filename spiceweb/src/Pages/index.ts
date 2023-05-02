@@ -19,6 +19,7 @@ import Register from "./Register";
 import ShoppingCart from "./ShoppingCart";
 import SubCategoryList from "./SubCategory/SubCategoryList";
 import SubCategoryUpsert from "./SubCategory/SubCategoryUpsert";
+import AccessDenied from "./AccessDenied";
 
 export {
 	Home,
@@ -35,11 +36,12 @@ export {
 	ShoppingCart,
 	OrderSummary,
 	OrderConfirmed,
-	AllOrders ,
+	AllOrders,
 	ManageOrder,
 	OrderPickup,
 	OrderHistory,
 	Payment,
 	Login,
 	Register,
+	AccessDenied,
 };

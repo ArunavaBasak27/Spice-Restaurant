@@ -102,7 +102,7 @@ const OrderPickup = () => {
 														<div className="col-6">
 															<a
 																type="button"
-																className="btn btn-success form-control w-75"
+																className="btn btn-success form-control w-100"
 																data-bs-toggle="modal"
 																data-bs-target={`#staticBackdrop${index}`}
 															>

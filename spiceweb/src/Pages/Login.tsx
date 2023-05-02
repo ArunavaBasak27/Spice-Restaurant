@@ -49,7 +49,6 @@ const Login = () => {
 
 	return (
 		<div className="container">
-			{loading && <MainLoader />}
 			<h2 className="text-info">Login</h2>
 			<br />
 			<form method="post" onSubmit={handleSubmit}>

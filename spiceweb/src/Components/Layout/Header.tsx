@@ -39,79 +39,85 @@ const Header = () => {
 				</button>
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-						{(userData.role === SD.Roles.ADMIN ||
-							userData.role === SD.Roles.MANAGER_USER) && (
-							<>
-								<li className="nav-item dropdown">
-									<a
-										className="nav-link dropdown-toggle"
-										href="#"
-										role="button"
-										data-bs-toggle="dropdown"
-										aria-expanded="false"
+						{userData.role === SD.Roles.ADMIN && (
+							<li className="nav-item dropdown">
+								<a
+									className="nav-link dropdown-toggle"
+									href="#"
+									role="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									Content Management
+								</a>
+								<ul className="dropdown-menu">
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/categoryList")}
 									>
-										Content Management
-									</a>
-									<ul className="dropdown-menu">
-										<li
-											className="dropdown-item"
-											onClick={() => navigate("/categoryList")}
-										>
-											Category
-										</li>
+										Category
+									</li>
 
-										<li
-											className="dropdown-item"
-											onClick={() => navigate("/subCategoryList")}
-										>
-											Sub Category
-										</li>
-
-										<li
-											className="dropdown-item"
-											onClick={() => navigate("/menuItemList")}
-										>
-											Menu Item
-										</li>
-
-										<li>
-											<hr className="dropdown-divider" />
-										</li>
-
-										<li
-											className="dropdown-item"
-											onClick={() => navigate("/couponList")}
-										>
-											Coupon
-										</li>
-									</ul>
-								</li>
-
-								<li className="nav-item dropdown">
-									<a
-										className="nav-link dropdown-toggle"
-										href="#"
-										role="button"
-										data-bs-toggle="dropdown"
-										aria-expanded="false"
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/subCategoryList")}
 									>
-										User Management
-									</a>
-									<ul className="dropdown-menu">
-										<li
-											className="dropdown-item"
-											onClick={() => navigate("/register")}
-										>
-											Register Employee
-										</li>
-									</ul>
-								</li>
-							</>
+										Sub Category
+									</li>
+
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/menuItemList")}
+									>
+										Menu Item
+									</li>
+
+									<li>
+										<hr className="dropdown-divider" />
+									</li>
+
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/couponList")}
+									>
+										Coupon
+									</li>
+								</ul>
+							</li>
 						)}
 
-						{(userData.role === SD.Roles.KITCHEN_USER ||
-							userData.role === SD.Roles.MANAGER_USER ||
-							userData.role === SD.Roles.ADMIN) && (
+						{(userData.role === SD.Roles.ADMIN ||
+							userData.role === SD.Roles.MANAGER_USER) && (
+							<li className="nav-item dropdown">
+								<a
+									className="nav-link dropdown-toggle"
+									href="#"
+									role="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									User Management
+								</a>
+								<ul className="dropdown-menu">
+									<li
+										className="dropdown-item"
+										onClick={() => navigate("/register")}
+									>
+										Register Employee
+									</li>
+								</ul>
+							</li>
+						)}
+						<li className="nav-item">
+							<NavLink
+								className="nav-link active"
+								aria-current="page"
+								to="/order/orderHistory"
+							>
+								Order History
+							</NavLink>
+						</li>
+						{userData.role !== SD.Roles.CUSTOMER && (
 							<>
 								<li className="nav-item dropdown">
 									<a
@@ -124,12 +130,16 @@ const Header = () => {
 										Order
 									</a>
 									<ul className="dropdown-menu">
-										<li
-											className="dropdown-item"
-											onClick={() => navigate("/order/orderList")}
-										>
-											Order List
-										</li>
+										{(userData.role === SD.Roles.MANAGER_USER ||
+											userData.role === SD.Roles.ADMIN) && (
+											<li
+												className="dropdown-item"
+												onClick={() => navigate("/order/orderList")}
+											>
+												Order List
+											</li>
+										)}
+
 										{(userData.role === SD.Roles.KITCHEN_USER ||
 											userData.role === SD.Roles.MANAGER_USER ||
 											userData.role === SD.Roles.ADMIN) && (
@@ -154,16 +164,7 @@ const Header = () => {
 								</li>
 							</>
 						)}
-						<li className="nav-item">
-							<NavLink className="nav-link active" aria-current="page" to="/order/orderHistory">
-								Order History
-							</NavLink>
-						</li>
-						<li className="nav-item">
-							<NavLink className="nav-link active" aria-current="page" to="/">
-								Home
-							</NavLink>
-						</li>
+
 						<li className="nav-item">
 							<NavLink
 								className="nav-link active"
