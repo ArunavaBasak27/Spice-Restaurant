@@ -56,15 +56,18 @@ function App() {
 	}, [isLoading, data?.result]);
 
 	useEffect(() => {
+		if (!isOrderLoading) {
+			dispatch(setOrderList(orderData?.result));
+		}
+	}, [orderData, isOrderLoading]);
+
+	useEffect(() => {
 		const token = localStorage.getItem(SD.token);
 		if (token) {
 			const { fullName, id, email, role }: userModel = jwtDecode(token);
 			dispatch(setLoggedInUser({ fullName, id, email, role }));
-			if (!isOrderLoading && role !== SD.Roles.CUSTOMER) {
-				dispatch(setOrderList(orderData?.result));
-			}
 		}
-	}, [orderData, isOrderLoading]);
+	}, []);
 	return (
 		<>
 			<Header />

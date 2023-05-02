@@ -1,6 +1,7 @@
 import { orderHeaderModel } from "../../../Interfaces/orderHeaderModel";
 import { format, parseISO } from "date-fns";
 import OrderDetails from "./OrderDetails";
+import OrderStatus from "./OrderStatus";
 
 interface Props {
 	orderList: orderHeaderModel[];
@@ -9,7 +10,7 @@ const OrderList = (props: Props) => {
 	return (
 		<div className="border backgroundWhite">
 			{props.orderList !== null && props.orderList.length > 0 && (
-				<div>
+				<div className="table-responsive-sm">
 					<table className="table table-bordered border">
 						<thead>
 							<tr className="table-secondary">
@@ -19,7 +20,7 @@ const OrderList = (props: Props) => {
 								<th>Pickup Time</th>
 								<th>Order Total</th>
 								<th>Total Items</th>
-								<th></th>
+								<th>Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -43,21 +44,33 @@ const OrderList = (props: Props) => {
 												</td>
 												<td>{orderHeader.orderTotal}</td>
 												<td>{orderHeader.totalItems}</td>
-												<td>
-													<a
-														type="button"
-														className="btn btn-success form-control w-75"
-														data-bs-toggle="modal"
-														data-bs-target={`#staticBackdrop${index}`}
-													>
-														<i className="bi bi-list-ul"></i>
-													</a>
-
-													<OrderDetails
-														id={index}
-														orderHeader={orderHeader}
-														orderDetails={orderHeader.orderDetails}
-													/>
+												<td className="row">
+													<div className="col-md-6 col-12">
+														<a
+															type="button"
+															className="btn btn-success form-control"
+															data-bs-toggle="modal"
+															data-bs-target={`#staticBackdrop${index}`}
+														>
+															<i className="bi bi-list-ul"></i>
+														</a>
+														<OrderDetails
+															id={index}
+															orderHeader={orderHeader}
+															orderDetails={orderHeader.orderDetails}
+														/>
+													</div>
+													<div className="col-md-6 col-12 mt-md-0 mt-2">
+														<a
+															type="button"
+															className="btn btn-info form-control"
+															data-bs-toggle="modal"
+															data-bs-target={`#statusBackdrop${index}`}
+														>
+															<i className="bi bi-clock"></i>
+														</a>
+														<OrderStatus id={index} orderHeader={orderHeader} />
+													</div>
 												</td>
 											</tr>
 										);

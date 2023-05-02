@@ -1,11 +1,6 @@
-import { useEffect, useState } from "react";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
-import { useDispatch } from "react-redux";
-import { setOrderList } from "../../Storage/Redux/orderSlice";
 import { MainLoader } from "../../Components/Pages/Common";
-import { orderHeaderModel } from "../../Interfaces/orderHeaderModel";
-import { format, parseISO } from "date-fns";
-import { OrderDetails, OrderList } from "../../Components/Pages/Order";
+import { OrderList } from "../../Components/Pages/Order";
 const AllOrders = () => {
 	const { data, isLoading } = useGetAllOrdersQuery(null);
 	if (isLoading) {

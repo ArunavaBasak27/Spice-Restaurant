@@ -1,11 +1,9 @@
-import { format, parseISO } from "date-fns";
 import { useGetOrdersByUserQuery } from "../../Apis/orderApi";
-import { OrderDetails, OrderList } from "../../Components/Pages/Order";
-import { orderHeaderModel } from "../../Interfaces/orderHeaderModel";
+import { OrderList } from "../../Components/Pages/Order";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
-import { useEffect, useState } from "react";
 import { MainLoader } from "../../Components/Pages/Common";
+import { withAuth } from "../../HOC";
 
 const OrderHistory = () => {
 	const userData = useSelector((state: RootState) => state.userStore);
@@ -30,4 +28,4 @@ const OrderHistory = () => {
 	);
 };
 
-export default OrderHistory;
+export default withAuth(OrderHistory);
