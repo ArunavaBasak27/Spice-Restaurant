@@ -5,24 +5,18 @@ import { setMenuItem } from "../../../Storage/Redux/menuItemSlice";
 import { menuItemModel } from "../../../Interfaces";
 import MenuItemCard from "./MenuItemCard";
 import { MainLoader } from "../Common";
-
-const AllMenuItems = () => {
-	const dispatch = useDispatch();
-	const { data, isLoading } = useGetMenuItemsQuery(null);
-
-	useEffect(() => {
-		if (!isLoading) {
-			dispatch(setMenuItem(data.result));
-		}
-	}, [isLoading]);
-
+interface Props {
+	menuItemList: menuItemModel[];
+}
+const AllMenuItems = (props: Props) => {
 	return (
 		<>
-			{isLoading && <MainLoader />}
-			{!isLoading &&
-				data?.result.map((menuItem: menuItemModel, index: number) => {
-					return <MenuItemCard key={index} menuItem={menuItem} />;
+			<h2 className="text-success">{props.menuItemList[0]?.category?.name}</h2>
+			<div>
+				{props.menuItemList.map((menuItem: menuItemModel) => {
+					return <MenuItemCard menuItem={menuItem} />;
 				})}
+			</div>
 		</>
 	);
 };
