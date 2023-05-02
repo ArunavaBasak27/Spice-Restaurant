@@ -8,6 +8,7 @@ import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { MainLoader } from "../../Components/Pages/Common";
 import { setOrderList } from "../../Storage/Redux/orderSlice";
 import SD from "../../Utility/SD";
+import { withFrontDeskAuth } from "../../HOC";
 
 const OrderPickup = () => {
 	const { data, isLoading } = useGetAllOrdersQuery(null);
@@ -142,4 +143,4 @@ const OrderPickup = () => {
 		</>
 	);
 };
-export default OrderPickup;
+export default withFrontDeskAuth(OrderPickup);

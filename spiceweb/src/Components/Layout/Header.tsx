@@ -13,6 +13,7 @@ const Header = () => {
 	const userData: userModel = useSelector(
 		(state: RootState) => state.userStore
 	);
+	console.log(userData);
 	const shoppingCart: shoppingCartModel = useSelector(
 		(state: RootState) => state.shoppingCartStore
 	);
@@ -108,60 +109,63 @@ const Header = () => {
 								</ul>
 							</li>
 						)}
-						<li className="nav-item">
-							<NavLink
-								className="nav-link active"
-								aria-current="page"
-								to="/order/orderHistory"
-							>
-								Order History
-							</NavLink>
-						</li>
-						{userData.role !== SD.Roles.CUSTOMER && (
-							<>
-								<li className="nav-item dropdown">
-									<a
-										className="nav-link dropdown-toggle"
-										href="#"
-										role="button"
-										data-bs-toggle="dropdown"
-										aria-expanded="false"
-									>
-										Order
-									</a>
-									<ul className="dropdown-menu">
-										{(userData.role === SD.Roles.MANAGER_USER ||
-											userData.role === SD.Roles.ADMIN) && (
-											<li
-												className="dropdown-item"
-												onClick={() => navigate("/order/orderList")}
-											>
-												Order List
-											</li>
-										)}
 
-										{(userData.role === SD.Roles.KITCHEN_USER ||
-											userData.role === SD.Roles.MANAGER_USER ||
-											userData.role === SD.Roles.ADMIN) && (
-											<li
-												className="dropdown-item"
-												onClick={() => navigate("/order/manageOrder")}
-											>
-												Manage Order
-											</li>
-										)}
-										{(userData.role === SD.Roles.FRONT_DESK_USER ||
-											userData.role === SD.Roles.MANAGER_USER ||
-											userData.role === SD.Roles.ADMIN) && (
-											<li
-												className="dropdown-item"
-												onClick={() => navigate("/order/orderPickup")}
-											>
-												Order PickUp
-											</li>
-										)}
-									</ul>
+						{userData.id !== "" && (
+							<>
+								<li className="nav-item">
+									<NavLink
+										className="nav-link active"
+										aria-current="page"
+										to="/order/orderHistory"
+									>
+										Order History
+									</NavLink>
 								</li>
+								{userData.role !== SD.Roles.CUSTOMER && (
+									<li className="nav-item dropdown">
+										<a
+											className="nav-link dropdown-toggle"
+											href="#"
+											role="button"
+											data-bs-toggle="dropdown"
+											aria-expanded="false"
+										>
+											Order
+										</a>
+										<ul className="dropdown-menu">
+											{(userData.role === SD.Roles.MANAGER_USER ||
+												userData.role === SD.Roles.ADMIN) && (
+												<li
+													className="dropdown-item"
+													onClick={() => navigate("/order/orderList")}
+												>
+													Order List
+												</li>
+											)}
+
+											{(userData.role === SD.Roles.KITCHEN_USER ||
+												userData.role === SD.Roles.MANAGER_USER ||
+												userData.role === SD.Roles.ADMIN) && (
+												<li
+													className="dropdown-item"
+													onClick={() => navigate("/order/manageOrder")}
+												>
+													Manage Order
+												</li>
+											)}
+											{(userData.role === SD.Roles.FRONT_DESK_USER ||
+												userData.role === SD.Roles.MANAGER_USER ||
+												userData.role === SD.Roles.ADMIN) && (
+												<li
+													className="dropdown-item"
+													onClick={() => navigate("/order/orderPickup")}
+												>
+													Order PickUp
+												</li>
+											)}
+										</ul>
+									</li>
+								)}
 							</>
 						)}
 
