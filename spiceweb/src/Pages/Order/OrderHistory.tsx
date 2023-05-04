@@ -3,16 +3,18 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
 import { MainLoader } from "../../Components/Pages/Common";
 import { withAuth } from "../../HOC";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 
 const OrderHistory = () => {
 	const userData = useSelector((state: RootState) => state.userStore);
 	const [totalRecords, setTotalRecords] = useState();
 	const [pageOptions, setPageOptions] = useState({
-		pageNumber: 1,
-		pageSize: 5,
+		pageNumber: 1, //page no-1,2,....
+		pageSize: 5, //number of records/page
 	});
+	const [currentPageSize, setCurrentPageSize] = useState(pageOptions.pageSize);
+
 	const { data, isLoading } = useGetAllOrdersQuery(
 		{
 			userId: userData.id,
@@ -44,12 +46,14 @@ const OrderHistory = () => {
 			} of ${totalRecords}`;
 	};
 
-	const handlePaginationClick = (direction: string) => {
+	const handlePaginationClick = (direction: string, pageSize?: number) => {
 		console.log(direction);
 		if (direction === "prev") {
 			setPageOptions({ pageSize: 5, pageNumber: pageOptions.pageNumber - 1 });
 		} else if (direction === "next") {
 			setPageOptions({ pageSize: 5, pageNumber: pageOptions.pageNumber + 1 });
+		} else if (direction === "change") {
+			setPageOptions({ pageSize: pageSize ?? 5, pageNumber: 1 });
 		}
 	};
 
@@ -70,6 +74,24 @@ const OrderHistory = () => {
 				<OrderList orderList={data?.apiResponse?.result} />
 
 				<div className="d-flex mx-5 justify-content-end align-items-center">
+					<div>Rows per page</div>
+					<div>
+						<select
+							name=""
+							id=""
+							className="form-select"
+							onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+								handlePaginationClick("change", Number(e.target.value));
+								setCurrentPageSize(Number(e.target.value));
+							}}
+							style={{ width: "80px" }}
+						>
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+						</select>
+					</div>
 					<div className="mx-2">{getPageDetails()}</div>
 					<button
 						disabled={pageOptions.pageNumber === 1}

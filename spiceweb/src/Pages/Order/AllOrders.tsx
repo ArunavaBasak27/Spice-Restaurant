@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { MainLoader } from "../../Components/Pages/Common";
 import { OrderList } from "../../Components/Pages/Order";
@@ -9,6 +9,8 @@ const AllOrders = () => {
 		pageNumber: 1,
 		pageSize: 5,
 	});
+	const [currentPageSize, setCurrentPageSize] = useState(pageOptions.pageSize);
+
 	const { data, isLoading } = useGetAllOrdersQuery({
 		userId: "",
 		pageSize: pageOptions.pageSize,
@@ -24,7 +26,7 @@ const AllOrders = () => {
 
 	const pageList = () => {
 		var pages = [];
-		for (let i = 0; i < totalRecords! / 5; i++) {
+		for (let i = 0; i < totalRecords! / currentPageSize; i++) {
 			pages.push(i);
 		}
 		return pages;
@@ -36,7 +38,7 @@ const AllOrders = () => {
 			if (index === i) {
 				button.classList.remove("btn-light");
 				button.classList.add("btn-info", "active");
-				setPageOptions({ pageNumber: i + 1, pageSize: 5 });
+				setPageOptions({ pageNumber: i + 1, pageSize: currentPageSize });
 			} else {
 				button.classList.remove("btn-info", "active");
 				button.classList.add("btn-light");
@@ -61,22 +63,46 @@ const AllOrders = () => {
 						<OrderList orderList={data?.apiResponse?.result} />
 					</div>
 					<div className="col-12">
-						<div className="btn-group float-end mt-3">
-							<>
-								{pageList().map((i) => {
-									return (
-										<button
-											key={i}
-											className={`btn page ${
-												i === 0 ? "btn-info active" : "btn-light"
-											}`}
-											onClick={() => handlePagination(i)}
-										>
-											{i + 1}
-										</button>
-									);
-								})}
-							</>
+						<div className="row">
+							<div className="col-6">
+								<select
+									name=""
+									id=""
+									className="form-select"
+									onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+										setPageOptions({
+											pageSize: Number(e.target.value),
+											pageNumber: 1,
+										});
+										setCurrentPageSize(Number(e.target.value));
+									}}
+									style={{ width: "80px" }}
+								>
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="15">15</option>
+									<option value="20">20</option>
+								</select>
+							</div>
+							<div className="col-6 text-end">
+								<div className="btn-group mt-3">
+									<>
+										{pageList().map((i) => {
+											return (
+												<button
+													key={i}
+													className={`btn page ${
+														i === 0 ? "btn-info active" : "btn-light"
+													}`}
+													onClick={() => handlePagination(i)}
+												>
+													{i + 1}
+												</button>
+											);
+										})}
+									</>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
