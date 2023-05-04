@@ -1,9 +1,9 @@
-import { OrderPickupList } from "../../Components/Pages/Order";
+import { OrderList } from "../../Components/Pages/Order";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { MainLoader } from "../../Components/Pages/Common";
 import { withFrontDeskAuth } from "../../HOC";
+import SD from "../../Utility/SD";
 
 const OrderPickup = () => {
 	const [totalRecords, setTotalRecords] = useState();
@@ -15,8 +15,9 @@ const OrderPickup = () => {
 
 	const { data, isLoading } = useGetAllOrdersQuery({
 		userId: "",
-		pageSize: 10,
-		pageNumber: 1,
+		pageSize: currentPageSize,
+		pageNumber: pageOptions.pageNumber,
+		status: SD.StatusReady,
 	});
 
 	useEffect(() => {
@@ -60,6 +61,8 @@ const OrderPickup = () => {
 			} of ${totalRecords}`;
 	};
 
+	console.log(totalRecords);
+
 	if (isLoading) {
 		return <MainLoader />;
 	}
@@ -67,28 +70,25 @@ const OrderPickup = () => {
 		<>
 			<h2 className="text-info">Orders Ready for Pickup</h2>
 			<div className="border backgroundWhite">
-				<div
-					className="container border border-secondary"
-					style={{ height: "60px" }}
-				>
+				<div className="container border border-secondary p-2">
 					<div className="row container">
-						<div className="col-11">
+						<div className="col-md-11 pb-2">
 							<div className="row" style={{ paddingTop: "10px" }}>
-								<div className="col-4">
+								<div className="col-12 col-md-4">
 									<input
 										type="text"
 										className="form-control"
 										placeholder="Enter name..."
 									/>
 								</div>
-								<div className="col-4">
+								<div className="col-12 col-md-4 mt-md-0 mt-2">
 									<input
 										type="text"
 										className="form-control"
 										placeholder="Enter email..."
 									/>
 								</div>
-								<div className="col-4">
+								<div className="col-12 col-md-4 mt-md-0 mt-2">
 									<input
 										type="text"
 										className="form-control"
@@ -97,11 +97,13 @@ const OrderPickup = () => {
 								</div>
 							</div>
 						</div>
-						<div className="col-1">
+						<div className="col-md-1">
 							<div className="row" style={{ paddingTop: "10px" }}>
-								<button className="btn btn-info form-control">
-									<i className="bi bi-search"></i>
-								</button>
+								<div className="col-12">
+									<button className="btn btn-info form-control">
+										<i className="bi bi-search"></i>
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -110,7 +112,7 @@ const OrderPickup = () => {
 				<br />
 				<div className="row">
 					<div className="col-12">
-						<OrderPickupList orderList={data?.apiResponse?.result} />
+						<OrderList orderList={data?.apiResponse?.result} />
 					</div>
 					<div className="col-12">
 						<div className="row">
