@@ -1,10 +1,10 @@
-import { useGetOrdersByUserQuery } from "../../Apis/orderApi";
 import { OrderList } from "../../Components/Pages/Order";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
 import { MainLoader } from "../../Components/Pages/Common";
 import { withAuth } from "../../HOC";
 import { useEffect, useState } from "react";
+import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 
 const OrderHistory = () => {
 	const userData = useSelector((state: RootState) => state.userStore);
@@ -13,7 +13,7 @@ const OrderHistory = () => {
 		pageNumber: 1,
 		pageSize: 5,
 	});
-	const { data, isLoading } = useGetOrdersByUserQuery(
+	const { data, isLoading } = useGetAllOrdersQuery(
 		{
 			userId: userData.id,
 			pageSize: pageOptions.pageSize,

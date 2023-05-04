@@ -17,12 +17,6 @@ const orderApi = createApi({
 	tagTypes: ["orderApi"],
 	endpoints: (builder) => ({
 		getAllOrders: builder.query({
-			query: () => ({
-				url: "order",
-			}),
-			providesTags: ["orderApi"],
-		}),
-		getOrdersByUser: builder.query({
 			query: ({ userId, pageSize, pageNumber }) => ({
 				url: "order",
 				params: {
@@ -62,7 +56,6 @@ const orderApi = createApi({
 });
 export const {
 	useGetAllOrdersQuery,
-	useGetOrdersByUserQuery,
 	useCreateOrderMutation,
 	useUpdateOrderMutation,
 } = orderApi;

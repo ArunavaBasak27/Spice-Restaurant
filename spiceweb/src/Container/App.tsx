@@ -58,7 +58,7 @@ function App() {
 
 	useEffect(() => {
 		if (!isOrderLoading) {
-			dispatch(setOrderList(orderData?.result));
+			dispatch(setOrderList(orderData?.apiResponse?.result));
 		}
 	}, [orderData, isOrderLoading]);
 

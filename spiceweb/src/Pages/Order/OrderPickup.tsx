@@ -15,7 +15,7 @@ const OrderPickup = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (!isLoading) {
-			dispatch(setOrderList(data?.result));
+			dispatch(setOrderList(data?.apiResponse?.result));
 		}
 	}, [isLoading]);
 
@@ -82,8 +82,8 @@ const OrderPickup = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{data?.result.length > 0 &&
-								data?.result.map(
+							{data?.apiResponse?.result.length > 0 &&
+								data?.apiResponse?.result.map(
 									(orderHeader: orderHeaderModel, index: number) => {
 										if (orderHeader.orderStatus === SD.StatusReady) {
 											return (
