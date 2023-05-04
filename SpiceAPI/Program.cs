@@ -92,7 +92,7 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseCors(options => options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().WithExposedHeaders());
+app.UseCors(options => options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().WithExposedHeaders("*"));
 
 app.UseAuthentication();
 app.UseAuthorization();

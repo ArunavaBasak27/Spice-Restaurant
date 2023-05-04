@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SpiceAPI.Data;
 using SpiceAPI.Models;
 using SpiceAPI.Models.Dto;
@@ -27,7 +28,7 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<object> GetOrders(string userId = null)
+        public async Task<object> GetOrders(string userId = null, int pageNumber = 1, int pageSize = 5)
         {
             try
             {
@@ -39,12 +40,19 @@ namespace SpiceAPI.Controllers
 
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    _response.Result = orderHeaders.Where(x => x.ApplicationUserId == userId).ToList();
+                    orderHeaders = orderHeaders.Where(x => x.ApplicationUserId == userId).ToList();
                 }
-                else
+
+                Pagination pagination = new Pagination()
                 {
-                    _response.Result = orderHeaders;
-                }
+                    CurrentPage = pageNumber,
+                    PageSize = pageSize,
+                    TotalRecords = orderHeaders.Count()
+                };
+
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pagination));
+
+                _response.Result = orderHeaders.Skip((pageNumber - 1) * pageSize).Take(pageSize);
                 _response.StatusCode = HttpStatusCode.OK;
             }
             catch (Exception ex)

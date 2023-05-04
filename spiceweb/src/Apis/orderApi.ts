@@ -1,4 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import {
+	FetchBaseQueryMeta,
+	createApi,
+	fetchBaseQuery,
+} from "@reduxjs/toolkit/dist/query/react";
 import SD from "../Utility/SD";
 
 const orderApi = createApi({
@@ -19,12 +23,23 @@ const orderApi = createApi({
 			providesTags: ["orderApi"],
 		}),
 		getOrdersByUser: builder.query({
-			query: (userId) => ({
+			query: ({ userId, pageSize, pageNumber }) => ({
 				url: "order",
 				params: {
 					userId: userId,
+					pageSize: pageSize,
+					pageNumber: pageNumber,
 				},
 			}),
+			transformResponse(
+				apiResponse: { result: any },
+				meta: FetchBaseQueryMeta
+			) {
+				return {
+					apiResponse,
+					totalRecords: meta?.response!.headers.get("X-Pagination"),
+				};
+			},
 			providesTags: ["orderApi"],
 		}),
 		createOrder: builder.mutation({

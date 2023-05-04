@@ -8,8 +8,8 @@ interface Props {
 }
 const OrderList = (props: Props) => {
 	return (
-		<div className="border backgroundWhite">
-			{props.orderList !== null && props.orderList.length > 0 && (
+		<div>
+			{props.orderList !== null && props.orderList?.length > 0 && (
 				<div className="table-responsive-sm">
 					<table className="table table-bordered border">
 						<thead>
@@ -85,7 +85,7 @@ const OrderList = (props: Props) => {
 					</table>
 				</div>
 			)}
-			{!props.orderList.length && <p>No Orders found...</p>}
+			{props.orderList?.length! === 0 && <p>No Orders found...</p>}
 		</div>
 	);
 };
