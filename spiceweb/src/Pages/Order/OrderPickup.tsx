@@ -1,9 +1,11 @@
 import { OrderList } from "../../Components/Pages/Order";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { MainLoader } from "../../Components/Pages/Common";
 import { withFrontDeskAuth } from "../../HOC";
 import SD from "../../Utility/SD";
+import { inputHelper } from "../../Helper";
+import { orderHeaderModel } from "../../Interfaces/orderHeaderModel";
 
 const OrderPickup = () => {
 	const [totalRecords, setTotalRecords] = useState();
@@ -12,12 +14,28 @@ const OrderPickup = () => {
 		pageSize: 5,
 	});
 	const [currentPageSize, setCurrentPageSize] = useState(pageOptions.pageSize);
+	const [apiFilters, setApiFilters] = useState({
+		name: "",
+		email: "",
+		phoneNumber: "",
+	});
+
+	const [filters, setFilters] = useState({
+		name: "",
+		email: "",
+		phoneNumber: "",
+	});
 
 	const { data, isLoading } = useGetAllOrdersQuery({
 		userId: "",
 		pageSize: currentPageSize,
 		pageNumber: pageOptions.pageNumber,
 		status: SD.StatusReady,
+		...(apiFilters && {
+			name: apiFilters.name,
+			email: apiFilters.email,
+			phoneNumber: apiFilters.phoneNumber,
+		}),
 	});
 
 	useEffect(() => {
@@ -61,7 +79,28 @@ const OrderPickup = () => {
 			} of ${totalRecords}`;
 	};
 
-	console.log(totalRecords);
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const tempData = inputHelper(e, filters);
+		setFilters(tempData);
+	};
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setApiFilters({
+			name: filters.name,
+			email: filters.email,
+			phoneNumber: filters.phoneNumber,
+		});
+		console.log("first");
+	};
+
+	const handleReset = () => {
+		setApiFilters({
+			name: "",
+			email: "",
+			phoneNumber: "",
+		});
+	};
 
 	if (isLoading) {
 		return <MainLoader />;
@@ -71,42 +110,65 @@ const OrderPickup = () => {
 			<h2 className="text-info">Orders Ready for Pickup</h2>
 			<div className="border backgroundWhite">
 				<div className="container border border-secondary p-2">
-					<div className="row container">
-						<div className="col-md-11 pb-2">
-							<div className="row" style={{ paddingTop: "10px" }}>
-								<div className="col-12 col-md-4">
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter name..."
-									/>
+					<form method="post" onSubmit={handleSubmit} onReset={handleReset}>
+						<div className="row container">
+							<div className="col-md-11 pb-2">
+								<div className="row" style={{ paddingTop: "10px" }}>
+									<div className="col-12 col-md-4">
+										<input
+											type="text"
+											className="form-control"
+											placeholder="Enter name..."
+											name="name"
+											onChange={handleChange}
+										/>
+									</div>
+									<div className="col-12 col-md-4 mt-md-0 mt-2">
+										<input
+											type="text"
+											className="form-control"
+											placeholder="Enter email..."
+											name="email"
+											onChange={handleChange}
+										/>
+									</div>
+									<div className="col-12 col-md-4 mt-md-0 mt-2">
+										<input
+											type="text"
+											className="form-control"
+											placeholder="Enter Phone number..."
+											name="phoneNumber"
+											onChange={handleChange}
+										/>
+									</div>
 								</div>
-								<div className="col-12 col-md-4 mt-md-0 mt-2">
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter email..."
-									/>
-								</div>
-								<div className="col-12 col-md-4 mt-md-0 mt-2">
-									<input
-										type="text"
-										className="form-control"
-										placeholder="Enter Phone number..."
-									/>
+							</div>
+							<div className="col-md-1">
+								<div className="row" style={{ paddingTop: "10px" }}>
+									<div className="col-12">
+										<button
+											className={`btn ${
+												data?.apiResponse?.result?.length === 0
+													? "btn-success"
+													: "btn-info"
+											} form-control`}
+											type={`${
+												data?.apiResponse?.result?.length === 0
+													? "reset"
+													: "submit"
+											}`}
+										>
+											{data?.apiResponse?.result?.length === 0 ? (
+												<i className="bi bi-arrow-clockwise"></i>
+											) : (
+												<i className="bi bi-search"></i>
+											)}
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div className="col-md-1">
-							<div className="row" style={{ paddingTop: "10px" }}>
-								<div className="col-12">
-									<button className="btn btn-info form-control">
-										<i className="bi bi-search"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					</form>
 				</div>
 
 				<br />

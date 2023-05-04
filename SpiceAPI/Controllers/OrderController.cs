@@ -28,7 +28,8 @@ namespace SpiceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<object> GetOrders(string userId = null, int pageNumber = 1, int pageSize = 5, string status = null)
+        public async Task<object> GetOrders(string userId = null, int pageNumber = 1, int pageSize = 5, string status = null
+            ,string name=null,string phoneNumber = null,string email = null)
         {
             try
             {
@@ -37,6 +38,19 @@ namespace SpiceAPI.Controllers
                     .ThenInclude(u => u.MenuItem)
                     .OrderByDescending(u => u.Id)
                     .ToListAsync();
+
+                if (!string.IsNullOrEmpty(name))
+                {
+                    orderHeaders = orderHeaders.Where(x => x.ApplicationUser.Name.ToLower().Contains(name.ToLower())).ToList();
+                }
+                if (!string.IsNullOrEmpty(email))
+                {
+                    orderHeaders = orderHeaders.Where(x => x.ApplicationUser.Email.ToLower().Contains(email.ToLower())).ToList();
+                }
+                if (!string.IsNullOrEmpty(phoneNumber))
+                {
+                    orderHeaders = orderHeaders.Where(x => x.ApplicationUser.PhoneNumber.ToLower().Contains(phoneNumber.ToLower())).ToList();
+                }
 
                 if (!string.IsNullOrEmpty(status))
                 {

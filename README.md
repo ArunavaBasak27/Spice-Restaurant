@@ -1,4 +1,20 @@
-# Getting Started with Create React App
+# Getting Started with Spice Restaurant App
+
+This is a full stack monolithic Web Application having a .NET Core API back-end
+and a Typescript React front end
+
+# Brief Description of API
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `dotnet watch run`
+
+Runs the app in the development mode.\
+Open [https://localhost:7165/swagger/index.html](https://localhost:7165/swagger/index.html) to view it in the browser.
+
+# Brief Description of Web project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

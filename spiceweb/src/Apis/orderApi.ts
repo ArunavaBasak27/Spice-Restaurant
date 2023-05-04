@@ -17,13 +17,24 @@ const orderApi = createApi({
 	tagTypes: ["orderApi"],
 	endpoints: (builder) => ({
 		getAllOrders: builder.query({
-			query: ({ userId, pageSize, pageNumber, status }) => ({
+			query: ({
+				userId,
+				pageSize,
+				pageNumber,
+				status,
+				name,
+				phoneNumber,
+				email,
+			}) => ({
 				url: "order",
 				params: {
 					userId: userId,
 					pageSize: pageSize,
 					pageNumber: pageNumber,
 					status: status,
+					name: name,
+					email: email,
+					phoneNumber: phoneNumber,
 				},
 			}),
 			transformResponse(

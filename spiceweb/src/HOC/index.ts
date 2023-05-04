@@ -3,7 +3,6 @@ import withAuth from "./withAuth";
 import withChefAuth from "./withChefAuth";
 import withManagerAuth from "./withManagerAuth";
 import withPaymentAuth from "./withPaymentAuth";
-import withSummaryAuth from "./withSummaryAuth";
 import withFrontDeskAuth from "./wthFrontDeskAuth";
 
 export {
@@ -12,6 +11,5 @@ export {
 	withChefAuth,
 	withManagerAuth,
 	withFrontDeskAuth,
-	withSummaryAuth,
 	withPaymentAuth,
 };

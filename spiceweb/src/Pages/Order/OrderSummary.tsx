@@ -14,7 +14,7 @@ import SD from "../../Utility/SD";
 import userModel from "../../Interfaces/userModel";
 import { useInitiatePaymentMutation } from "../../Apis/paymentApi";
 import { MiniLoader } from "../../Components/Pages/Common";
-import { withSummaryAuth } from "../../HOC";
+import { withAuth } from "../../HOC";
 
 const OrderSummary = () => {
 	const navigate = useNavigate();
@@ -108,6 +108,7 @@ const OrderSummary = () => {
 
 		setLoading(false);
 	};
+
 	return (
 		<div className="backgroundWhite">
 			<div className="container">
@@ -301,7 +302,12 @@ const OrderSummary = () => {
 								</div>
 							</div>
 						</div>
-						<div className="card-footer">
+						<div
+							className="card-footer"
+							style={{
+								display: `${shoppingCart.cartItems ? "block" : "none"}`,
+							}}
+						>
 							<div className="col-12 col-md-4 offset-md-8">
 								<button type="submit" className="btn btn-success form-control">
 									{loading && <MiniLoader />}Place Order
@@ -315,4 +321,4 @@ const OrderSummary = () => {
 	);
 };
 
-export default withSummaryAuth(OrderSummary);
+export default withAuth(OrderSummary);
