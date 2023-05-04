@@ -46,6 +46,18 @@ const AllOrders = () => {
 		});
 	};
 
+	const getPageDetails = () => {
+		const dataStartNumber =
+			(pageOptions.pageNumber - 1) * pageOptions.pageSize + 1;
+		const dataEndNumber = pageOptions.pageNumber * pageOptions.pageSize;
+
+		return `${dataStartNumber} 
+		  -
+		 ${
+				dataEndNumber < totalRecords! ? dataEndNumber : totalRecords
+			} of ${totalRecords}`;
+	};
+
 	if (isLoading) {
 		return <MainLoader />;
 	}
@@ -83,6 +95,7 @@ const AllOrders = () => {
 									<option value="15">15</option>
 									<option value="20">20</option>
 								</select>
+								<div className="float-end">{getPageDetails()}</div>
 							</div>
 							<div className="col-6 text-end">
 								<div className="btn-group mt-3">
