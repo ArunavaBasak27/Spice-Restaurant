@@ -89,12 +89,12 @@ const Home = () => {
 						(selectedCategory === "Show All"
 							? categoryList.sort()
 							: [selectedCategory]
-						).map((category) => {
+						).map((category, index: number) => {
 							let menuItemList = data?.result?.filter(
 								(menuItem: menuItemModel) =>
 									menuItem.category?.name === category
 							);
-							return <AllMenuItems menuItemList={menuItemList} />;
+							return <AllMenuItems key={index} menuItemList={menuItemList} />;
 						})}
 				</div>
 			</div>

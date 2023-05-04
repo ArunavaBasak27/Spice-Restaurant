@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router";
 import { menuItemModel } from "../../../Interfaces";
+import { RootState } from "../../../Storage/Redux/store";
+import { useSelector } from "react-redux";
 let mild = require("../../../Images/mild.png");
 let spicy = require("../../../Images/spicy.png");
 let verySpicy = require("../../../Images/verySpicy.png");
@@ -10,7 +12,14 @@ interface Props {
 
 const MenuItemCard = (props: Props) => {
 	const navigate = useNavigate();
-
+	const userData = useSelector((state: RootState) => state.userStore);
+	const handleDetails = (id: number) => {
+		if (userData.id === "") {
+			navigate("/login");
+			return;
+		}
+		navigate("/menuItemDetails/" + id);
+	};
 	return (
 		<div
 			className="col-12 border border-info rounded"
@@ -60,7 +69,7 @@ const MenuItemCard = (props: Props) => {
 					</div>
 					<div className=" col-md-3 col-sm-12 offset-md-9 text-center">
 						<a
-							onClick={() => navigate("/menuItemDetails/" + props.menuItem.id)}
+							onClick={() => handleDetails(props.menuItem.id)}
 							className="btn btn-success form-control mb-2"
 						>
 							Details

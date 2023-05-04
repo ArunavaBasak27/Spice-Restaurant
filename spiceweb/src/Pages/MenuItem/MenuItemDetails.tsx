@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetMenuItemByIdQuery } from "../../Apis/menuItemApi";
-import { MainLoader } from "../../Components/Pages/Common";
+import { MainLoader, MiniLoader } from "../../Components/Pages/Common";
 import { useState } from "react";
 import { useUpdateShoppingCartMutation } from "../../Apis/shoppingCartApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,6 @@ const MenuItemDetails = () => {
 		skip: id === undefined,
 	});
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const [quantity, setQuantity] = useState(1);
 	const [updateShoppingCart] = useUpdateShoppingCartMutation();
 	const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -31,6 +30,11 @@ const MenuItemDetails = () => {
 	const userData = useSelector((state: RootState) => state.userStore);
 
 	const handleAddToCart = async (menuItemId: number) => {
+		if (!userData) {
+			navigate("/login");
+			return;
+		}
+
 		setIsAddingToCart(true);
 
 		const response: apiResponse = await updateShoppingCart({
@@ -111,7 +115,7 @@ const MenuItemDetails = () => {
 								onClick={() => handleAddToCart(data?.result.id)}
 								className="btn btn-success form-control"
 							>
-								Add to Cart
+								{isAddingToCart && <MiniLoader />} Add to Cart
 							</button>
 						</div>
 
