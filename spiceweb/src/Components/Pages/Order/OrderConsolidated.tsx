@@ -90,4 +90,4 @@ const OrderConsolidated = ({ data, orderData }: Props) => {
 	);
 };
 
-export default withPaymentAuth(OrderConsolidated);
+export default OrderConsolidated;

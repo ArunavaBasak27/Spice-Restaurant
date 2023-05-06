@@ -114,4 +114,4 @@ const PaymentForm = ({ data, orderData }: Props) => {
 	);
 };
 
-export default withPaymentAuth(PaymentForm);
+export default PaymentForm;
