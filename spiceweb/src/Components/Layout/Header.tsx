@@ -13,7 +13,7 @@ const Header = () => {
 	const userData: userModel = useSelector(
 		(state: RootState) => state.userStore
 	);
-	console.log(userData);
+	// console.log(userData);
 	const shoppingCart: shoppingCartModel = useSelector(
 		(state: RootState) => state.shoppingCartStore
 	);

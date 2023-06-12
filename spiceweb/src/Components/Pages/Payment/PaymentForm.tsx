@@ -32,7 +32,7 @@ interface Props {
 }
 
 const PaymentForm = ({ data, orderData }: Props) => {
-	console.log(data, orderData);
+	// console.log(data, orderData);
 	const navigate = useNavigate();
 	const stripe = useStripe();
 	const elements = useElements();

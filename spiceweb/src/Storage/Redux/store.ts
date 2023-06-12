@@ -35,6 +35,7 @@ const store = configureStore({
 		[paymentApi.reducerPath]: paymentApi.reducer,
 		[orderApi.reducerPath]: orderApi.reducer,
 	},
+	devTools: false,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware()
 			.concat(categoryApi.middleware)

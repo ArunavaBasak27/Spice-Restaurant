@@ -93,7 +93,7 @@ const ManageOrder = () => {
 		}
 	};
 
-	console.log(orderList);
+	// console.log(orderList);
 
 	return (
 		<div>

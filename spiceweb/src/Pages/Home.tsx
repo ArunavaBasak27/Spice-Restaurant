@@ -31,7 +31,7 @@ const Home = () => {
 
 	const handleCategoryClick = (i: number) => {
 		const buttons = document.querySelectorAll(".filter");
-		console.log(buttons);
+		// console.log(buttons);
 		let localCategory = "";
 		buttons.forEach((button, index) => {
 			if (index === i) {

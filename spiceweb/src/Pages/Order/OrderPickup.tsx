@@ -91,7 +91,7 @@ const OrderPickup = () => {
 			email: filters.email,
 			phoneNumber: filters.phoneNumber,
 		});
-		console.log("first");
+		// console.log("first");
 	};
 
 	const handleReset = () => {

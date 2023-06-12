@@ -32,7 +32,7 @@ const OrderHistory = () => {
 		}
 	}, [data]);
 
-	console.log(data);
+	// console.log(data);
 
 	const getPageDetails = () => {
 		const dataStartNumber =
@@ -47,7 +47,7 @@ const OrderHistory = () => {
 	};
 
 	const handlePaginationClick = (direction: string, pageSize?: number) => {
-		console.log(direction);
+		// console.log(direction);
 		if (direction === "prev") {
 			setPageOptions({ pageSize: 5, pageNumber: pageOptions.pageNumber - 1 });
 		} else if (direction === "next") {
@@ -61,7 +61,7 @@ const OrderHistory = () => {
 		return <MainLoader />;
 	}
 
-	console.log(totalRecords);
+	// console.log(totalRecords);
 	return (
 		<>
 			<div className="row">

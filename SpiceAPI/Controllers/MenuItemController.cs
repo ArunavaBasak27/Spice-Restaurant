@@ -117,7 +117,7 @@ namespace SpiceAPI.Controllers
                 menuItemFromDb.Price = menuItemDTO.Price;
                 menuItemFromDb.CategoryId = menuItemDTO.CategoryId;
                 menuItemFromDb.SubCategoryId = menuItemDTO.SubCategoryId;
-
+                menuItemFromDb.Spicyness = menuItemDTO.Spicyness;
                 if (menuItemDTO.File != null && menuItemDTO.File.Length > 0)
                 {
                     await _photoService.DeletePhoto(menuItemFromDb.Image);

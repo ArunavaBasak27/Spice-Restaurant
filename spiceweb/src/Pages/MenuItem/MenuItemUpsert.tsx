@@ -104,13 +104,16 @@ const MenuItemUpsert = () => {
 		const formData = new FormData();
 
 		formData.append("Name", menuItemInputs.name);
-		formData.append("Description", textArea);
+		formData.append(
+			"Description",
+			textArea.length === 0 ? menuItemInputs.description : textArea
+		);
 		formData.append("Spicyness", menuItemInputs.spicyness.toString());
 		formData.append("CategoryId", menuItemInputs.categoryId.toString());
 		formData.append("SubCategoryId", menuItemInputs.subCategoryId.toString());
 		formData.append("Price", menuItemInputs.price.toString());
 		formData.append("File", imageToStore);
-
+		// console.log(menuItemInputs);
 		let response: apiResponse = {};
 
 		if (id) {
