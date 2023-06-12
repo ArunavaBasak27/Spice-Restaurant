@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SpiceAPI.Data;
+using SpiceAPI.Initializer;
 using SpiceAPI.Mapper;
 using SpiceAPI.Models;
 using SpiceAPI.Services.Models;
 using SpiceAPI.Services.PhotoService;
 using System.Text;
-
+#nullable disable
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,11 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("SpiceDB"));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddAutoMapper(typeof(Mappings));
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddCors();
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
@@ -73,6 +76,14 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
@@ -93,7 +104,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseCors(options => options.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod().WithExposedHeaders("*"));
-
+SeedDatabase();
 app.UseAuthentication();
 app.UseAuthorization();
 
